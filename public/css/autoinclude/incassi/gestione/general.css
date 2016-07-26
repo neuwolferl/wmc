@@ -1,0 +1,31 @@
+html,body {
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    
+}
+#pagina {
+    max-height: 100%;
+
+}
+.suggestBox {
+    width: 98%;
+    max-height: 99%;
+    margin: 1%;
+    overflow-y: scroll;
+}
+.suggestBox>ul>li:hover {
+    cursor: move;
+}
+
+.dimensionatore { 
+    /*border: 1px solid purple;*/
+    display: block;
+}
+

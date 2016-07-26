@@ -1,0 +1,15 @@
+
+html, body{
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+.campPlus {
+    background: url('./img/plus.png');
+    background-repeat: no-repeat;
+    /*background-attachment: fixed;*/
+    background-size: 15px 15px;
+    background-position: 0px 0px;
+    width: 19px;
+    height: 19px;
+}

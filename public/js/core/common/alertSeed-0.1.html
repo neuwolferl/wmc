@@ -1,0 +1,17 @@
+<pre>--__alerts|json__--</pre>
+<div class="alert alert-info" role="alert" ng-repeat="alert in alerts| filter:{type: 'info'}" ng-animate="'alertseedanimate'" id="--__'alert-seed-'+alert.hash__--">
+    <div class="pull-right glyphicon glyphicon-remove deletebtn" ng-click="$parent.deleteAlert(alert.hash)">&nbsp;</div>
+    --__alert.hash__--
+</div>
+<div class="alert alert-success" role="alert" ng-repeat="alert in alerts| filter:{type: 'success'}" ng-animate="'alertseedanimate'">
+    <div class="pull-right glyphicon glyphicon-remove deletebtn" ng-click="$parent.deleteAlert(alert.hash)">&nbsp;</div>
+    --__alert.hash__--
+</div>
+<div class="alert alert-warning" role="alert" ng-repeat="alert in alerts| filter:{type: 'warning'}" ng-animate="'alertseedanimate'">
+    <div class="pull-right glyphicon glyphicon-remove deletebtn" ng-click="$parent.deleteAlert(alert.hash)">&nbsp;</div>
+    --__alert.hash__--
+</div>
+<div class="alert alert-danger" role="alert" ng-repeat="alert in alerts| filter:{type: 'danger'}" ng-animate="'alertseedanimate'">
+    <div class="pull-right glyphicon glyphicon-remove deletebtn" ng-click="$parent.deleteAlert(alert.hash)">&nbsp;</div>
+    --__alert.hash__--
+</div>

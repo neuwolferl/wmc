@@ -1,0 +1,257 @@
+<div ng-app="SituazioneAppuntamenti" class="container" style="width: 100%;">
+    <div ng-controller="AppController as ACTRL" class="topcontainer">
+        {if isset($breadCrumb)}
+        <div>
+            <ol class="breadcrumb">
+                {echo $breadCrumb} 
+            </ol>
+        </div>
+        {/if}
+        <error-mask ng-show="LCTRL.errorMask"></error-mask>
+        <header class="page-header row hidden-sm hidden-xs">
+            <h1>Situazione appuntamenti</h1>
+        </header>
+        <h1 class="visible-sm visible-xs">Situazione appuntamenti</h1>
+        <div class="row">
+            <div class="col-sm-2">
+                --__prova|json__--
+                <div id="situazione-appuntamenti-descrizione-app" ng-show="calendarShapeInfo.info">
+                    <p>
+                        Appuntamento di <br><b>--__calendarShapeInfo.info.details.venditore__--</b><br><br> presso: <br>
+                        <b>--__calendarShapeInfo.info.details.account.ragione_sociale__--</b><br><br>
+                        partita iva: <i>--__calendarShapeInfo.info.details.account.partita_iva__--</i><br>
+                        <i>--__calendarShapeInfo.info.details.activities[0].indirizzo__--</i><br>
+                        <i>--__calendarShapeInfo.info.details.indirizzoaccount.via__--</i><br>
+                        <i>--__calendarShapeInfo.info.details.indirizzoaccount.citta__--</i><br>
+                        <i>--__calendarShapeInfo.info.details.phone__--</i><br>
+                    </p>
+                    <p></p>
+                    <p>
+                        da: --__calendarShapeInfo.info.start|date:"dd-MM-yy   HH:mm"__--<br>
+                        a: --__calendarShapeInfo.info.end|date:"dd-MM-yy   HH:mm"__--
+                    </p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p class="bg-danger" ng-if="calendarShapeInfo.info.error.length"><b>Questo appuntamento presenta degli errori.</b>
+                        <br>Click sull&apos;appuntamento per maggiori dettagli.
+                    </p>
+                    <p></p>
+                    <p>
+                        Appuntamento preso da: <i>--__calendarShapeInfo.info.details.telemarketing__--</i>
+                    </p>
+                    <p></p>
+                    <p>
+                        Prossimo step: <i>--__calendarShapeInfo.info.details.prossimo_step__--</i><br>
+                        Stadio vendita: <i>--__calendarShapeInfo.info.details.stadio_vendita__--</i><br>
+                        Esito conferma: <i>--__calendarShapeInfo.info.details.esito_conferma__--</i><br>
+                    </p>
+                </div>
+            </div>  
+            
+            <div class="col-sm-8">
+                <div>
+                    <calendario-sinottico calId="ACTRL.sinottico[0]" title="Calendario Venditori" style="display: none; width: 100%; height: 100%;"></calendario-sinottico>
+                </div>
+
+                <div id="logcont" style="border: 1px dashed lightgray;" ng-show="appuntamento.ragione_sociale">
+                    <div style="text-align: center; width: 100%;">
+                        <h3>Log attività per --__appuntamento.ragione_sociale__--</h3>
+                    </div>
+                    <log-general logid="ACTRL.logger[0]" logdescriptor="logGeneral"></log-general>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div ng-if="appuntamento.ragione_sociale && appuntamento.stato < 3">
+                    <button class="btn btn-sm btn-primary"><i class="fa fa-arrow-left" ng-click="annullaSceltaAppuntamento()">Torna a elenco</i></button>
+                    <form>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td>Appuntamento di <br><b>--__appuntamento.venditore__--</b><br><br> presso: <br>
+                                    <b>--__appuntamento.ragione_sociale__--</b><br><br>
+                                    partita iva: <i>--__appuntamento.partita_iva__--</i><br>
+                                    <i>--__appuntamento.indirizzo__--</i><br>
+                                    <i>--__appuntamento.indirizzoaccount.via__--</i><br>
+                                    <i>--__appuntamento.indirizzoaccount.citta__--</i><br>
+                                    <i>--__appuntamento.indirizzo__--</i><br>
+                                    <i>--__appuntamento.phone__--</i><br></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Telefono: <i>--__appuntamento.telefono__--</i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Appuntamento preso da: <i>--__appuntamento.telemarketing__--</i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h3>&nbsp;</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h3>Dipendenti e fatturato</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Dipendenti: --__appuntamento.dipendenti[0]+" ("+appuntamento.dipendenti[1]+")"__--<br>
+                                    Fatturato: --__appuntamento.fatturato[0]+" ("+appuntamento.fatturato[1]+")"__--<br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h3>Contatti</h3>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="cont in appuntamento.contatti">
+                                <td>
+                                    --__cont.nome+" "+cont.cognome__--<br>
+                                    <i>--__cont.ruolo__--</i><br>
+                                    --__cont.telefono+"   "+cont.cellulare__--<br>
+                                </td>
+                            </tr>
+                            <tr ng-if="!(appuntamento.stato) || !(appuntamento.stato - 2)">
+                                <td>
+                                    <BR>
+                                    <button ng-click="confermaAppuntamento()"
+                                            type="button" class="btn btn-primary"
+                                            style="width: 100%;">
+                                        CONFERMA
+                                    </button>
+                                    <BR>
+                                </td>
+                            </tr>
+                            <tr ng-if="!(appuntamento.stato) || !(appuntamento.stato - 1)">
+                                <td>
+                                    <BR>
+                                    <button ng-click="sconfermaAppuntamento()"
+                                            type="button" class="btn btn-primary"
+                                            style="width: 100%;">
+                                        SCONFERMA
+                                    </button>
+                                    <BR>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h3>Cambia Commerciale</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select ng-options="vend for vend in {$root}.commerciali"
+                                            ng-model="appuntamento.venditore">
+                                    </select><br><br>
+                                    <button type="button" class="btn btn-primary"
+                                            ng-click="cambiaCommerciale()">
+                                        Cambia
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h3>Cambia Data e Ora</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Data <input type="date" name="date" ng-model="appuntamento.data"><br><br>
+                                    Ora&nbsp;<select ng-model="appuntamento.ora" ng-options="ora for ora in ore"></select>&nbsp;&nbsp;
+                                    Minuti&nbsp;<select ng-model="appuntamento.minuti" ng-options="minuto for minuto in minuti"></select><br><br>
+                                    <button type="button" class="btn btn-primary"
+                                            ng-click="cambiaDataOra()">
+                                        Cambia
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr ng-if="!(appuntamento.stato - 1)">
+                                <td>
+                                    <h3>Invio manuale MAIL</h3>
+                                </td>
+                            </tr>
+                            <tr ng-if="!(appuntamento.stato - 1)">
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr ng-if="!(appuntamento.stato - 1)">
+                                <td>
+                                    <button type="button" class="btn btn-primary"
+                                            ng-click="sendMail()">
+                                        MAIL!
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div ng-show="appuntamentiRaw.length && !appuntamento.ragione_sociale" class="col-sm-8">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ragione sociale</th>
+                            <th>Venditore</th>
+                            <th colspan="3" class="text-center">Orario</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="app in appuntamentiRaw|orderBy :&apos;activities[0].orario_inizio&apos;" ng-click="(app.errors.length ? true : prepareAppForEdit({data: {details: app}}))">
+                        <td>
+                            --__app.account.ragione_sociale__--
+                        </td>
+                        <td>
+                            --__app.venditore__--
+                        </td>
+                        <td>
+                            --__app.activities[0].orario_inizio__--
+                        </td>
+                        <td>
+                            <i class="fa fa-arrow-right"></i>
+                        </td> 
+                        <td>
+                            --__app.activities[0].orario_fine__--
+                        </td>
+                        <td ng-show="app.errors.length">
+                            <i class="fa fa-exclamation-triangle" data-toggle="tooltip" data-placement="left" title="Questo appuntamento ha problemi. Fai click per segnalare." ng-click="ACTRL.reportToAdmin(app)"></i>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+</div>

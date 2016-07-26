@@ -1,0 +1,68 @@
+<div ng-app="Vincenzo">
+    <div>
+    <div ng-controller="MainController as MCTRL" style="width: 98%; border: 1px solid lightgrey;">
+        <div style="display: inline-block; float: left; width: 45%; margin: 1%; border: 1px solid lightgray;">
+            <div style=" display: inline-block; float: left; width: 50%">
+                Risorsa: <input type="text" ng-model="MCTRL.resource" size="50"><br>
+                Id Risorsa: <input type="text" ng-model="MCTRL.resourceid" size="30"><br>
+            </div> 
+            <div style=" display: inline-block; float: left; width: 50%">
+                <p ng-repeat="pair in MCTRL.payload">
+                    Chiave: <input type="text" ng-model="pair.chiave" size="20" ng-change="MCTRL.adjustPayload()">
+                Valore: <input type="text" ng-model="pair.valore" size="20" ng-change="MCTRL.adjustPayload()">
+                </p>
+            </div> 
+            <br><br><br>
+            <button type="button" ng-click="MCTRL.sendRequest()">GET!</button>
+            <table>
+                <tr ng-repeat="item in MCTRL.so">
+                    <td><pre>--__item|json__--</pre></td>
+                </tr>
+            </table>
+            <pre>--__MCTRL.so|json__--</pre>
+        </div>
+    </div>
+    <div ng-controller="PostController as PostCTRL" style="width: 98%; border: 1px solid lightgrey;">
+        <div style="display: inline-block; float: left; width: 45%; margin: 1%; border: 1px solid lightgray;">
+            <div style=" display: inline-block; float: left; width: 50%">
+                Risorsa: <input type="text" ng-model="PostCTRL.resource" size="50"><br>
+            </div> 
+            <br><br><br>
+            <button type="button" ng-click="PostCTRL.getVM()">GET VM</button>
+            >>>>>>>>>>>
+            <button type="button" ng-click="PostCTRL.postVM()">POST!</button>
+            <!--<pre>--__PostCTRL.fields|json__--</pre>-->
+            <table >
+                <tr ng-repeat="field in PostCTRL.fields|orderBy:PostCTRL.ord">
+                    <td>--__field.label__--&nbsp;(--__field.name__--)<span ng-if="field.mandatory">&nbsp;*&nbsp;</span></td>
+                    <td><input ng-if="field.editable" ng-model="PostCTRL.newvm[field.name]">
+                    <input ng-if="!field.editable"></td>
+                </tr>
+            </table>
+            <pre>--__PostCTRL.newvm|json__--</pre>
+        </div>
+    </div>
+    </div>
+    <div>
+        <div ng-controller="PutController as PutCTRL" style="width: 98%; border: 1px solid lightgrey;">
+        <div style="display: inline-block; float: left; width: 45%; margin: 1%; border: 1px solid lightgray;">
+            <div style=" display: inline-block; float: left; width: 50%">
+                Risorsa: <input type="text" ng-model="PutCTRL.resource" size="50"><br>
+            </div> 
+            <br><br><br>
+            <button type="button" ng-click="PutCTRL.getVM()">GET VM</button>
+            >>>>>>>>>>>
+            <button type="button" ng-click="PutCTRL.putVM()">PUT!</button>
+            <!--<pre>--__PostCTRL.fields|json__--</pre>-->
+            <table >
+                <tr ng-repeat="field in PutCTRL.fields|orderBy:PutCTRL.ord">
+                    <td>--__field.name__--&nbsp;<span ng-if="field.mandatory">&nbsp;*&nbsp;</span></td>
+                    <td><input ng-model="PutCTRL.newvm[field.name]">
+                    </td>
+                </tr>
+            </table>
+            <pre>--__PutCTRL.newvm|json__--</pre>
+        </div>
+    </div>
+    </div>
+</div>

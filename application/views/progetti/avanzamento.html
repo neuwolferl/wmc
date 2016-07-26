@@ -1,0 +1,521 @@
+<div id="pagina">
+    <div ng-app="AvanzamentoProgetto" style="width: 100%;" ng-init="elaborazione = 0">
+
+        <h2>AVANZAMENTO PROGETTO</h2>
+
+
+
+        <div id="specchietto-container">
+            <div ng-controller="SpecchiettoController as SpecchiettoCtrl" id="specchietto">
+                <div id="tabellaSpecchietto">
+                    <div id="titoloSpecchietto">
+                        <h4>PROGETTO</h4>
+                    </div>
+                    <img src="../../img/ajax-loader.gif" ng-if="!SpecchiettoCtrl.specchiettoLoaded">
+                    <dl class="dl-horizontal">
+                        <div ng-repeat="field in SpecchiettoCtrl.schemaProgetto" ng-if="SpecchiettoCtrl.specchiettoLoaded">
+                            <!----__field__---->
+                            <dt >--__field.label__--</dt>
+                            <dd ng-if="{$fieldIsString}">--__field.content__--</dd>
+                            <dd ng-if="{$fieldIsDate}">--__field.content|date:"dd/MM/yyyy"__--</dd>
+                            <dd ng-if="{$fieldIsCurrency}">--__field.content|currency:"&euro;&nbsp;"__--</dd>
+                        </div>
+                    </dl>
+
+                </div>
+                <div id="tabellaSpecchietto2">
+                    <div id="titoloSpecchietto">
+                        <h4>CLIENTE</h4>
+                    </div>
+                    <img src="../../img/ajax-loader.gif" ng-if="!SpecchiettoCtrl.specchiettoLoaded">
+                    <dl class="dl-horizontal">
+                        <div ng-repeat="field in SpecchiettoCtrl.schemaCliente" ng-if="SpecchiettoCtrl.specchiettoLoaded">
+                            <!----__field__---->
+                            <dt >--__field.label__--</dt>
+                            <dd ng-if="{$fieldIsString}">--__field.content__--</dd>
+                            <dd ng-if="{$fieldIsDate}">--__field.content|date:"dd/MM/yyyy"__--</dd>
+                            <dd ng-if="{$fieldIsCurrency}">--__field.content|currency:"&euro;&nbsp;"__--</dd>
+                        </div>
+                    </dl>
+
+                </div>
+                <div id="tabellaSpecchietto3">
+                    <div id="titoloSpecchietto">
+                        <h4>CONTATTI</h4>
+                    </div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ng-repeat="cont in {$root}.contatti"><a href="" ng-click="SpecchiettoCtrl.changeContattoAttivo({$index})">--__{$root}.nomicontatti[$index]__--</a></li>
+                    </ul>
+                    <dl class="dl-horizontal">
+                        <div ng-repeat="datum in {$root}.contatti[SpecchiettoCtrl.contattoAttivo]">
+                            <dt >
+                            --__datum.key__--
+                            </dt>
+                            <dd>
+                                --__datum.value__--
+                            </dd>
+                        </div> 
+                    </dl>
+
+                </div>
+            </div>
+
+        </div>
+        <div id="first-container" ng-show="!(elaborazione)" ng-controller="EsecuzioneController as EsecuzioneCtrl" >
+            <div id="esecuzione">
+
+
+                <div id="tabellaEsecuzione">  
+                    <h4>PIANO DI ESECUZIONE DEL PROGETTO: --__EsecuzioneCtrl.show| showStatus__--</h4>
+                    <p class="text-muted">&nbsp;</p>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ng-class="EsecuzioneCtrl.showClass(0)"><a href="" ng-click="EsecuzioneCtrl.changeShow(0)">Budget</a></li>
+                        <li ng-class="EsecuzioneCtrl.showClass(1)"><a href="" ng-click="EsecuzioneCtrl.changeShow(1)">Forecast</a></li>
+                        <li ng-class="EsecuzioneCtrl.showClass(2)"><a href="" ng-click="EsecuzioneCtrl.changeShow(2)">Forecast respinto</a></li>
+                    </ul>
+                    <form novalidate class="form">
+                        <table style="width: 98%; " class="table table-condensed" id="esecuzioneTable">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Nome scadenza</th>
+                                    <th>Stato</th>
+                                    <th ng-if="!(EsecuzioneCtrl.show - 1)">Operazioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="sc in (filteredEsecuzione = {$root}.infoEsecuzione| filterOnStatus : EsecuzioneCtrl.show)">
+                                    <td>--__(!(sc.isactual - 1) ? sc.actualdate : sc.date)|date:"dd-MM-yyyy"__--</td>
+                                    <td>--__(!(sc.isactual - 1) ? sc.actuallabel : sc.label)__--</td>
+                                    <td>--__sc.status| showStatus : sc.isactual__--</td>
+                                    <td ng-if="!(EsecuzioneCtrl.show - 1)">
+                                        <span ng-if="sc.clonable" ng-click="EsecuzioneCtrl.clone(sc.index)">Copia<img ng-src="../../img/arrowright.png" style="height: 16px; width: 16px;"></span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </form>
+                    <br><br>
+                </div>
+
+
+
+            </div>
+            <div id="esecuzioneEdit">
+
+
+                <div id="tabellaEsecuzioneEdit">  
+                    <h4>PIANO DI ESECUZIONE DEL PROGETTO: Nuovo Forecast</h4>
+                    <p class="text-muted">Inserire le scadenze previste per l&apos;esecuzione del progetto, compresa la chiusura e specificare la data effettiva di apertura del progetto.</p>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="">Nuovo Forecast</a></li>
+                    </ul>
+                    <form novalidate class="form">
+                        <table style="width: 98%; " class="table table-condensed" id="esecuzioneTable">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Data effettiva</th>
+                                    <th>Nome scadenza</th>
+                                    <th>Stato</th>
+                                    <th>Operazioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="sc in (filteredEsecuzioneNuovo = {$root}.nuovo.esecuzione| filterOnStatus : 1)">
+                                    <td>
+                                        <input class="input-sm" type="date" ng-model="sc.date" ng-if="sc.isactual - 1">
+                                        <span ng-if="!(sc.isactual - 1)">--__sc.date|date:"dd-MM-yyyy"__--</span>
+                                    </td>
+                                    <td>
+                                        <input class="input-sm" type="date" ng-model="sc.actualdate" ng-if="sc.isactual - 1">
+                                        <span ng-if="!(sc.isactual - 1)">--__sc.actualdate|date:"dd-MM-yyyy"__--</span>
+                                    </td>
+                                    <td>
+                                        <input class="input-sm" type="text" ng-model="sc.label" ng-if="sc.isactual - 1">
+                                        <span ng-if="!(sc.isactual - 1)">--__sc.actuallabel__--</span>
+                                    </td>
+                                    <td>--__sc.status| showStatus : sc.isactual__--</td>
+                                    <td>
+                                        <span ng-if="(sc.isactual - 1)" ng-click="EsecuzioneCtrl.delete({$root}.nuovo.esecuzione.indexOf(sc))">Elimina<img ng-src="../../img/remove.png" style="height: 16px; width: 16px;"></span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </form>
+                    <br><br>
+                    <span><a ng-href="" ng-click="EsecuzioneCtrl.add()">Aggiungi scadenza</a></span>&nbsp;
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+        <div id="second-container" ng-controller="AttivitaController as AttivitaCtrl" ng-show="!elaborazione">
+            <div id="attivita">
+                <div id="tabellaAttivita">
+                    <h4>ATTIVIT&Agrave; PREVISTE: STATO ATTUALE</h4>
+                    <p class="text-muted">&nbsp;</p>
+
+                    <form novalidate class="form">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Nome</th>
+                                    <th>Descrizione</th>
+                                    <th>Stato</th>
+                                    <th>Operazioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="!{$root}.infoAttivita.length">
+                                    <td colspan="2">Nessuna attivit&agrave; presente</td>
+                                </tr>
+                                <tr ng-repeat="att in {$root}.infoAttivita">
+                                    <td>--__att.projecttaskname__--</td>
+                                    <td>--__att.description__--</td>
+                                    <td>--__att.projecttaskprogress__--</td>
+                                    <td>
+                                        <span ng-if="att.clonable" ng-click="AttivitaCtrl.clone(att.index)">Copia<img ng-src="../../img/arrowright.png" style="height: 16px; width: 16px;"></span>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </form>
+                    <br><br>
+                    <br>
+                </div>
+
+            </div>
+            <div id="attivitaEdit">
+                <div id="tabellaAttivitaEdit">
+                    <h4>ATTIVIT&Agrave; PREVISTE: NUOVO STATO</h4>
+                    <p class="text-muted">Inserire le attivit&agrave; previste e la loro descrizione.</p>
+
+                    <form novalidate class="form">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Nome</th>
+                                    <th>Descrizione</th>
+                                    <th>Progresso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="!{$root}.nuovo.attivita.length">
+                                    <td colspan="3">Nessuna attivit&agrave; presente</td>
+                                </tr>
+                                <tr ng-repeat="att in {$root}.nuovo.attivita">
+                                    <td>
+                                        <span ng-if="att.locked">--__att.projecttaskname__--</span>
+                                        <input ng-if="!att.locked" class="input-sm" type="text" ng-model="att.projecttaskname"></td>
+                                    <td>
+                                        <span ng-if="att.locked">--__att.description__--</span>
+                                        <textarea ng-if="!att.locked" class="input-sm" cols="100" rows="5" ng-model="att.description"></textarea>
+                                    </td>
+                                    <td>
+                                        <span ng-if="att.locked">--__att.projecttaskprogress__--</span>
+                                        <select ng-if="!att.locked" class="input-sm" ng-model="att.projecttaskprogress">
+                                            <option value="da completare">da completare</option>
+                                            <option value="completata">completata</option>
+                                            <option value="annullata">annullata</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </form>
+                    <br><br>
+                    <span><a ng-href="" ng-click="AttivitaCtrl.add()">Aggiungi attivit&agrave;</a></span>&nbsp;
+                    <span><a ng-href="" ng-click="AttivitaCtrl.remove()">Rimuovi attivit&agrave;</a></span><br>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+        <div id="third-container" ng-show="!(elaborazione)" ng-controller="FatturazioneController as FatturazioneCtrl">
+            <div id="fatturazione">
+                <div id="tabellaFatturazione">
+                    <h4>PIANO DI FATTURAZIONE: --__FatturazioneCtrl.show| showStatus__--</h4>
+                    <p class="text-muted">&nbsp;</p>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ng-class="FatturazioneCtrl.showClass(0)"><a href="" ng-click="FatturazioneCtrl.changeShow(0)">Budget</a></li>
+                        <li ng-class="FatturazioneCtrl.showClass(1)"><a href="" ng-click="FatturazioneCtrl.changeShow(1)">Forecast</a></li>
+                        <li ng-class="FatturazioneCtrl.showClass(2)"><a href="" ng-click="FatturazioneCtrl.changeShow(2)">Forecast respinto</a></li>
+                    </ul>
+                    <form novalidate class="form">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Ammontare</th>
+                                    <th>Stato</th>
+                                    <th ng-if="!(FatturazioneCtrl.show - 1)">Operazioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="!{$root}.infoFatturazione.length">
+                                    <td colspan="3">Nessuna fattura presente in stato budget</td>
+                                </tr>
+                                <tr ng-repeat="fat in (filteredFatturazione = {$root}.infoFatturazione| filterOnStatus : FatturazioneCtrl.show)">
+                                    <td>--__(!(fat.isactual - 1) ? fat.actualdate : fat.date)|date:"dd-MM-yyyy"__--</td>
+                                    <td>--__(!(fat.isactual - 1) ? fat.actualamount : fat.amount)__--</td>
+                                    <td>--__fat.status| showStatus : fat.isactual__--</td>
+                                    <td ng-if="!(FatturazioneCtrl.show - 1)">
+                                        <span ng-if="fat.clonable" ng-click="FatturazioneCtrl.clone(fat.index)">Copia<img ng-src="../../img/arrowright.png" style="height: 16px; width: 16px;"></span>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div ng-controller="FatturazioneController as FatturazioneCtrl" id="fatturazioneEdit">
+                <div id="tabellaFatturazioneEdit">
+                    <h4>PIANO DI FATTURAZIONE: Nuovo Forecast</h4>
+                    <p class="text-muted">Inserire le fatture previste con le date e gli importi relativi.</p>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="">Nuovo Forecast</a></li>
+                    </ul>
+                    <form novalidate class="form">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Data effettiva</th>
+                                    <th>Ammontare</th>
+                                    <th>Stato</th>
+                                    <th>Operazioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="fat in {$root}.nuovo.fatturazione">
+                                    <td>
+                                        <input class="input-sm" type="date" ng-model="fat.date" ng-if="fat.isactual - 1">
+                                        <span ng-if="!(fat.isactual - 1)">--__fat.date|date:"dd-MM-yyyy"__--</span>
+                                    </td>
+                                    <td>
+                                        <input class="input-sm" type="date" ng-model="fat.actualdate" ng-if="fat.isactual - 1">
+                                        <span ng-if="!(fat.isactual - 1)">--__fat.actualdate|date:"dd-MM-yyyy"__--</span>
+                                    </td>
+                                    <td>
+                                        <input class="input-sm" type="text" ng-model="fat.amount" ng-if="fat.isactual - 1">
+                                        <span ng-if="!(fat.isactual - 1)">--__fat.actualamount__--</span>
+                                    </td>
+                                    <td>--__fat.status| showStatus : fat.isactual__--</td>
+                                    <td>
+                                        <span ng-if="(fat.isactual - 1)" ng-click="FatturazioneCtrl.delete({$root}.nuovo.fatturazione.indexOf(fat))">Elimina<img ng-src="../../img/remove.png" style="height: 16px; width: 16px;"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </form>
+                    <span><a ng-href="" ng-click="FatturazioneCtrl.add()">Aggiungi fattura</a></span>&nbsp;
+                </div>
+            </div>
+        </div>
+        <div id="fourth-container" ng-show="!(elaborazione)" ng-controller="IncassoController as IncassoCtrl">
+            <div id="incasso">
+                <div id="tabellaIncasso">
+                    <h4>PIANO DI INCASSI: --__IncassoCtrl.show| showStatus__--</h4>
+                    <p class="text-muted">&nbsp;</p>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ng-class="IncassoCtrl.showClass(0)"><a href="" ng-click="IncassoCtrl.changeShow(0)">Budget</a></li>
+                        <li ng-class="IncassoCtrl.showClass(1)"><a href="" ng-click="IncassoCtrl.changeShow(1)">Forecast</a></li>
+                        <li ng-class="IncassoCtrl.showClass(2)"><a href="" ng-click="IncassoCtrl.changeShow(2)">Forecast respinto</a></li>
+                    </ul>
+                    <form novalidate class="form">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Ammontare</th>
+                                    <th>Tipologia</th>
+                                    <th>Stato</th>
+                                    <th ng-if="!(IncassoCtrl.show - 1)">Operazioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="inc in (filteredIncasso = {$root}.infoIncasso| filterOnStatus : IncassoCtrl.show)">
+                                    <td>--__(!(inc.isactual - 1) ? inc.actualdate : inc.date)|date:"dd-MM-yyyy"__--</td>
+                                    <td>--__(!(inc.isactual - 1) ? inc.actualamount : inc.amount)__--</td>
+                                    <td>--__(!(inc.isactual - 1) ? inc.actualtype : inc.type)|tipoIncasso__--</td>
+                                    <td>--__inc.status| showStatus : inc.isactual__--</td>
+                                    <td ng-if="!(IncassoCtrl.show - 1)">
+                                        <span ng-if="inc.clonable" ng-click="IncassoCtrl.clone(inc.index)">Copia<img ng-src="../../img/arrowright.png" style="height: 16px; width: 16px;"></span>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div id="incassoEdit">
+                <div id="tabellaIncassoEdit">
+                    <h4>PIANO DI INCASSI: Nuovo Forecast</h4>
+                    <p class="text-muted">Inserire gli incassi previsti con le date e gli importi relativi, specificando la tipologia.</p>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="">Nuovo Forecast</a></li>
+                    </ul>
+                    <form novalidate class="form">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Data effettiva</th>
+                                    <th>Ammontare</th>
+                                    <th>Tipologia</th>
+                                    <th>Stato</th>
+                                    <th>Operazioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="inc in {$root}.nuovo.incasso">
+                                    <td>
+                                        <input class="input-sm" type="date" ng-model="inc.date" ng-if="inc.isactual - 1">
+                                        <span ng-if="!(inc.isactual - 1)">--__inc.date|date:"dd-MM-yyyy"__--</span>
+                                    </td>
+                                    <td>
+                                        <input class="input-sm" type="date" ng-model="inc.actualdate" ng-if="inc.isactual - 1">
+                                        <span ng-if="!(inc.isactual - 1)">--__inc.actualdate|date:"dd-MM-yyyy"__--</span>
+                                    </td>
+                                    <td>
+                                        <input class="input-sm" type="text" ng-model="inc.amount" ng-if="inc.isactual - 1">
+                                        <span ng-if="!(inc.isactual - 1)">--__inc.actualamount__--</span>
+                                    </td>
+                                    <td>
+                                        <select class="input-sm" ng-model="inc.type" ng-if="inc.isactual - 1">
+                                            <option value="1">Assegno</option>
+                                            <option value="2">Bonifico</option>
+                                            <option value="3">Contante</option>
+                                        </select>
+                                        <span ng-if="!(inc.isactual - 1)">--__inc.actualtype|tipoIncasso__--</span>
+                                    </td>
+                                    <td>--__inc.status| showStatus : inc.isactual__--</td>
+                                    <td>
+                                        <span ng-if="(inc.isactual - 1)" ng-click="IncassoCtrl.delete({$root}.nuovo.incasso.indexOf(inc))">Elimina<img ng-src="../../img/remove.png" style="height: 16px; width: 16px;"></span>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </form>
+                    <span><a ng-href="" ng-click="IncassoCtrl.add()">Aggiungi incasso</a></span>&nbsp;
+                </div>
+            </div>
+        </div>
+        <br><br><br><br>
+        <div id="fifth-container" ng-controller="PulsantieraController as PulsantieraCtrl">
+            <div class="pulsantiera" ng-show="!(elaborazione)">
+                <button class="btn btn-primary" ng-click="PulsantieraCtrl.conferma()">Procedi</button>
+            </div>
+            <div id="conferma" ng-show="!(elaborazione - 1)">
+                <div class="riepilogo">
+                    Stai per confermare i seguenti dati:
+                    <div class="riepilogo">
+
+                        Piano di esecuzione.<br>Sono preventivate le seguenti scadenze:
+                        <ul>
+                            <li ng-repeat="sc in ({$root}.nuovo.esecuzione)">
+                                <span class="text-primary">--__sc.label__--</span>,&nbsp;
+                                <span ng-if="sc.isactual">scadenza gi&agrave; consolidata</span>
+                                <span ng-if="!sc.isactual">
+                                    scadenza
+                                    <span ng-if="PulsantieraCtrl.ckEmptyDate(sc.actualdate)">eseguita il --__sc.actualdate|date:"dd-MM-yyyy"__--,</span>
+                                    <span>preventivata per il --__sc.date|date:"dd-MM-yyyy"__--</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="riepilogo">
+                        Attivit&agrave;.<br>Verranno eseguite le seguenti attivit&agrave;:
+                        <ul>
+                            <li ng-repeat="att in ({$root}.nuovo.attivita)">
+                                <span class="text-primary">--__att.projecttaskname__--</span>,&nbsp;attivit&agrave;
+                                <span class="text-warning">--__att.projecttaskprogress__--</span>
+                                <p ng-if="!att.locked">
+                                    --__att.description__--
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="riepilogo">
+                        Fatturazione.<br>La fatturazione del totale progetto sar&agrave; cos&igrave; ripartita:
+
+                        <ul>
+                            <li ng-repeat="fat in ({$root}.nuovo.fatturazione)">
+                                <span class="text-primary">--__fat.amount__--</span>,&nbsp;
+                                <span ng-if="fat.isactual">fattura gi&agrave; emessa</span>
+                                <span ng-if="!fat.isactual">
+                                    fattura
+                                    <span ng-if="PulsantieraCtrl.ckEmptyDate(fat.actualdate)">da emettere il --__fat.actualdate|date:"dd-MM-yyyy"__--,</span>
+                                    <span>preventivata per il --__fat.date|date:"dd-MM-yyyy"__--</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="riepilogo">
+                        Incasso.<br>L'incasso del totale progetto sar&agrave; cos&igrave; ripartito:
+                        <ul>
+                            <li ng-repeat="inc in ({$root}.nuovo.incasso)">
+                                <span class="text-primary">--__inc.amount__--</span>,&nbsp;
+                                <span ng-if="inc.isactual">somma gi&agrave; incassata</span>
+                                <span ng-if="!inc.isactual">
+                                    somma
+                                    <span ng-if="PulsantieraCtrl.ckEmptyDate(fat.actualdate)">da incassare il --__inc.actualdate|date:"dd-MM-yyyy"__--,</span>
+                                    <span>con incasso preventivato per il --__inc.date|date:"dd-MM-yyyy"__--</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pulsantiera">
+                    <button class="btn btn-primary" ng-click="PulsantieraCtrl.edita()">Modifica</button>&nbsp;
+                    <button class="btn btn-danger" ng-click="PulsantieraCtrl.salva()">Conferma</button>
+                </div>
+
+            </div>
+            <div id="salvataggio" ng-show="!(elaborazione - 2)">
+                <div class="riepilogo">
+                    <p>Piano di esecuzione:&nbsp;--__{$root}.confermaEsecuzione__--<img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.confermataEsecuzione"></p>
+                    <p>Piano delle attivit&agrave;:&nbsp;--__{$root}.confermaAttivita__--<img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.confermataAttivita"></p>
+                    <p>Piano di fatturazione:&nbsp;--__{$root}.confermaFattura__--<img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.confermataFattura"></p>
+                    <p>Piano di incasso:&nbsp;--__{$root}.confermaIncasso__--<img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.confermataIncasso"></p>
+                    <button class="btn btn-primary" ng-if="{$root}.confermataEsecuzione" ng-click="PulsantieraCtrl.backToList()">Torna ad elenco</button>
+                </div>
+            </div><br><br>
+            <button type="button" class="btn btn-primary" ng-if ="({$root}.commenti + 1)" ng-click="{$root}.commenti = - 1">Commenti</button>
+            <button type="button" class="btn btn-primary" ng-if ="!({$root}.commenti + 1)" ng-click="{$root}.commenti = 0">Nascondi Commenti</button>
+            <div ng-controller="CommentiController as CommentiCtrl" id="commenti" ng-show="!({$root}.commenti + 1)">
+                <div ng-repeat="comm in CommentiCtrl.commenti" style="border: 1px dashed lightgrey;">
+                    <p>--__comm.Contenuto__--</p>
+                    <p class="text-warning">--__comm.Autore__--</p>
+                    <p class="text-muted">--__comm["Data creazione"]__--</p>
+                </div>
+                <div>
+                    <textarea ng-model="CommentiCtrl.nuovo" placeholder="Inserisci un nuovo commento" rows="5" cols="100"></textarea><br>
+                    <button ng-click="CommentiCtrl.push()" class="btn btn-primary" type="button" ng-if="CommentiCtrl.checkEmptyNuovo()">Inserisci</button>
+                </div>
+            </div>
+        </div>
+
+        <br><br><br><br>
+    </div>
+
+</div>

@@ -1,0 +1,187 @@
+<div ng-app="SelezioneZone" class="container"> 
+    <div ng-controller="ZoneController as ZoneCTRL" class="topcontainer">
+        {if isset($breadCrumb)}
+        <div>
+            <ol class="breadcrumb">
+                {echo $breadCrumb}
+            </ol>
+        </div>
+        {/if}
+        <error-mask ng-show="ZoneCTRL.errorMask"></error-mask>
+        <header class="page-header row hidden-sm hidden-xs">
+            <h1>SELEZIONE ZONE</h1>
+        </header>
+        <h1 class="visible-sm visible-xs">SELEZIONE ZONE</h1>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid geoSelector">
+                <div class="navbar-header"></div>
+                <div class="navbar">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li>
+                            <a class="collapsed" data-toggle="collapse" ng-click="selectZones(0)">
+                                <span ng-show="zone.regione && zone.provincia">
+                                    <strong>Zona selezionata: provincia di --__zone.provincia__-- in --__zone.regione__--</strong>
+                                </span>
+                                <span ng-show="!zone.regione || !zone.provincia">
+                                    <strong>Seleziona una zona</strong>
+                                </span>
+                                <span class="caret"></span>
+                            </a>
+
+                        </li>
+                    </ul>
+                </div>
+        </nav>
+        <div class="row" role="menu" id="zoneChooser" class="text-center" style="display: none;">
+            <h4>Scelta zone</h4>
+            <div class="geoSelector">
+                <div class="text-center">
+                    <select ng-model="zone.regione" name="regione" size="10" width="300" style="width: 300px"
+                            ng-options="reg for reg in Common.getRegioniItaliane()"></select>
+                    <select ng-show="zone.regione && zone.regione.length" ng-model="zone.provincia" 
+                            name="provincia" size="10" width="300" style="width: 300px"
+                            ng-options="prov for prov in Common.getProvinceItaliane(zone.regione)"></select>
+                    <br>
+                    <button type="button" class="btn btn-sm btn-warning" ng-click="selectZones(2)">
+                        Annulla&nbsp;<i class="fa fa-remove fa-2x"></i>
+                    </button>&nbsp;
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="selectZones(1)">
+                        Ok&nbsp;<i class="fa fa-check fa-2x"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div style="margin-bottom: 15px;">
+                Campagna: --__camp__-- &nbsp;&nbsp;&nbsp;
+                Lotto attivo:&nbsp; 
+                <select ng-model="currentLot" ng-options="lot for lot in lots" ng-change="ZoneCTRL.changeLot()">
+                </select>
+                &nbsp;--__currentLot__--&nbsp;
+                <button ng-if="camp" type="button" class="btn-primary btn-sm" ng-click="ZoneCTRL.newLot()">Nuovo lotto</button>&nbsp;
+                <button ng-if="camp" type="button" class="btn-primary btn-sm" ng-click="ZoneCTRL.emptyLot()">Svuota lotto</button>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="nav nav-tabs">
+                <li role="presentation" ng-class="{active: st.get() === &apos;mappa&apos;}"><a ng-click="ZoneCTRL.goToMap()">Mappa</a></li>
+                <li role="presentation" ng-class="{active: st.get() === &apos;consulenti&apos;}"><a ng-click="ZoneCTRL.goToConsulenti()">Consulenti</a></li>
+            </ul>
+        </div>
+        <div class="row" ng-show="st.get() === &apos;consulenti&apos;">
+            <table class="table table-condensed">
+                <thead ng-show="consDetails">
+                    <tr ng-click="ZoneCTRL.unchooseCons()"
+                        ng-style="ZoneCTRL.coloraVenditore(chosenCons.totAssigned)">
+                        <th>--__chosenCons.name__--</th>
+                        <th>--__chosenCons.totAssigned__--</th>
+                        <th>&nbsp;</th>
+                        <th><div ng-if="chosenCons.loading" class="vendLoading">&nbsp;</div></th>
+                </tr>
+                </thead>
+                <thead ng-show="!consDetails">
+                <th>Consulente</th>
+                <th>Aziende Assegnate</th>
+                <th>&nbsp;</th>
+                </thead>
+                <tbody ng-if="!consDetails">
+                    <tr ng-repeat="cons in consulenti" ng-click="ZoneCTRL.chooseCons(cons.userid)"
+                        ng-style="ZoneCTRL.coloraVenditore(cons.totAssigned)">
+                        <td>--__cons.name__--</td>
+                        <td>--__cons.totAssigned__--</td>  
+                        <td><div ng-if="cons.loading" class="vendLoading">&nbsp;</div></td>  
+                    </tr>
+                </tbody>
+                <tbody ng-if="consDetails">
+                    <tr ng-repeat="loc in chosenCons.locs">
+                        <td>--__loc.name__--&nbsp;(--__loc.prov__--)</td>
+                        <td>--__loc.count__--</td>  
+                        <td><button type="button" class="btn-danger btn-sm buttonRemoveLocVend"
+                                    ng-click="ZoneCTRL.removeLoc(loc.name, loc.prov, loc.count);">x</button></td>  
+                        <td><div ng-if="loc.loading" class="locVendLoading">&nbsp;</div>
+                            <div ng-if="!loc.loading" class="locVendDone">&nbsp;</div></td>  
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" ng-show="consDetails && st.get() === &apos;mappa&apos;">
+            <table class="table table-condensed">
+                <thead>
+                    <tr ng-style="ZoneCTRL.coloraVenditore(chosenCons.totAssigned)">
+                        <th>--__chosenCons.name__--</th>
+                        <th>--__chosenCons.totAssigned__--</th>
+                        <th>&nbsp;</th>  
+                        <td><div ng-if="loc.loading" class="locVendLoading">&nbsp;</div>
+                        <th><div ng-if="chosenCons.loading" class="vendLoading">&nbsp;</div></th>
+                </tr>
+                </thead>
+                <tbody ng-if="consDetails">
+                    <tr ng-repeat="loc in chosenCons.locs">
+                        <td>--__loc.name__--&nbsp;(--__loc.prov__--)</td>
+                        <td>--__loc.count__--</td>  
+                        <td><button type="button" class="btn-danger btn-sm buttonRemoveLocVend"
+                                    ng-click="ZoneCTRL.removeLoc(loc.name, loc.prov, loc.count);"><i class="fa fa-remove"></i></button></td>  
+                        <td><div ng-if="loc.loading" class="locVendLoading">&nbsp;</div>
+                            <div ng-if="!loc.loading" class="locVendDone">&nbsp;</div></td>  
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" ng-show="st.get() === &apos;mappa&apos;">
+            <div class="col-sm-9 col-xs-9" id="mapContainer">
+            <ui-gmap-google-map center="map.center" zoom="map.zoom" control="mapControl">
+                <ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl">
+
+                </ui-gmap-drawing-manager>
+            </ui-gmap-google-map>
+                </div>
+            <div class="col-sm-3 col-xs-3">
+                <div class="geoDetails">
+                    <div class="panel">
+                        <div class="panel-heading">Dettagli</div>
+                        <div class="panel-body">
+                            <div ng-if="{$root}.showNotShow.geoDetails"> 
+                                <b>Regione:</b> --__geoDetails.reg__--<br>
+                                <b>Provincia:</b> --__geoDetails.prov__--<br>
+                                <b>Localit&agrave;:</b><span style="font: 18px sans">--__geoDetails.loc__--</span><br>
+                                <b>Aziende presenti:</b> --__geoDetails.count__--<br>
+                                <b>Aziende chiamabili:</b> --__geoDetails.callable__--<br>
+                                <b>Aziende escluse:</b> --__geoDetails.excluded__--<br>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="locList && locList.length && st.get() === &apos;mappa&apos;">
+            <table class="table table-condensed table-striped" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th ng-click="ZoneCTRL.sortLoc(0)">Localit&agrave;</th>
+                        <th>Provincia</th>
+                        <th ng-click="ZoneCTRL.sortLoc(1)">Totali</th>
+                        <th ng-click="ZoneCTRL.sortLoc(2)">Chiamabili</th>
+                        <th>Escluse</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody id="locList">
+                    <tr ng-repeat="loc in locList">
+                        <td><i class="fa fa-arrows" ng-click="ZoneCTRL.zoomOnLoc(loc)"></i></td>
+                        <td><i class="fa fa-tachometer" ng-click="(ZoneCTRL.hoverLoc = loc) && (ZoneCTRL.sortNearestLoc())"></i></td>
+                        <td>--__loc.loc__--</td>
+                        <td>--__loc.PROV__--</td>
+                        <td>--__loc.count__--</td>
+                        <td>--__loc.callable__--</td>
+                        <td>--__loc.excluded__--</td>
+                        <td><span ng-show="ZoneCTRL.hoverLoc">--__ZoneCTRL.calculateDistance(ZoneCTRL.hoverLoc,loc)__-- km</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

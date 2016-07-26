@@ -1,0 +1,208 @@
+<div ng-app="testapi" class="container" style="width: 100%;">
+    <div ng-controller="ApiController as ACTRL" class="row">
+        <div class="col-sm-2">
+            <ul class="list-group">
+                <li class="list-group-item" ng-class="{active: !(method - 1)}" ng-click="setMethod(1)">GET</li>
+                <li class="list-group-item" ng-class="{active: !(method - 2)}" ng-click="setMethod(2)">POST</li>
+                <li class="list-group-item" ng-class="{active: !(method - 3)}" ng-click="setMethod(3)">PUT</li>
+                <li class="list-group-item" ng-class="{active: !(method - 4)}" ng-click="setMethod(4)">DELETE</li>
+                <li class="list-group-item" ng-class="{active: !(method - 5)}" ng-click="setMethod(5)">MAIL</li>
+            </ul>
+        </div>
+        <div ng-class="ACTRL.getRequestFormClass()">
+            <div style="width: 100%; height: 100%;" ng-show="!(method - 1)">
+                <h1>TEST RICHIESTE GET</h1>
+                <form novalidate class="form-horizontal" name="getrequestform">
+                    <fieldset>
+                        <legend>Informazioni base</legend>
+                        <div class="form-group" ng-class="ACTRL.hasError(getrequestform.resourceName.$dirty && getrequestform.resourceName.$invalid)">
+                            <label for="resourceName" class="col-sm-1 control-label">Risorsa:</label>
+                            <div class="col-sm-6">
+                                <select ng-model="getRequest.resourceName" class="form-control" 
+                                        name="resourceName" id="resourceName" required
+                                        ng-options="res for res in resourceTree"></select>
+                            </div>
+                            <label for="resourceId" class="col-sm-1 control-label">Id:</label>
+                            <div class="col-sm-2">
+                                <input type="search" ng-model="getRequest.resourceId" class="form-control" 
+                                       name="resourceId" id="resourceId">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <ng-form name="getrequestparsform">
+                            <legend>Ulteriori parametri</legend>
+                            <div class="bg-info" ng-show="getRequest.resourceId.length">
+                                Attenzione: se specificato un id i parametri di ricerca aggiuntivi saranno ignorati
+                            </div>
+                            <div class="form-group col-sm-12" style="text-align: center;">
+                                <button type="button" class="btn btn-sm btn-primary"
+                                        ng-click="getrequestNewPar()">Nuova condizione</button>
+                            </div>
+                            <div class="form-group col-sm-6" ng-repeat="par in getRequest.pars track by par.id"
+                                 ng-class="ACTRL.parHasError({$index})" style="min-width: 450px;">
+                                <div class="col-sm-4">
+                                    <input type="text" ng-model="par.key" dynamic-name="ACTRL.parControlName({$index},0)"
+                                           class="form-control" required>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select ng-options="op for op in operators" ng-model="par.op" dynamic-name="ACTRL.parControlName({$index},1)" 
+                                            class="form-control" required></select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" ng-model="par.value" dynamic-name="ACTRL.parControlName({$index},2)" 
+                                           class="form-control" required>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-sm btn-danger" ng-click="getrequestRemPar(par.id)">x</button>
+                                </div>
+                            </div>
+                        </ng-form>
+                    </fieldset>
+                    <fieldset>
+                        <ng-form name="getrequestlimitform">
+                            <legend>Ulteriori parametri</legend>
+                            <div class="bg-info" ng-show="getRequest.resourceId.length">
+                                Attenzione: se specificato un id i parametri di ricerca aggiuntivi saranno ignorati
+                            </div>
+                            <div class="col-sm-4" ng-class="ACTRL.hasError(getrequestlimitform.getRequestOffset.$dirty && getrequestlimitform.getRequestOffset.$invalid)">
+                                <label for="getRequestOffset">Offset</label>
+                                <input type="number" ng-model="getRequest.limit.offset" name="getRequestOffset" class="form-control" required>
+                            </div>
+                            <div class="col-sm-4" ng-class="ACTRL.hasError(getrequestlimitform.getRequestAmount.$dirty && getrequestlimitform.getRequestAmount.$invalid)">
+                                <label for="getRequestAmount">Amount</label>
+                                <input type="number" ng-model="getRequest.limit.amount" name="getRequestAmount" class="form-control" required>
+                            </div>
+                        </ng-form>
+                    </fieldset>
+                    <br>
+                    <div class="form-group" ng-class="ACTRL.hasError(getrequestform.resourceName.$dirty && getrequestform.resourceName.$invalid)">
+                        <div class="col-sm-12" style="text-align: center;">
+                            <button type="button" class="btn btn-primary" ng-disabled="!canMakeGet()" ng-click="makeGet()">
+                                GET!
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div style="width: 100%; height: 100%;" ng-show="!(method - 2)">
+                <h1>TEST RICHIESTE POST</h1>
+                <form novalidate class="form-horizontal" name="postrequestform">
+                    <fieldset>
+                        <legend>Informazioni base</legend>
+                        <div class="form-group" ng-class="ACTRL.hasError(postrequestform.resourceName.$dirty && postrequestform.resourceName.$invalid)">
+                            <label for="postResourceName" class="col-sm-1 control-label">Risorsa:</label>
+                            <div class="col-sm-6">
+                                <select ng-model="postRequest.resourceName" class="form-control" 
+                                        name="postResourceName" id="postResourceName" required
+                                        ng-options="res for res in resourceTree"></select>
+                            </div>
+                            <label for="postResourceId" class="col-sm-1 control-label" ng-show="!postRequest.__id">Id:</label>
+                            <label for="postResourceId" class="col-sm-1 control-label" ng-show="postRequest.__id">--__postRequest.__id__--</label>
+                            <div class="col-sm-2">
+                                <input type="search" ng-model="postRequest.resourceId" class="form-control" 
+                                       name="postResourceId" id="postResourceId">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <ng-form name="postrequestparsform">
+                            <legend>Payload</legend>
+                            <div class="form-group col-sm-12" style="text-align: center;">
+                                <button type="button" class="btn btn-sm btn-primary"
+                                        ng-click="postrequestNewPar()">Nuovo campo</button>
+                            </div>
+                            <div class="form-group col-sm-6" ng-repeat="par in postRequest.pars track by par.id"
+                                 ng-class="ACTRL.parHasError({$index})" style="min-width: 450px;">
+                                <div class="col-sm-5" >
+                                    <input type="text" ng-model="par.key" dynamic-name="ACTRL.parControlName({$index},0)"
+                                           class="form-control" required disabled ng-style="ACTRL.postParIsIndex({$index})">
+                                </div>
+                                <input type="hidden" ng-model="par.op" value="=">
+                                <div class="col-sm-5">
+                                    <input type="text" ng-model="par.value" dynamic-name="ACTRL.parControlName({$index},2)" 
+                                           class="form-control" placeholder="--__par.placeholder__--">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-sm btn-danger" ng-click="postrequestRemPar(par.id)">x</button>
+                                </div>
+                            </div>
+                        </ng-form>
+                    </fieldset>
+                    <br>
+                    <div class="form-group" ng-class="ACTRL.hasError(postrequestform.resourceName.$dirty && postrequestform.resourceName.$invalid)">
+                        <div class="col-sm-12" style="text-align: center;">
+                            <button type="button" class="btn btn-primary" ng-disabled="!canMakePost()" ng-click="makePost()">
+                                POST!
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div style="width: 100%; height: 100%;" ng-show="!(method - 3)">
+                <h1>TEST RICHIESTE PUT</h1>
+            </div>
+            <div style="width: 100%; height: 100%;" ng-show="!(method - 4)">
+                <h1>TEST RICHIESTE DELETE</h1>
+            </div>
+            <div style="width: 100%; height: 100%;" ng-show="!(method - 5)">
+                <h1>TEST MAIL</h1>
+                <div class="col-sm-12">
+                <form novalidate class="form-horizontal" name="postrequestform">
+                    <div class="col-sm-6">
+                        <label for="mailRagioneSociale" class="control-label">Ragione Sociale</label>
+                        <input name="mailRagioneSociale" ng-model="mailRequest.azienda" class="form-control">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="mailIndirizzo" class="control-label">Indirizzo</label>
+                        <input name="mailIndirizzo" ng-model="mailRequest.location" class="form-control">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="mailTmk" class="control-label">Tmk</label>
+                        <select name="mailTmk" ng-model="mailRequest.tmk" class="form-control"
+                                ng-options="tmk for tmk in tmks"></select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="mailVenditore" class="control-label">Venditore</label>
+                        <select name="mailTmk" ng-model="mailRequest.venditore" class="form-control"
+                                ng-options="vend for vend in vends"></select>
+                    </div>
+                    <div class="col-sm-12" style="text-align: center;">
+                        
+                        <button type="button" class="btn btn-primary"
+                                ng-click="sendMail()">MAIL!</button>
+                    </div>
+                </form>
+                </div>
+                <div class="col-sm-12">
+                    <pre>--__mailRequestResponse|json__--</pre>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5" ng-show="!(method - 1) && showResults.get">
+            <div class="col-sm-12" style="text-align: center;">
+                <button type="button" class="btn btn-primary"
+                        ng-click="showResults.get = !showResults.get">Indietro</button>
+            </div>
+            <div class="col-sm-12">
+                <h2>Risultati get</h2>
+            </div>
+            <div class="col-sm-12">
+                <div ng-show="results.get.length">
+                    <pre ng-repeat="item in results.get">--__item|json__--</pre>
+                </div>
+
+                <div class="emptysetcontainer" ng-show="!results.get.length">
+                    <div class="emptysetelement">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+</div>

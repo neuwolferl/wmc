@@ -1,0 +1,61 @@
+
+<div ng-app="ProgettiDaConfermare" id="pagina">
+    <h2>PROGETTI DA CONFERMARE</h2>
+
+
+    <div ng-controller="ListoneController as ListoneCtrl">
+        <div id="topNavigator">
+            <form class="form">
+                <label for="ricerca" id="ricercaLabel">Filtra:</label>
+                <input class="input-sm" size="100" ng-model="ListoneCtrl.ricerca" ng-change="ListoneCtrl.filter()" id="ricerca" name="ricerca" type="search">
+            </form>
+            <span id="goBack"><a ng-show="ListoneCtrl.previousIsShown" ng-href="#" ng-click="ListoneCtrl.goBack()" >&lt;</a></span>
+            <span id="numeroPagina">pagina --__ (ListoneCtrl.currentPage+1) +" di "+ ListoneCtrl.totalNumberOfPages __--</span>
+            <span id="goForw"><a ng-show="ListoneCtrl.nextIsShown" ng-href="#" ng-click="ListoneCtrl.goForw()">&gt;</a></span>
+            <label for="pageCounterOption" id="pageCounterOptionLabel">Mostra</label>
+            <select class="btn btn-primary" name="pageCounterOption" id="pageCounterOption" ng-model="itemsInAPage" ng-change="ListoneCtrl.organizeData()">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+
+        <br><br><br>
+
+        <div class="listone">
+            <table width="100%" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="10%">Numero progetto</th>
+                        <th width="15%">Titolo progetto</th>
+                        <th width="10%">Situazione progetto</th>
+                        <th width="20%">Tipologia progetto</th>
+                        <th width="25%">Azienda cliente</th>
+                        <th width="20%">Data apertura progetto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="datum in filtered = (data| filter : ListoneCtrl.ricerca) | pagina : ListoneCtrl.currentPage * itemsInAPage | limitTo : itemsInAPage" ng-click="ListoneCtrl.avvia(datum.link)">
+                        <td>--__datum["Numero progetto"]__--</td>
+                        <td>--__datum["Nome progetto"]__--</td>
+                        <td>--__(datum["Stato progetto"] === "initiated" ? "Richiesto avvio" : "Richiesto avanzamento")__--</td>
+                        <td>--__datum["Tipo progetto"]__--</td>
+                        <td>--__datum["Azienda cliente"]__--</td>
+                        <td>--__datum["Data apertura progetto"]|date:"dd/MM/yyyy"__--</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div><br>
+        <div id="paginazione">
+            <ul class="pagination">
+                <li><a href="#" ng-click="ListoneCtrl.goFirst()">&laquo;</a></li>
+                <li ng-repeat="page in ListoneCtrl.pages" ng-class="ListoneCtrl.currentPageToClass(page)"><a href="#" ng-click="ListoneCtrl.goToPage(page - 1)">--__page__--</a>&nbsp;</li>
+                <li><a href="#" ng-click="ListoneCtrl.goLast()">&raquo;</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>

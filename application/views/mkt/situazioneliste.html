@@ -1,0 +1,486 @@
+<div ng-app="SituazioneListe" class="container">
+    <div ng-controller="ListeController as LCTRL" class="topcontainer">
+        {if isset($breadCrumb)}
+        <div>
+            <ol class="breadcrumb">
+                {echo $breadCrumb}
+            </ol>
+        </div>
+        {/if}
+        <error-mask ng-show="LCTRL.errorMask"></error-mask>
+        <header class="page-header row hidden-sm hidden-xs">
+            <h1>Situazione liste telemarketing</h1>
+        </header>
+        <h1 class="visible-sm visible-xs">Situazione liste telemarketing</h1>
+        <div class="row" ng-show="st.get() === &apos;liste&apos;">
+            <div class="col-sm-2">
+                <h3 ng-show="opPar.tmkList.length">Operatori:</h3>
+                <table ng-show="opPar.tmkList.length">
+                    <tr ng-repeat="tmk in opPar.tmkList">
+                        <td>
+                    <smart-button btnid="tmkBtns[{$index}][0]" label="--__tmk.USERID|userInfo:opPar.tmkList__--" class="btn btn-primary btn-sm btn-tmk"
+                                  ng-if="opPar.tmkList.length"></smart-button>
+                    <!--                        <button class="btn btn-primary btn-sm btn-tmk" ng-click="LCTRL.selectTmk({$index})" ng-class="LCTRL.classTmk({$index})">
+                                                --__tmk.NOME+" "+tmk.COGNOME__--
+                                            </button>-->
+                    <br>
+                    </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-8" style="border: 1px dashed lightgray;">
+                <div style="width: 100%; text-align: center">
+                    <button type="button" ng-show="opPar.tmkList.length" class="btn btn-primary btn-sm" ng-click="LCTRL.cercaAzienda()">Cerca lead</button>
+                </div>
+                <h4 ng-show="opPar.activeTmkIndex > - 1">Lead in coda</h4>
+                <div ng-show="opPar.activeTmkIndex > - 1">
+                    <label for="showOnlyActive">Mostra solo attivi </label>
+                    <input type="checkbox" class="input-sm" ng-model="opPar.showOnlyActive" id="showOnlyActive" name="showOnlyActive">
+                    <label for="continueList">Segui nel tempo </label>
+                    <input type="checkbox" class="input-sm" ng-model="opPar.continueList" id="continueList" name="continueList"><br>
+                </div>
+                <div class="lead-daservire" ng-show="opPar.activeTmkIndex > - 1">
+                    <div ng-if="dataPar.leadList.length" 
+                         class="lead" ng-repeat="lead in dataPar.leadList|onlyActive:opPar.showOnlyActive" 
+                         ng-class="LCTRL.classLead(lead)" ng-mouseover="LCTRL.highlightLead({$index}, 1)"
+                         ng-dblclick="LCTRL.searchSpecificLead(lead.piva)">
+                        <p>
+                            <span class="lead-piva">--__lead.piva__--</span>
+                            <span class="lead-punteggio">--__lead.Punteggio_Azienda__--</span>
+                        </p>
+                        <div>
+                            <p class="lead-ragsoc">--__lead.RagioneSociale__--</p>
+                            <p class="lead-worker">--__lead.worker|userInfo:opPar.vendList:"C"__--</p>
+                            <p class="lead-worker" ng-show="!lead.Telefoni">NO TEL</p>
+                        </div>
+                        <p class="lead-bottom">
+                            <span class="lead-icon1">&nbsp;</span>
+                            <span class="lead-icon2">&nbsp;</span>
+                            <span class="lead-icon3">&nbsp;</span>
+                            <span class="lead-icon4">&nbsp;</span>
+                            <span class="lead-icon5">&nbsp;</span>
+                        </p>
+                    </div>
+                </div>
+                <br>
+                <h4 ng-show="opPar.activeTmkIndex > - 1">Lead personali</h4>
+                <div class="lead-daservire" ng-show="opPar.activeTmkIndex > - 1">
+                    <div ng-if="dataPar.personalLeadList.length" 
+                         class="lead" ng-repeat="lead in dataPar.personalLeadList|onlyActive:opPar.showOnlyActive" 
+                         ng-class="LCTRL.classLead(lead)" ng-mouseover="LCTRL.highlightLead({$index}, 2)"
+                         ng-dblclick="LCTRL.searchSpecificLead(lead.piva)">
+                        <p>
+                            <span class="lead-piva">--__lead.piva__--</span>
+                            <span class="lead-punteggio">--__lead.Punteggio_Azienda__--</span>
+                        </p>
+                        <div>
+                            <p class="lead-ragsoc">--__lead.RagioneSociale__--</p>
+                            <p class="lead-worker">--__lead.worker|userInfo:opPar.vendList:"C"__--</p>
+                            <p class="lead-worker" ng-show="!lead.Telefoni">NO TEL</p>
+                        </div>
+                        <p class="lead-bottom">
+                            <span class="lead-icon1">&nbsp;</span>
+                            <span class="lead-icon2">&nbsp;</span>
+                            <span class="lead-icon3">&nbsp;</span>
+                            <span class="lead-icon4">&nbsp;</span>
+                            <span class="lead-icon5">&nbsp;</span>
+                        </p>
+                    </div>
+                </div>
+                <br>
+                <h4>Rifissi</h4>
+                <div class="lead-daservire">
+                    <div ng-if="dataPar.rifissiLeadList.length" 
+                         class="lead" ng-repeat="lead in dataPar.rifissiLeadList|onlyActive:opPar.showOnlyActive" 
+                         ng-class="LCTRL.classLead(lead)" ng-mouseover="LCTRL.highlightLead({$index}, 3)"
+                         ng-dblclick="LCTRL.searchSpecificLead(lead.piva)">
+                        <p>
+                            <span class="lead-piva">--__lead.piva__--</span>
+                            <span class="lead-punteggio">--__lead.Punteggio_Azienda__--</span>
+                        </p>
+                        <div>
+                            <p class="lead-ragsoc">--__lead.RagioneSociale__--</p>
+                            <p class="lead-worker">--__lead.worker|userInfo:opPar.vendList:"C"__--</p>
+                            <p class="lead-worker" ng-show="!lead.Telefoni">NO TEL</p>
+                        </div>
+                        <p class="lead-bottom">
+                            <span class="lead-icon1">&nbsp;</span>
+                            <span class="lead-icon2">&nbsp;</span>
+                            <span class="lead-icon3">&nbsp;</span>
+                            <span class="lead-icon4">&nbsp;</span>
+                            <span class="lead-icon5">&nbsp;</span>
+                        </p>
+                    </div>
+                </div>
+                <!--            <div class="lead lead-posticipata">
+                                <p>
+                                    <span class="lead-piva">09876543212</span>
+                                    <span class="lead-punteggio">98</span>
+                                </p>
+                                <p class="lead-ragsoc">Nome dell'azienda normale</p>
+                                <p class="lead-bottom">
+                                    <span class="lead-worker">Gimmillaro</span>
+                                    <span class="lead-icon1">&nbsp;</span>
+                                    <span class="lead-icon2">&nbsp;</span>
+                                </p>
+                            </div>-->
+                <!--            <div class="lead lead-inattiva">
+                                <p>
+                                    <span class="lead-piva">09876543212</span>
+                                    <span class="lead-punteggio">89</span>
+                                </p>
+                                <p class="lead-ragsoc">Nome dell'azienda inattiva</p>
+                                <p class="lead-bottom">
+                                    <span class="lead-worker">Rubino</span>
+                                    <span class="lead-icon1">&nbsp;</span>
+                                    <span class="lead-icon2">&nbsp;</span>
+                                </p>
+                            </div>-->
+                <!--            <div class="lead lead-prenotata">
+                                <p>
+                                    <span class="lead-piva">09876543212</span>
+                                    <span class="lead-punteggio">67</span>
+                                </p>
+                                <p class="lead-ragsoc">Nome dell'azienda prenotata</p>
+                                <p class="lead-bottom">
+                                    <span class="lead-worker">Molteni</span>
+                                    <span class="lead-icon1">&nbsp;</span>
+                                    <span class="lead-icon2">&nbsp;</span>
+                                </p>
+                            </div>-->
+                <!--            <div class="lead lead-lavorazione">
+                                <p>
+                                    <span class="lead-piva">09876543212</span>
+                                    <span class="lead-punteggio">78</span>
+                                </p>
+                                <p class="lead-ragsoc">Nome dell'azienda in lavorazione</p>
+                                <p class="lead-bottom">
+                                    <span class="lead-worker">Ali</span>
+                                    <span class="lead-icon1">&nbsp;</span>
+                                    <span class="lead-icon2">&nbsp;</span>
+                                </p>
+                            </div>-->
+
+
+
+
+
+
+
+            </div>
+            <div class="col-sm-2">
+                <div style="width: 100%;" ng-show="opPar.activeTmkIndex > - 1">
+                    <h4>Situazione in breve</h4>
+                    <table style="width: 100%" class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <td>Localit&agrave;</td>
+                                <td>Venditore</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="cov in dataPar.coverage">
+                                <td>--__cov.loc__--</td>
+                                <td>--__cov.vend|userInfo:opPar.vendList:"C"__--</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><br><br>
+                <div style="width: 100%;" ng-if="(opPar.selectedLead > - 1)">
+
+                    <h3>Dettaglio lead</h3>
+                    <h4>LOTTO: --__dataPar.leadList[opPar.selectedLead].lot__--</h4>
+                    <h4>--__dataPar.leadList[opPar.selectedLead].RagioneSociale__--</h4>
+                    <p>Localit&agrave;: --__dataPar.leadList[opPar.selectedLead].Localita__--</p>
+                    <p>Punteggio: --__dataPar.leadList[opPar.selectedLead].Punteggio_Azienda__--</p>
+                    <p>Stato: --__dataPar.leadList[opPar.selectedLead]|statoLead__--</p>
+                    <p>Venditore:  --__dataPar.leadList[opPar.selectedLead].worker|userInfo:opPar.vendList:"C"__--</p>
+                    <p>Forma Giuridica:  --__dataPar.leadList[opPar.selectedLead].FormaGiuridica__--</p>
+                    <p>Fascia Fatturato:  --__dataPar.leadList[opPar.selectedLead].FasciaFatturato|fasciaFatturato__--</p>
+                    <p>Classe Dipendenti:  --__dataPar.leadList[opPar.selectedLead].ClasseDipendenti|classeDipendenti__--</p>
+                    <p>Telefoni:  --__dataPar.leadList[opPar.selectedLead].Telefoni__--</p>
+
+                </div>
+                <div style="width: 100%;" ng-if="(opPar.selectedPersonalLead > - 1)">
+
+                    <h3>Dettaglio lead</h3>
+                    <h4>--__dataPar.personalLeadList[opPar.selectedPersonalLead].RagioneSociale__--</h4>
+                    <p>Localit&agrave;: --__dataPar.personalLeadList[opPar.selectedPersonalLead].Localita__--</p>
+                    <p>Punteggio: --__dataPar.personalLeadList[opPar.selectedPersonalLead].Punteggio_Azienda__--</p>
+                    <p>Stato: --__dataPar.personalLeadList[opPar.selectedPersonalLead]|statoLead__--</p>
+                    <p>Venditore:  --__dataPar.personalLeadList[opPar.selectedPersonalLead].worker|userInfo:opPar.vendList:"C"__--</p>
+                    <p>Forma Giuridica:  --__dataPar.personalLeadList[opPar.selectedPersonalLead].FormaGiuridica__--</p>
+                    <p>Fascia Fatturato:  --__dataPar.personalLeadList[opPar.selectedPersonalLead].FasciaFatturato|fasciaFatturato__--</p>
+                    <p>Classe Dipendenti:  --__dataPar.personalLeadList[opPar.selectedPersonalLead].ClasseDipendenti|classeDipendenti__--</p>
+                    <p>Telefoni:  --__dataPar.personalLeadList[opPar.selectedPersonalLead].Telefoni__--</p>
+
+                </div>
+                <div style="width: 100%;" ng-if="(opPar.selectedRifissoLead > - 1)">
+
+                    <h3>Dettaglio lead</h3>
+                    <h4>--__dataPar.rifissiLeadList[opPar.selectedRifissoLead].RagioneSociale__--</h4>
+                    <p>Localit&agrave;: --__dataPar.rifissiLeadList[opPar.selectedRifissoLead].Localita__--</p>
+                    <p>Punteggio: --__dataPar.rifissiLeadList[opPar.selectedRifissoLead].Punteggio_Azienda__--</p>
+                    <p>Stato: --__dataPar.rifissiLeadList[opPar.selectedRifissoLead]|statoLead__--</p>
+                    <p>Venditore:  --__dataPar.rifissiLeadList[opPar.selectedRifissoLead].worker|userInfo:opPar.vendList:"C"__--</p>
+                    <p>Forma Giuridica:  --__dataPar.rifissiLeadList[opPar.selectedRifissoLead].FormaGiuridica__--</p>
+                    <p>Fascia Fatturato:  --__dataPar.rifissiLeadList[opPar.selectedRifissoLead].FasciaFatturato|fasciaFatturato__--</p>
+                    <p>Classe Dipendenti:  --__dataPar.rifissiLeadList[opPar.selectedRifissoLead].ClasseDipendenti|classeDipendenti__--</p>
+                    <p>Telefoni:  --__dataPar.rifissiLeadList[opPar.selectedRifissoLead].Telefoni__--</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="st.get() === &apos;cercalead&apos;">
+            <form class="form-aligned" novalidate>
+                <fieldset ng-show="!(opPar.searching - 1)">
+                    <legend>Cerca lead <button class="btn bnt-sm btn-primary" ng-click="LCTRL.liste()"><i class="fa fa-arrow-left"></i> Torna a liste</button></legend>
+                    <div class="form-group">
+                        <label>Inserire partita iva o parte della ragione sociale per cercare lead nella base dati</label>
+                        <input type="search" class="form-control" name="opParsearch" ng-model="opPar.search">
+                    </div>
+                    <div class="text-center form-group">
+                        <a class="text-primary" ng-click="opPar.search && opPar.search.length && !opPar.ricercaLeading && LCTRL.ricercaLead()">
+                            <span class="btn btn-primary btn-circle btn-xl">
+                                <i class="fa fa-2x" ng-class="LCTRL.ricercaLeadIcon()"></i>
+                            </span><br>
+                            Cerca
+                        </a>
+                    </div>
+
+
+                    <div class="form-group" ng-show="dataPar.searchResults.length">
+                    <p>Trovate --__dataPar.searchResults.length__--</p>
+                    </div>
+                    <div class="form-group" ng-show="!dataPar.searchResults.length">
+                        <div class="loader" ng-show="opPar.timerRicerca.then">&nbsp;</div>
+                        <span ng-show="!opPar.timerRicerca.then">Nessun risultato.</span>
+                    </div>
+                    <div style="width: 100%; overflow: scroll; border: 1px solid black;" ng-show="dataPar.searchResults.length">
+
+                        <table class="lead-search table table-condensed table-hover" style="width: 1300px">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">P. Iva</th>
+                                    <th style="width: 250px;">R. Sociale</th>
+                                    <th style="width: 150px;">Localit&agrave;</th>
+                                    <th style="width: 50px;">Punteggio</th>
+                                    <th style="width: 30px;">Dip</th>
+                                    <th style="width: 30px;">Fatt</th>
+                                    <th style="width: 30px;">F. Soc</th>
+                                    <th style="width: 100px;">Selezione</th>
+                                    <th style="width: 70px;">Tipo</th>
+                                    <th style="width: 90px;">Attualmente</th>
+                                    <th style="width: 100px;">Tmk</th>
+                                    <th style="width: 100px;">Vend</th>
+                                    <th style="width: 150px;">Esclusione</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="lead in dataPar.searchResults" ng-class="LCTRL.classLead(lead)"
+                                    ng-dblclick="LCTRL.ricercaLeadDetails({$index})">
+                                    <td>--__lead.PartitaIva__--</td>
+                                    <td>--__lead.RagioneSociale__--</td>
+                                    <td>--__lead.Localita+" ("+lead.Provincia_Sigla+")"__--</td>
+                                    <td>--__lead.Punteggio_Azienda__--</td>
+                                    <td class="lead-icon3">&nbsp;</td>
+                                    <td class="lead-icon4">&nbsp;</td>
+                                    <td class="lead-icon5">&nbsp;</td>
+                                    <td>--__(lead|statoGeneraleLead:opPar.tmkList:opPar.vendList).selezione__--</td>
+                                    <td>--__(lead|statoGeneraleLead:opPar.tmkList:opPar.vendList).chiamata__--</td>
+                                    <td>--__(lead|statoGeneraleLead:opPar.tmkList:opPar.vendList).attuale__--</td>
+                                    <td>--__(lead|statoGeneraleLead:opPar.tmkList:opPar.vendList).assegnazioneTmk__--</td>
+                                    <td>--__(lead|statoGeneraleLead:opPar.tmkList:opPar.vendList).assegnazioneVend__--</td>
+                                    <td>--__lead.Esclusione|esclusione__--</td>
+                                    <!--<td><pre>--__lead|json__--</pre></td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="text-align: center; width: 100%;">
+                            <a ng-click="LCTRL.ricercaLead()">Cerca altre</a>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset ng-show="!(opPar.searching - 2)" style="width: 100%; border: 1px solid black;">
+                    <button class="btn btn-primary btn-sm" type="button"
+                            ng-click="LCTRL.backToRicercaLead()"><i class="fa fa-arrow-left"></i> Torna all&apos;elenco</button>
+                    <table style="width: 100%;" class="table table-condensed">
+                        <tr>
+                            <td style="width: 30%">Ragione Sociale</td>
+                            <td style="width: 70%">--__dataPar.searchResultDetails.RagioneSociale__--</td>
+                        </tr>
+                        <tr>
+                            <td>Partita Iva</td>
+                            <td>--__dataPar.searchResultDetails.PartitaIva__--</td>
+                        </tr>
+                        <tr>
+                            <td>Attivit&agrave; Ateco</td>
+                            <td>--__dataPar.searchResultDetails.Attivita_ATECO__--</td>
+                        </tr>
+                        <tr>
+                            <td>Indirizzo</td>
+                            <td>--__dataPar.searchResultDetails.Indirizzo__--</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>--__dataPar.searchResultDetails.Cap + " "+dataPar.searchResultDetails.Localita +" ("+dataPar.searchResultDetails.Provincia_Sigla+")"__--</td>
+                        </tr>
+                        <tr>
+                            <td>Fascia Fatturato</td>
+                            <td>--__dataPar.searchResultDetails.FasciaFatturato|fasciaFatturato__--</td>
+                        </tr>
+                        <tr>
+                            <td>Forma Giuridica</td>
+                            <td>--__dataPar.searchResultDetails.FormaGiuridica__--</td>
+                        </tr>
+                        <tr>
+                            <td>Classe Dipendenti</td>
+                            <td>--__dataPar.searchResultDetails.ClasseDipendenti|classeDipendenti__--</td>
+                        </tr>
+                        <tr>
+                            <td>Punteggio Azienda</td>
+                            <td>--__dataPar.searchResultDetails.Punteggio_Azienda__--</td>
+                        </tr>
+                        <tr>
+                            <td>Stato Lead</td>
+                            <td>--__(dataPar.searchResultDetails|statoGeneraleLead).selezione+"   "+(dataPar.searchResultDetails|statoGeneraleLead).chiamata__--</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>attualmente --__(dataPar.searchResultDetails|statoGeneraleLead).attuale__--</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>--__(dataPar.searchResultDetails|statoGeneraleLead:opPar.tmkList:opPar.vendList).assegnazioneVend+"  "+(dataPar.searchResultDetails|statoGeneraleLead:opPar.tmkList:opPar.vendList).assegnazioneTmk__--</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">MODIFICA STATO LEAD</td>
+                        </tr>
+                        <tr ng-show="dataPar.searchResultDetails.PartitaIva && dataPar.searchResultDetails.pipe && dataPar.searchResultDetails.static_lock">
+                            <td colspan="2">
+                        <smart-button btnid="leadOpBtns.enable[0]" label="Abilita" class="btn btn-primary"></smart-button>
+                        <!--                                    <button type="button" class="btn btn-primary"
+                                                                                ng-click="LCTRL.mktLeadDisable(0)">Abilita</button>-->
+                        </td>
+                        </tr> 
+                        <tr ng-show="dataPar.searchResultDetails.PartitaIva && ([1, 2, 3, 4, 6, 7]).indexOf(parseInt(dataPar.searchResultDetails.pipe)) > - 1 && !dataPar.searchResultDetails.static_lock">
+                            <td colspan="2">
+                        <smart-button btnid="leadOpBtns.disable[0]" label="Disabilita" class="btn btn-primary"></smart-button>
+                        <!--                                    <button type="button" class="btn btn-primary"
+                                                                                ng-click="LCTRL.mktLeadDisable(1)">Disabilita</button>-->
+                        </td>
+                        </tr> 
+                        <tr ng-show="opPar.leadCanChange.libera">
+                            <td colspan="2">
+                        <smart-button btnid="leadOpBtns.libera[0]" label="Libera lead" class="btn btn-primary"></smart-button>
+                        <!--                                    <button type="button" class="btn btn-primary"
+                                                                                ng-click="LCTRL.mktLeadChangeStatus(1)">Libera lead</button>-->
+                        </td>
+                        </tr> 
+                        <tr ng-show="opPar.leadCanChange.coda">
+                            <td>
+                        <smart-button btnid="leadOpBtns.coda[0]" label="Metti in coda" class="btn btn-primary"></smart-button>
+                        <!--                            <button type="button" class="btn btn-primary"
+                                                            ng-click="LCTRL.mktLeadChangeStatus(2, opPar.changingLeadTmk, opPar.changingLeadVend, opPar.changingLeadLot)">Metti in coda</button>-->
+                        </td>
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 40%">
+                                        Venditore
+                                    </td>
+                                    <td>
+                                        <select class="input-sm" ng-model="opPar.changingLeadVend">
+                                            <option value="-1">Scegli venditore</option>
+                                            <option ng-repeat="vend in opPar.vendList" value="--__vend.USERID__--">--__vend.USERID|userInfo:opPar.vendList:"NC"__--</option>
+                                        </select> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Lotto
+                                    </td>
+                                    <td>
+                                        <select class="input-sm" ng-model="opPar.changingLeadLot"
+                                                ng-options="lot for lot in opPar.lots">
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        </tr>
+                        <tr ng-show="opPar.leadCanChange.personale">
+                            <td>
+                        <smart-button btnid="leadOpBtns.personale[0]" label="Personale" class="btn btn-primary"></smart-button>
+                        <!--                                    <button type="button" class="btn btn-primary"
+                                                                    ng-click="LCTRL.mktLeadChangeStatus(3, opPar.changingLeadTmk, opPar.changingLeadVend, opPar.changingLeadLot)">Assegna a Tmk</button>-->
+                        </td>
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 40%">
+                                        Venditore
+                                    </td>
+                                    <td>
+                                        <select class="input-sm" ng-model="opPar.changingLeadVend">
+                                            <option value="-1">Scegli venditore</option>
+                                            <option ng-repeat="vend in opPar.vendList" value="--__vend.USERID__--">--__vend.USERID|userInfo:opPar.vendList:"NC"__--</option>
+                                        </select> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Telemarketing
+                                    </td>
+                                    <td>
+                                        <select class="input-sm" ng-model="opPar.changingLeadTmk">
+                                            <option value="-1">Scegli tmk</option>
+                                            <option ng-repeat="tmk in opPar.tmkList" value="--__tmk.USERID__--">--__tmk.USERID|userInfo:opPar.tmkList:"NC"__--</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Lotto
+                                    </td> 
+                                    <td>
+                                        <select class="input-sm" ng-model="opPar.changingLeadLot"
+                                                ng-options="lot for lot in opPar.lots">
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        </tr>
+                        <tr ng-show="opPar.leadCanChange.prenota">
+                            <td>
+                        <smart-button btnid="leadOpBtns.prenota[0]" label="Prenota" class="btn btn-primary"></smart-button>
+                        </td>
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td>
+                                        Telemarketing
+                                    </td>
+                                    <td>
+                                        <select class="input-sm" ng-model="opPar.changingLeadTmk">
+                                            <option value="-1">Scegli tmk</option>
+                                            <option ng-repeat="tmk in opPar.tmkList" value="--__tmk.USERID__--">--__tmk.USERID|userInfo:opPar.tmkList:"NC"__--</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        </tr>
+                        <tr ng-show="opPar.leadCanChange.sprenota">
+                            <td>
+                        <smart-button btnid="leadOpBtns.sprenota[0]" label="Sprenota" class="btn btn-primary"></smart-button>
+                        </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+.navbar-inverse {
+    background-color: rgb(0, 83, 128);
+    border-color: #004469;
+    color: #005380;
+    color:#ececec;
+}
+.navbar-inverse .navbar-brand {
+    color: #ECECEC;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: #ECECEC;
+}
+.navbar-nav>li>a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.navbar-brand {
+    height: 50px;
+    padding: 15px 35px;
+}
+#logo{
+    float: left;
+    padding: 7px 20px;
+}
+#logo img{
+    display: block;
+}
+.navbar-inverse .navbar-text {
+    color: #ECECEC;
+}
+.dropdowntoolbox{
+  text-align: right;
+  padding: 2px 15px;
+}
+.dropdowntoolbox button {
+  margin-left: 30px;
+}
+.dropdowntoolbox button:last-child {
+  margin-left: 10px;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
+    background-color: #004469;
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
+    background-color: #004469;
+}
+.breadcrumb {
+    background-color: transparent;
+}
+
+.btn-circle {
+		width: 30px;
+		height: 30px;
+		text-align: center;
+		padding: 6px 0;
+		font-size: 12px;
+		line-height: 1.428571429;
+		border-radius: 15px;
+		text-align: center;
+	}
+	.btn-circle.btn-lg {
+		width: 50px;
+		height: 50px;
+		padding: 10px 12px;
+		font-size: 18px;
+		line-height: 1.33;
+		border-radius: 25px;
+		text-align: center;
+	}
+	.btn-circle.btn-xl {
+		width: 70px;
+		height: 70px;
+		padding: 10px 12px;
+		font-size: 24px;
+		line-height: 1.33;
+		border-radius: 35px;
+		text-align: center;
+	}

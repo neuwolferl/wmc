@@ -1,0 +1,105 @@
+<div ng-app="AssegnazioneLavoro" class="container"> 
+    <div ng-controller="JobController as JCTRL" class="topcontainer">
+        {if isset($breadCrumb)}
+        <div>
+            <ol class="breadcrumb">
+                {echo $breadCrumb}
+            </ol>
+        </div>
+        {/if}
+        <error-mask ng-show="JCTRL.errorMask"></error-mask>
+        <header class="page-header row hidden-sm hidden-xs">
+            <h1>JOB COVERAGE</h1>
+        </header>
+        <h1 class="visible-sm visible-xs">JOB COVERAGE</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Elenco venditori</h3><br>
+                <div ng-repeat="com in commerciali"  ng-show="!commercialeSelezionato.USERID || commercialeSelezionato.USERID === com.USERID">
+                    <button type="button" class="btn-success" style="width: auto; margin: 3px;"
+                            ng-click="JCTRL.clickOnVendor(com.USERID)"
+                            ng-show="!commercialeSelezionato.USERID || commercialeSelezionato.USERID === com.USERID">
+                        --__com.NOME +" "+com.COGNOME__-- 
+                    </button><br>
+                    <div ng-show="commercialeSelezionato.USERID === com.USERID" ng-repeat="loc in assegnazioneCommerciali[com.USERID]" 
+                         style="display: inline-block; float: left;">
+                        <button type="button" class="btn-warning btn-sm" style="width: auto; margin: 3px;" ng-click="JCTRL.associaTmkVend(loc.loc)">
+                            --__loc.loc+" ("+loc.count+") [L: "+loc.lot+"]"__-- 
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" id="mainContainer">
+                <h3 ng-show="commercialeSelezionato.USERID">Telemarketing associati a --__commercialeSelezionato.NOME+" "+commercialeSelezionato.COGNOME__--</h3>
+                <table ng-show="commercialeSelezionato.USERID" style="width: 100%;">
+                    <tr ng-repeat="tmk in tmkAssociati">
+                        <td>
+                            <div style="width: auto; margin: 3px; display: inline-block; float: left;">
+                                <button type="button" class="btn-success"
+                                        ng-click="JCTRL.clickOnTelemarketingAssociato(tmk.USERID)"
+                                        >
+                                    --__tmk.NOME__-- 
+                                </button>
+                            </div>
+                            <div ng-if="tmk.LOCS.length" ng-repeat="loc in tmk.LOCS" style="display: inline-block; float: left;">
+                                <button type="button" class="btn-warning btn-sm" style="width: auto; margin: 3px;"
+                                        ng-click="JCTRL.associaTmkVend(loc)" ng-disabled="tmk.USERID != telemarketingSelezionato.USERID">
+                                    --__loc__-- 
+                                </button>
+                            </div>
+                            <div style="width: 100%;">&nbsp;</div>
+                        </td></tr>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h3>Telemarketing Liberi</h3><br>
+                <div ng-repeat="tmk in telemarketing|telemarketing_liberi:associazioni:true" 
+                     ng-show="!telemarketingSelezionato.USERID || telemarketingSelezionato.USERID === tmk.USERID">
+                    <button type="button" class="btn-success" style="width: auto; margin: 3px;"
+                            ng-click="JCTRL.clickOnTelemarketing(tmk.USERID)"
+                            ng-show="!telemarketingSelezionato.USERID || telemarketingSelezionato.USERID === tmk.USERID">
+                        --__tmk.NOME +" "+tmk.COGNOME__-- 
+                    </button>
+                </div>
+                <div ng-repeat="tmk in telemarketing|telemarketing_liberi:associazioni:false"
+                     ng-show="!telemarketingSelezionato.USERID || telemarketingSelezionato.USERID === tmk.USERID">
+                    <button type="button" class="btn-info" style="width: auto; margin: 3px;"
+                            ng-click="JCTRL.clickOnTelemarketing(tmk.USERID)"
+                            ng-show="!telemarketingSelezionato.USERID || telemarketingSelezionato.USERID === tmk.USERID">
+                        --__tmk.NOME +" "+tmk.COGNOME__-- 
+                    </button>
+                </div>
+            </div>
+        </div>
+        <maschera titlep="Associazione --__JCTRL.makeAssociazione.tmkName__-- -> --__JCTRL.makeAssociazione.vendorName__--" 
+                  sizep="lg" maskid="JCTRL.mascheraAssocia[0]" buttons="Assegna|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+                    <fieldset>
+                        <legend>Scegli le localit&agrave;</legend>
+                        <div>
+                            <p>Localit&agrave; non assegnate</p>
+                            <div ng-repeat="loc in JCTRL.makeAssociazione.locs|filter:{assigned: false}" 
+                                 style="display: inline-block; float: left;">
+                                <button type="button" class="btn-warning btn-sm" style="width: auto; margin: 3px;"
+                                        ng-click="JCTRL.assegnaLoc(loc.loc)">
+                                    --__loc.loc+" ("+loc.count+")"__-- 
+                                </button>
+                            </div>
+                        </div><br><br><br>
+                        <div>
+                            <p>Localit&agrave; assegnate</p>
+                            <div ng-repeat="loc in JCTRL.makeAssociazione.locs|filter:{assigned: true}" 
+                                 style="display: inline-block; float: left;">
+                                <button type="button" class="btn-warning btn-sm" style="width: auto; margin: 3px;"
+                                        ng-click="JCTRL.assegnaLoc(loc.loc)">
+                                    --__loc.loc+" ("+loc.count+")"__-- 
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </maschera>
+    </div>
+</div>

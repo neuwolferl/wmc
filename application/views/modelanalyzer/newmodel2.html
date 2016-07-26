@@ -1,0 +1,48 @@
+iooioinsomma
+<div id="filterdivhalo"></div>
+<div id="filterdiv">
+
+</div>
+<div id="cont">
+    <div id="top">
+        {if isset($navigator)}
+        {echo $navigator}
+        {/if}
+
+        <h1> Model analyzer</h1>
+        <h2>Editor modello</h2>
+        <label for="modelname">Nome modello:</label><br>
+        <input type="text" name="modelname" id="modelname"><br>
+        {if isset($mmodname)}
+        {echo $mmodname}
+        {/if}
+        {if isset($tabname)}
+        {echo $tabname}
+        Campo: {if isset($campo)}
+        {echo $campo}
+        {/if}
+        <br><br>
+        {/if}
+    </div>
+    <div id="bottom-container">
+        <div id="navigator">
+            <div id="first-form">
+                <form method="post" id="formnewmodel">
+                </form>
+            </div>
+        </div>
+        <div id="right-part">
+            <div id="right-top-part">
+                <button id="btnPreview" type="button" style="display: none; margin-right: 30px;">Preview</button>
+                <button id="btnSave" type="button" style="display: none; margin-right: 30px;">Salva</button>
+            </div>
+            <div id="composer">
+            </div>
+        </div>
+    </div>
+    <div id="preview">
+        ba<br>ba<br>ba<br>ba<br>ba<br>ba<br>ba<br>ba<br>ba<br>ba<br>ba<br>ba<br>ba<br>
+    </div>
+
+
+</div>

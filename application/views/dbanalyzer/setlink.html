@@ -1,0 +1,70 @@
+
+    <body>
+        {if isset($navigator)}
+        {echo $navigator}
+        {/if}
+        {if isset($script)}
+        {echo $script}
+        {/if}
+        <h1> Db analyzer</h1>
+        <h2>Nuova relazione</h2>
+        {if isset($dbname)}
+        {echo $dbname}
+        {/if}
+        {if isset($tabname)}
+        {echo $tabname}
+        Campo: {if isset($campo)}
+        {echo $campo}
+        {/if}
+        <br><br>
+        {/if}
+        Nuova relazione<br><br>
+        Descrizione verbale:<br>
+        La tabella <b>{if isset($tabella1)}{echo $tabella1}{/if}</b> &eacute;
+        collegata alla tabella <b><span class="tabella2"></span></b>. <br>
+        <i><span class="mult2"></span></i> record di <b>{if isset($tabella1)}{echo $tabella1}{/if}</b>, identificat<i><span class="mult3"></span></i> dal campo <b>{if isset($campo1)}{echo $campo1}{/if}</b>, in
+        tabella <b><span class="tabella2"></span></b> <i><span class="mult1"></span></i> dal campo <b><span class="campo2"></span></b>.<br>
+        In virt&ugrave; di questo collegamento sar&agrave; possibile accedere da <b>{if isset($campo1)}{echo $campo1}{/if}</b> <b><span class="view2"></span></b> di <b><span class="tabella2"></span></b>.
+        <br><br><form method="post" action={if isset($formaction)}{echo $formaction}{/if}>
+              <label for="mult">Molteplicit&agrave; della relazione&nbsp;</label>
+            <select required name="mult" id="mult">
+                <option value="-1">Scegli</option>
+                <option value="0">1:1</option>
+                <option value="1">1:n</option>
+                <option value="2">n:1</option>
+            </select><br><br>
+
+            <label id="labeltable" for="table">Tabella&nbsp;</label>
+            <select required name="table" id="table">
+                {if isset($tableoptions)}
+                {echo $tableoptions}
+                {/if} 
+            </select>
+
+            <br><br>
+            <label id="labelfield" for="field">Field&nbsp;</label>
+            <select required name="field" id="field">
+                {if isset($fieldoptions)}
+                {echo $fieldoptions}
+                {/if} 
+            </select>
+            <br><br>
+            <label id="labelview" for="view">Visibilit&agrave;&nbsp;</label>
+            <select required name="view" id="view">
+                <option value="-1">Scegli</option>
+                <option value="0">Self</option>
+                <option value="1">Record</option>
+                <option value="2">Campo alias</option> 
+            </select>
+            &nbsp;&nbsp;&nbsp;
+            <select name="al" id="al">
+                <option value="-1">Scegli</option>
+            </select>
+            <br><br>
+            <button id ="insertlink" name="insertlink" type="submit">Inserisci</button>
+        </form>
+        <br><br>
+        Collegamenti gi&agrave; inseriti:<br><br>
+        {if isset($table)}
+                {echo $table}
+                {/if} 

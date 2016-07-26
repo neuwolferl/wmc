@@ -1,0 +1,46 @@
+<div ng-app="RequestMod">
+    <div style="width: 98%; height: 98%;" ng-controller="MainController as MCtrl">
+        <div style="display: inline-block; float: left; width: 48%; margin: 1%; border: 1px solid lightgray; border-radius: 5px;">
+            <form>
+
+                <fieldset>
+                    <legend>Metodo</legend>
+                    <input ng-model="MCtrl.method" type="radio" name="method" value="RETRIEVE" style="vertical-align: baseline;"/>&nbsp;RETRIEVE<br>
+                    <input ng-model="MCtrl.method" type="radio" name="method" value="CREATE" style="vertical-align: baseline;" />&nbsp;CREATE<br>
+                    <input ng-model="MCtrl.method" type="radio" name="method" value="UPDATE" style="vertical-align: baseline;" />&nbsp;UPDATE<br>
+                    <input ng-model="MCtrl.method" type="radio" name="method" value="DELETE" style="vertical-align: baseline;" />&nbsp;DELETE<br>
+                </fieldset>
+                <!--                <fieldset>
+                                    <legend>URL</legend>
+                                    <input ng-model="MCtrl.url" type="text" name="url" style="width: 100%"/>
+                                </fieldset>-->
+                <fieldset>
+                    <legend>Risorse richieste</legend>
+                    <label for="payloadRes1">Res1</label>
+                    <input type="text" name="payloadRes1" ng-model="MCtrl.payload.resource1"><br>
+                    <label for="payloadId1">Id1</label>
+                    <input type="text" name="payloadId1" ng-model="MCtrl.payload.id1"><br>
+                    <label for="payloadRes2">Res2</label>
+                    <input type="text" name="payloadRes2" ng-model="MCtrl.payload.resource2"><br>
+                    <label for="payloadId2">Id2</label>
+                    <input type="text" name="payloadId2" ng-model="MCtrl.payload.id2"><br>
+                </fieldset>
+                <fieldset>
+                    <legend>PAYLOAD</legend>
+                    <!--<textarea ng-model="MCtrl.payload" name="payload"></textarea>-->
+
+                </fieldset>
+                --__MCtrl.payload__--
+                <fieldset>
+                    <legend></legend>
+                    <button ng-click="MCtrl.sendRequest()" type="button">Perform request</button>
+                </fieldset>
+            </form>
+        </div>
+        <div style="display: inline-block; float: left; width: 48%; height: 500px; margin: 1%; border: 1px solid lightgray; border-radius: 5px;">
+            <pre>--__MCtrl.response|json__--</pre>
+
+        </div>
+
+    </div>
+</div>

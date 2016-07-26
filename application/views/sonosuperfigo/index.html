@@ -1,0 +1,28 @@
+<div id="pagina">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+
+                <div class="greybox">
+                    <h3>Menu</h3>
+                    <ul class="nav nav-pills nav-stacked">
+                        {if isset($action)}
+                        {foreach $act in $action}
+                        <li>
+                            <a href="{echo $act}">{echo $act_i}</a>
+                        </li>
+                        
+                        {/foreach}
+                        {/if}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+
+    </div>
+</div>
+

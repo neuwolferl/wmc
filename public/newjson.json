@@ -1,0 +1,2691 @@
+[{
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 2,
+            "partitaiva": "01389530161",
+            "ragionesociale": "ZUNT ITALIANA S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ALTRI PRODOTTI IN GOMMA NCA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 4,
+            "partitaiva": "01208361004",
+            "ragionesociale": "ZUCCHERI RICAMBI S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI PARTI E ACCESSORI DI AUTOVEICOLI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 5,
+            "partitaiva": "01429210220",
+            "ragionesociale": "ZUCCARI S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "RICERCA E SVILUPPO SPERIMENTALE NEL CAMPO DELLE ALTRE SCIENZE NATURALI E DELL'INGEGNERIA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "bloccoscaduto": 1,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "bloccoscaduto": "true",
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 7,
+            "partitaiva": "00186380184",
+            "ragionesociale": "ZONCA S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ALTRE APPARECCHIATURE PER ILLUMINAZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": {
+            "tempo_sblocco": {
+                "date": "2015-05-27 09:21:00",
+                "timezone_type": 2,
+                "timezone": "CEST"
+            },
+            "blocco_manuale": 0,
+            "forza": 0,
+            "tempo_blocco": {
+                "date": "2015-04-28 13:31:38",
+                "timezone_type": 2,
+                "timezone": "CEST"
+            }
+        }
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 8,
+            "partitaiva": "02566310286",
+            "ragionesociale": "ZOIN REFRIGERAZIONE S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ATTREZZATURE DI USO NON DOMESTICO PER LA REFRIGERAZIONE E LA VENTILAZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 9,
+            "partitaiva": "03242710170",
+            "ragionesociale": "ZOGNO ROTTAMI S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ROTTAMI E SOTTOPRODOTTI DELLA LAVORAZIONE INDUSTRIALE METALLICI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 10,
+            "partitaiva": "07073860152",
+            "ragionesociale": "Z.M.D. S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ABBIGLIAMENTO E ACCESSORI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 11,
+            "partitaiva": "04356850158",
+            "ragionesociale": "ZINI PRODOTTI ALIMENTARI S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "PRODUZIONE DI PASTE ALIMENTARI, DI CUSCUS E DI PRODOTTI FARINACEI SIMILI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 12,
+            "partitaiva": "01543211203",
+            "ragionesociale": "ZINI ELIO S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COSTRUZIONE DI EDIFICI RESIDENZIALI E NON RESIDENZIALI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 14,
+            "partitaiva": "02442450751",
+            "ragionesociale": "ZINCOGAM S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "TRATTAMENTO E RIVESTIMENTO DEI METALLI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": true,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 16,
+            "partitaiva": "00150780344",
+            "ragionesociale": "ZILLI & BELLINI S.R.L.",
+            "esclusione": "2",
+            "attivita_ateco": "LAVORI DI MECCANICA GENERALE",
+            "fasciafatturato": "6"
+        },
+        "pipe": {
+            "lotto": 1,
+            "tubo": 1,
+            "venditore": 59,
+            "blocco_tmk": 0,
+            "disponibile_da": null,
+            "tempo_inserimento": {
+                "date": "2015-05-25 09:08:24",
+                "timezone_type": 2,
+                "timezone": "CEST"
+            }
+        },
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 17,
+            "partitaiva": "11314230159",
+            "ragionesociale": "ZEROPIU' S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "CONSULENZA NEL SETTORE DELLE TECNOLOGIE DELL'INFORMATICA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false, 
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 18,
+            "partitaiva": "02941250249",
+            "ragionesociale": "ZEPPELIN",
+            "esclusione": "128",
+            "attivita_ateco": "ATTIVITA' DEI TOUR OPERATOR",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 19,
+            "partitaiva": "00889500195",
+            "ragionesociale": "ZEMA",
+            "esclusione": "0",
+            "attivita_ateco": "LAVORAZIONE E CONSERVAZIONE DI CARNE (ESCLUSO VOLATILI)",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 21,
+            "partitaiva": "03236990275",
+            "ragionesociale": "ZED ENTERTAINMENT'S WORLD S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "ALTRE ATTIVITA' DI SUPPORTO ALLE RAPPRESENTAZIONI ARTISTICHE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 22,
+            "partitaiva": "03984360267",
+            "ragionesociale": "ZAVA SEVERINO S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI CEREALI E LEGUMI SECCHI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 25,
+            "partitaiva": "00596321208",
+            "ragionesociale": "ZAPPETTIFICIO MUZZI",
+            "esclusione": "0",
+            "attivita_ateco": "FUCINATURA, IMBUTITURA, STAMPAGGIO E PROFILATURA DEI METALLI; METALLURGIA DELLE POLVERI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 26,
+            "partitaiva": "03911770877",
+            "ragionesociale": "ZAPPALA' IMPIANTI S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "INSTALLAZIONE DI IMPIANTI IDRAULICI, DI RISCALDAMENTO E DI CONDIZIONAMENTO DELL'ARIA (INCLUSA MANUTENZIONE E RIPARAZIONE) IN EDIFICI O IN ALTRE OPERE DI COSTRUZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 27,
+            "partitaiva": "04572551002",
+            "ragionesociale": "ZANZI SERVIZI S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI COMBUSTIBILI SOLIDI, LIQUIDI, GASSOSI E DI PRODOTTI DERIVATI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 28,
+            "partitaiva": "06102660724",
+            "ragionesociale": "ZANONI DISTRIBUZIONE S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI PROFUMI E COSMETICI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 29,
+            "partitaiva": "02629860160",
+            "ragionesociale": "ZANETTI & PARIETTI S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ALTRI MATERIALI DA COSTRUZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": true,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 31,
+            "partitaiva": "01841030347",
+            "ragionesociale": "ZANELLI S.R.L.",
+            "esclusione": "2",
+            "attivita_ateco": "FABBRICAZIONE DI ALTRE MACCHINE UTENSILI (INCLUSE PARTI E ACCESSORI) NCA",
+            "fasciafatturato": "6"
+        },
+        "pipe": {
+            "lotto": 1,
+            "tubo": 1,
+            "venditore": 59,
+            "blocco_tmk": 0,
+            "disponibile_da": null,
+            "tempo_inserimento": {
+                "date": "2015-05-25 09:08:34",
+                "timezone_type": 2,
+                "timezone": "CEST"
+            }
+        },
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 32,
+            "partitaiva": "02495410264",
+            "ragionesociale": "ZANCHETTA AURELIO S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COSTRUZIONE DI EDIFICI RESIDENZIALI E NON RESIDENZIALI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 33,
+            "partitaiva": "01786160265",
+            "ragionesociale": "ZANATTA VETRO S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "LAVORAZIONE E TRASFORMAZIONE DEL VETRO PIANO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 34,
+            "partitaiva": "01261670168",
+            "ragionesociale": "ZANARDI LUIGI S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COSTRUZIONE DI EDIFICI RESIDENZIALI E NON RESIDENZIALI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 36,
+            "partitaiva": "02015470400",
+            "ragionesociale": "ZAMAGNA S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI MOBILI DI QUALSIASI MATERIALE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 39,
+            "partitaiva": "04156880371",
+            "ragionesociale": "ZACCANTI S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ARTICOLI MEDICALI ED ORTOPEDICI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 40,
+            "partitaiva": "00790970230",
+            "ragionesociale": "ZA.RI. S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ARTICOLI IN FERRO E IN ALTRI METALLI (FERRAMENTA)",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 42,
+            "partitaiva": "03063510980",
+            "ragionesociale": "Z L S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "INSTALLAZIONE DI IMPIANTI ELETTRICI IN EDIFICI O IN ALTRE OPERE DI COSTRUZIONE (INCLUSA MANUTENZIONE E RIPARAZIONE)",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 43,
+            "partitaiva": "02717590364",
+            "ragionesociale": "YPSILON S.R.L.",
+            "esclusione": "8",
+            "attivita_ateco": "CONFEZIONE IN SERIE DI ABBIGLIAMENTO ESTERNO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 45,
+            "partitaiva": "00557040805",
+            "ragionesociale": "YORK AUTO VUMBACA S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO E AL DETTAGLIO DI AUTOVETTURE E DI AUTOVEICOLI LEGGERI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 46,
+            "partitaiva": "02147970129",
+            "ragionesociale": "YGNIS ITALIA S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI APPARECCHI E ACCESSORI PER IMPIANTI IDRAULICI, DI RISCALDAMENTO E DI CONDIZIONAMENTO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 47,
+            "partitaiva": "03506340656",
+            "ragionesociale": "YELE S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "RACCOLTA DI RIFIUTI NON PERICOLOSI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 48,
+            "partitaiva": "05945911005",
+            "ragionesociale": "YAZZYCAMBEN S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "RISTORAZIONE CON SOMMINISTRAZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 50,
+            "partitaiva": "03888990409",
+            "ragionesociale": "YALLA YALLA S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "ATTIVITA' DELLE AGENZIE DI VIAGGIO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 52,
+            "partitaiva": "12912520157",
+            "ragionesociale": "Y2K COMMUNICATION S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ALTRI APPARECCHI ELETTRICI ED ELETTRONICI PER TELECOMUNICAZIONI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 53,
+            "partitaiva": "06320470153",
+            "ragionesociale": "XILOGRAFIA NUOVA S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "ALTRE ATTIVITA' DI DESIGN",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 54,
+            "partitaiva": "05799330963",
+            "ragionesociale": "WWW.ORPC.IT S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI SAPONI, DETERSIVI E ALTRI PRODOTTI PER LA PULIZIA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 55,
+            "partitaiva": "03357530249",
+            "ragionesociale": "WTK S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ATTREZZATURE DI USO NON DOMESTICO PER LA REFRIGERAZIONE E LA VENTILAZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 59,
+            "partitaiva": "12260020156",
+            "ragionesociale": "WORLD FASHION FOOD S.R.L. - SOC. UNIPERSONALE",
+            "esclusione": "128",
+            "attivita_ateco": "RISTORAZIONE CON SOMMINISTRAZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 60,
+            "partitaiva": "03638420236",
+            "ragionesociale": "WORLD CART S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI PRODOTTI IGIENICO-SANITARI E PER USO DOMESTICO IN CARTA E OVATTA DI CELLULOSA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 63,
+            "partitaiva": "05033620724",
+            "ragionesociale": "WORK SYSTEM S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO NON SPECIALIZZATO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 66,
+            "partitaiva": "04950350480",
+            "ragionesociale": "WOOLGROUP S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ALTRI ARTICOLI DI MAGLIERIA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 67,
+            "partitaiva": "02246460212",
+            "ragionesociale": "WOLFSGRUBER S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI OGGETTI IN FERRO, IN RAME ED ALTRI METALLI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 68,
+            "partitaiva": "03311540961",
+            "ragionesociale": "WNT ITALIA S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI MINERALI METALLIFERI, DI METALLI FERROSI E PRODOTTI SEMILAVORATI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 69,
+            "partitaiva": "00224970236",
+            "ragionesociale": "WMF ITALIA S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI COLTELLERIA, POSATERIA E PENTOLAME",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 70,
+            "partitaiva": "07015990158",
+            "ragionesociale": "WIZ CHEMICALS S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI PRODOTTI CHIMICI VARI PER USO INDUSTRIALE (INCLUSI I PREPARATI ANTIDETONANTI E ANTIGELO)",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 72,
+            "partitaiva": "01356530285",
+            "ragionesociale": "WINTECH S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "PRODUZIONE DI SOFTWARE NON CONNESSO ALL'EDIZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 73,
+            "partitaiva": "02505060216",
+            "ragionesociale": "WINKLER HOTELS S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "ALBERGHI E STRUTTURE SIMILI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 77,
+            "partitaiva": "13082620157",
+            "ragionesociale": "WINCOR NIXDORF RETAIL CONSULTING S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "PRODUZIONE DI SOFTWARE NON CONNESSO ALL'EDIZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 79,
+            "partitaiva": "00030790216",
+            "ragionesociale": "WIERER BAU S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "COSTRUZIONE DI EDIFICI RESIDENZIALI E NON RESIDENZIALI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 80,
+            "partitaiva": "05772900485",
+            "ragionesociale": "HOTEL ROSSO 23",
+            "esclusione": "0",
+            "attivita_ateco": "ALBERGHI E STRUTTURE SIMILI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 82,
+            "partitaiva": "06977680013",
+            "ragionesociale": "WEP S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "SCUOLE E CORSI DI LINGUA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 83,
+            "partitaiva": "06004290968",
+            "ragionesociale": "WEMAG S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI PRODOTTI CHIMICI PER L'INDUSTRIA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 84,
+            "partitaiva": "00488420266",
+            "ragionesociale": "WELLCO S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI STRUTTURE METALLICHE E DI PARTI DI STRUTTURE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 85,
+            "partitaiva": "01450120330",
+            "ragionesociale": "WELL EQUIPMENTS INTERNATIONAL SERVICES S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "NOLEGGIO SENZA OPERATORE DI ALTRE MACCHINE ED ATTREZZATURE NCA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 86,
+            "partitaiva": "03639120405",
+            "ragionesociale": "WELCOME SYSTEMS S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "ATTIVITA' DEI TOUR OPERATOR",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 89,
+            "partitaiva": "00294150172",
+            "ragionesociale": "AQUILA PIOMBO S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ALTRI ARTICOLI METALLICI E MINUTERIA METALLICA NCA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 90,
+            "partitaiva": "01827900992",
+            "ragionesociale": "WATER GEN POWER S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COSTRUZIONE DI OPERE DI PUBBLICA UTILITA' PER L'ENERGIA ELETTRICA E LE TELECOMUNICAZIONI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 91,
+            "partitaiva": "01688960200",
+            "ragionesociale": "WATER & SOIL REMEDIATION S.R.L.",
+            "esclusione": "72",
+            "attivita_ateco": "ALTRE ATTIVITA' DI RISANAMENTO E ALTRI SERVIZI DI GESTIONE DEI RIFIUTI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": {
+            "tempo_sblocco": null,
+            "blocco_manuale": 0,
+            "forza": 0,
+            "tempo_blocco": {
+                "date": "2015-02-27 09:24:19",
+                "timezone_type": 2,
+                "timezone": "CET"
+            }
+        }
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 92,
+            "partitaiva": "06216961000",
+            "ragionesociale": "WASHTEC S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ALTRE MACCHINE ED ATTREZZATURE PER L'INDUSTRIA, IL COMMERCIO E LA NAVIGAZIONE NCA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 93,
+            "partitaiva": "00601000987",
+            "ragionesociale": "WARCOM S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ARTICOLI DI COLTELLERIA E POSATERIA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 95,
+            "partitaiva": "00693770398",
+            "ragionesociale": "WALTER BABINI S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ABBIGLIAMENTO E ACCESSORI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 97,
+            "partitaiva": "01884310440",
+            "ragionesociale": "WALK ON S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI CALZATURE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 99,
+            "partitaiva": "06003850010",
+            "ragionesociale": "W.B.T. S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ALTRI PRODOTTI ALIMENTARI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 100,
+            "partitaiva": "01175560190",
+            "ragionesociale": "W R S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI COMBUSTIBILI SOLIDI, LIQUIDI, GASSOSI E DI PRODOTTI DERIVATI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 101,
+            "partitaiva": "01799770167",
+            "ragionesociale": "VUEMME S.R.L.",
+            "esclusione": "8",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ARTICOLI IN FERRO E IN ALTRI METALLI (FERRAMENTA)",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 103,
+            "partitaiva": "02889120230",
+            "ragionesociale": "V.R.B. S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "TRATTAMENTO E RIVESTIMENTO DEI METALLI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 105,
+            "partitaiva": "01098820226",
+            "ragionesociale": "VOLTOLINI S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "RECUPERO E PREPARAZIONE PER IL RICICLAGGIO DI CASCAMI E ROTTAMI METALLICI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 107,
+            "partitaiva": "02968980983",
+            "ragionesociale": "VOITH TURBO DRIVE SYSTEMS S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ALTRE PARTI ED ACCESSORI PER AUTOVEICOLI E LORO MOTORI NCA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 108,
+            "partitaiva": "03784450961",
+            "ragionesociale": "VODEN MEDICAL INSTRUMENTS S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ARTICOLI MEDICALI ED ORTOPEDICI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": true,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 110,
+            "partitaiva": "00560510398",
+            "ragionesociale": "VM SISTEMI S.P.A.",
+            "esclusione": "2",
+            "attivita_ateco": "PRODUZIONE DI SOFTWARE NON CONNESSO ALL'EDIZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": {
+            "lotto": 1,
+            "tubo": 1,
+            "venditore": 26,
+            "blocco_tmk": 0,
+            "disponibile_da": null,
+            "tempo_inserimento": {
+                "date": "2015-05-21 13:45:25",
+                "timezone_type": 2,
+                "timezone": "CEST"
+            }
+        },
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 111,
+            "partitaiva": "05948340632",
+            "ragionesociale": "VIVISOL NAPOLI S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI GAS INDUSTRIALI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 112,
+            "partitaiva": "01739280236",
+            "ragionesociale": "VIVETTI INSERIMENTI S.A.S.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ELETTRODOMESTICI, DI ELETTRONICA DI CONSUMO AUDIO E VIDEO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 113,
+            "partitaiva": "11161540155",
+            "ragionesociale": "VIVERE IN COOPERATIVA S.C.",
+            "esclusione": "128",
+            "attivita_ateco": "ATTIVITA' DI ORGANIZZAZIONI PER LA FILANTROPIA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": true,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 115,
+            "partitaiva": "02712160239",
+            "ragionesociale": "VIV DECORAL S.P.A.",
+            "esclusione": "2",
+            "attivita_ateco": "TRATTAMENTO E RIVESTIMENTO DEI METALLI",
+            "fasciafatturato": "6"
+        },
+        "pipe": {
+            "lotto": 1,
+            "tubo": 1,
+            "venditore": 80,
+            "blocco_tmk": 0,
+            "disponibile_da": null,
+            "tempo_inserimento": {
+                "date": "2015-04-10 15:10:51",
+                "timezone_type": 2,
+                "timezone": "CEST"
+            }
+        },
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 117,
+            "partitaiva": "01128820881",
+            "ragionesociale": "VITTORIA COLONNA S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO AL DETTAGLIO DI FIORI E PIANTE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 118,
+            "partitaiva": "11586750157",
+            "ragionesociale": "VITREALSPECCHI S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "LAVORAZIONE E TRASFORMAZIONE DEL VETRO PIANO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": true,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 119,
+            "partitaiva": "00635200413",
+            "ragionesociale": "VITEMPER S.R.L.",
+            "esclusione": "2",
+            "attivita_ateco": "LAVORAZIONE E TRASFORMAZIONE DEL VETRO PIANO",
+            "fasciafatturato": "6"
+        },
+        "pipe": {
+            "lotto": 1,
+            "tubo": 1,
+            "venditore": 19,
+            "blocco_tmk": 0,
+            "disponibile_da": null,
+            "tempo_inserimento": {
+                "date": "2015-05-21 09:06:49",
+                "timezone_type": 2,
+                "timezone": "CEST"
+            }
+        },
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 120,
+            "partitaiva": "00293450177",
+            "ragionesociale": "VITASOL S.P.A.",
+            "esclusione": "8",
+            "attivita_ateco": "PRODUZIONE DI MANGIMI PER L'ALIMENTAZIONE DEGLI ANIMALI DA ALLEVAMENTO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 121,
+            "partitaiva": "00223340167",
+            "ragionesociale": "VITARI S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI MACCHINE UTENSILI PER LA FORMATURA DEI METALLI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 122,
+            "partitaiva": "07517440157",
+            "ragionesociale": "VITAMINA S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ABBIGLIAMENTO E ACCESSORI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 123,
+            "partitaiva": "01726810185",
+            "ragionesociale": "VISTARINI S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO E AL DETTAGLIO DI AUTOVETTURE E DI AUTOVEICOLI LEGGERI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 124,
+            "partitaiva": "03298850409",
+            "ragionesociale": "VISCOUNT INTERNATIONAL S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI STRUMENTI MUSICALI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 125,
+            "partitaiva": "00226590131",
+            "ragionesociale": "VISCORET S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI MACCHINE PER L'INDUSTRIA ALIMENTARE, DELLE BEVANDE E DEL TABACCO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 126,
+            "partitaiva": "01919601003",
+            "ragionesociale": "VISCONTI CESI S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "ALBERGHI E STRUTTURE SIMILI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 127,
+            "partitaiva": "00429740483",
+            "ragionesociale": "CONFEZIONI VISCONF S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "CONFEZIONE IN SERIE DI ABBIGLIAMENTO ESTERNO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 128,
+            "partitaiva": "01859540260",
+            "ragionesociale": "VISARD S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ARMATURE PER OCCHIALI DI QUALSIASI TIPO; MONTATURA IN SERIE DI OCCHIALI COMUNI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 130,
+            "partitaiva": "05870580965",
+            "ragionesociale": "VIRMA S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ALTRI ARTICOLI METALLICI E MINUTERIA METALLICA NCA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 133,
+            "partitaiva": "03835041215",
+            "ragionesociale": "VIRAS INTERNATIONAL INSURANCE BROKER S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "PRODUTTORI, PROCACCIATORI ED ALTRI INTERMEDIARI DELLE ASSICURAZIONI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 134,
+            "partitaiva": "03841880879",
+            "ragionesociale": "VIR IMMOBILIARE S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMPRAVENDITA DI BENI IMMOBILI EFFETTUATA SU BENI PROPRI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 136,
+            "partitaiva": "10077121001",
+            "ragionesociale": "VIOLATECH S.R.L.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ARTICOLI MEDICALI ED ORTOPEDICI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": true,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 137,
+            "partitaiva": "00691210967",
+            "ragionesociale": "VIO & C. S.R.L.",
+            "esclusione": "2",
+            "attivita_ateco": "SPEDIZIONIERI E AGENZIE DI OPERAZIONI DOGANALI",
+            "fasciafatturato": "6"
+        },
+        "pipe": {
+            "lotto": 3,
+            "tubo": 1,
+            "venditore": 109,
+            "blocco_tmk": 0,
+            "disponibile_da": null,
+            "tempo_inserimento": {
+                "date": "2015-05-27 13:31:45",
+                "timezone_type": 2,
+                "timezone": "CEST"
+            }
+        },
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 139,
+            "partitaiva": "02422230165",
+            "ragionesociale": "VINILCHIMICA S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI MATERIE PLASTICHE IN FORME PRIMARIE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 141,
+            "partitaiva": "10221811002",
+            "ragionesociale": "VINCIGUERRA DISTRIBUZIONE S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI BEVANDE NON ALCOLICHE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 142,
+            "partitaiva": "05836400019",
+            "ragionesociale": "VINCENZO BONA S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "ALTRA STAMPA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": true,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 143,
+            "partitaiva": "03103890152",
+            "ragionesociale": "VIN.PE. S.P.A.",
+            "esclusione": "128",
+            "attivita_ateco": "COMMERCIO AL DETTAGLIO DI CARBURANTE PER AUTOTRAZIONE IN ESERCIZI SPECIALIZZATI",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 144,
+            "partitaiva": "09027950154",
+            "ragionesociale": "VIMOTER S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "FABBRICAZIONE DI ALTRE PARTI ED ACCESSORI PER AUTOVEICOLI E LORO MOTORI NCA",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 147,
+            "partitaiva": "04267490656",
+            "ragionesociale": "VILLANI CALCE S.R.L.",
+            "esclusione": "0",
+            "attivita_ateco": "COMMERCIO ALL'INGROSSO DI ALTRI MATERIALI DA COSTRUZIONE",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }, {
+        "calculated": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "checks": {
+            "pipeesc": true,
+            "atecoesc": true,
+            "fatturatoesc": true
+        },
+        "corrected": {
+            "pipeesc": false,
+            "atecoesc": false,
+            "fatturatoesc": false
+        },
+        "mkt": {
+            "internal_id": 148,
+            "partitaiva": "00184140200",
+            "ragionesociale": "VILLAGROSSI S.P.A.",
+            "esclusione": "0",
+            "attivita_ateco": "ESTRAZIONE DI GHIAIA E SABBIA; ESTRAZIONE DI ARGILLE E CAOLINO",
+            "fasciafatturato": "6"
+        },
+        "pipe": null,
+        "lock": null
+    }]

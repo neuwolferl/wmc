@@ -1,0 +1,298 @@
+<div id="pagina">
+    <div ng-app="AvvioProgetto" style="width: 100%;" ng-init="elaborazione = 0">
+
+        <h2>AVVIO PROGETTO</h2>
+        <div id="specchietto-container">
+            <div ng-controller="SpecchiettoController as SpecchiettoCtrl" id="specchietto">
+                <div id="tabellaSpecchietto">
+                    <div id="titoloSpecchietto">
+                        <h4>PROGETTO</h4>
+                    </div>
+                    <img src="../../img/ajax-loader.gif" ng-if="!SpecchiettoCtrl.specchiettoLoaded">
+                    <dl class="dl-horizontal">
+                        <div ng-repeat="field in SpecchiettoCtrl.schemaProgetto" ng-if="SpecchiettoCtrl.specchiettoLoaded">
+                            <!----__field__---->
+                            <dt >--__field.label__--</dt>
+                            <dd ng-if="{$fieldIsString}">--__field.content__--</dd>
+                            <dd ng-if="{$fieldIsDate}">--__field.content|date:"dd/MM/yyyy"__--</dd>
+                            <dd ng-if="{$fieldIsCurrency}">--__field.content|currency:"&euro;&nbsp;"__--</dd>
+                        </div>
+                    </dl>
+
+                </div>
+                <div id="tabellaSpecchietto2">
+                    <div id="titoloSpecchietto">
+                        <h4>CLIENTE</h4>
+                    </div>
+                    <img src="../../img/ajax-loader.gif" ng-if="!SpecchiettoCtrl.specchiettoLoaded">
+                    <dl class="dl-horizontal">
+                        <div ng-repeat="field in SpecchiettoCtrl.schemaCliente" ng-if="SpecchiettoCtrl.specchiettoLoaded">
+                            <!----__field__---->
+                            <dt >--__field.label__--</dt>
+                            <dd ng-if="{$fieldIsString}">--__field.content__--</dd>
+                            <dd ng-if="{$fieldIsDate}">--__field.content|date:"dd/MM/yyyy"__--</dd>
+                            <dd ng-if="{$fieldIsCurrency}">--__field.content|currency:"&euro;&nbsp;"__--</dd>
+                        </div>
+                    </dl>
+
+                </div>
+                <div id="tabellaSpecchietto3">
+                    <div id="titoloSpecchietto">
+                        <h4>CONTATTI</h4>
+                    </div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ng-repeat="cont in {$root}.contatti"><a href="" ng-click="SpecchiettoCtrl.changeContattoAttivo({$index})">--__{$root}.nomicontatti[$index]__--</a></li>
+                    </ul>
+                    <dl class="dl-horizontal">
+                        <div ng-repeat="datum in {$root}.contatti[SpecchiettoCtrl.contattoAttivo]">
+                            <dt >
+                            --__datum.key__--
+                            </dt>
+                            <dd>
+                                --__datum.value__--
+                            </dd>
+                        </div> 
+                    </dl>
+
+                </div>
+            </div>
+
+        </div>
+        <div id="first-container" ng-show="!(elaborazione)">
+            <div ng-controller="EsecuzioneController as EsecuzioneCtrl" id="esecuzione">
+
+
+                <!--            Apertura: --__EsecuzioneCtrl.budgetApertura__--<br>
+                            SAL: --__EsecuzioneCtrl.budgetPiano__--<br>
+                            Chiusura: --__EsecuzioneCtrl.budgetChiusura__--<br>-->
+                <div id="tabellaEsecuzione">  
+                    <h4>PIANO DI ESECUZIONE DEL PROGETTO</h4>
+                    <p class="text-muted">Inserire le scadenze previste per l&apos;esecuzione del progetto, compresa la chiusura e specificare la data effettiva di apertura del progetto.</p>
+                    <form novalidate class="form">
+                        <table style="width: 98%; " class="table table-condensed" id="esecuzioneTable">
+                            <thead>
+                                <tr>
+                                    <th>Data prevista</th>
+                                    <th>Data effettiva</th>
+                                    <th>Nome scadenza</th>
+                                    <th>Stato</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>--__{$root}.budgetApertura.budgetDate|date:"dd/MM/yyyy"__--</td>
+                                    <td><input class="input-sm" type="date" ng-model="budgetApertura.actualDate"></td>
+                                    <td>--__budgetApertura.label__--</td>
+                                    <td>--__budgetApertura.status__--</td>
+                                </tr>
+                                <tr ng-repeat="sc in budgetEsecuzione">
+                                    <td><input class="input-sm" type="date" ng-model="sc.budgetDate"></td>
+                                    <td></td>
+                                    <td>--__sc.label__--</td>
+                                    <td>--__sc.status__--</td>
+                                </tr>
+                                <tr>
+                                    <td><input class="input-sm" ng-show="budgetChiusura" type="date" ng-model="budgetChiusura.budgetDate" value="EsecuzioneCtrl.budgetChiusura.date"></td>
+                                    <td></td>
+                                    <td>--__budgetChiusura.label__--</td>
+                                    <td>--__budgetChiusura.status__--</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </form>
+                    <br><br>
+                    <span><a ng-href="" ng-click="EsecuzioneCtrl.addMiddleBudget()">Aggiungi scadenza</a></span>&nbsp;
+                    <span><a ng-href="" ng-click="EsecuzioneCtrl.removeMiddleBudget()">Rimuovi scadenza</a></span><br>
+                    <span><a ng-href="" ng-click="EsecuzioneCtrl.addLastBudget()">Aggiungi chiusura</a></span>&nbsp;
+                    <span><a ng-href="" ng-click="EsecuzioneCtrl.removeLastBudget()">Rimuovi chiusura</a></span>&nbsp;
+
+                </div>
+
+
+
+            </div>
+
+            <div ng-controller="AttivitaController as AttivitaCtrl" id="attivita">
+
+
+                <div id="tabellaAttivita">
+                    <h4>ATTIVIT&Agrave; PREVISTE</h4>
+                    <p class="text-muted">Inserire le attivit&agrave; previste e la loro descrizione.</p>
+
+                    <form novalidate class="form">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Nome</th>
+                                    <th>Descrizione</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="!budgetAttivita.length">
+                                    <td colspan="3">Nessuna attivit&agrave; presente</td>
+                                </tr>
+                                <tr ng-repeat="att in budgetAttivita">
+                                    <td><input class="input-sm" type="text" ng-model="att.name"></td>
+                                    <td><textarea class="input-sm" cols="100" rows="5" ng-model="att.description"></textarea></td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </form>
+                    <br><br>
+                    <span><a ng-href="" ng-click="AttivitaCtrl.addMiddleBudget()">Aggiungi attivit&agrave;</a></span>&nbsp;
+                    <span><a ng-href="" ng-click="AttivitaCtrl.removeMiddleBudget()">Rimuovi attivit&agrave;</a></span><br>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+        <div id="second-container" ng-show="!elaborazione">
+
+            <div ng-controller="FatturazioneController as FatturazioneCtrl" id="fatturazione">
+                <div id="tabellaFatturazione">
+                    <h4>PIANO DI FATTURAZIONE</h4>
+                    <p class="text-muted">Inserire le fatture previste con le date e gli importi relativi.</p>
+                    <form novalidate class="form">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Ammontare</th>
+                                    <th>Stato</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="!budgetFattura.length">
+                                    <td colspan="3">Nessuna fattura presente in stato budget</td>
+                                </tr>
+                                <tr ng-repeat="fat in budgetFattura">
+                                    <td><input type="date" class="input-sm" ng-model="fat.date"></td>
+                                    <td><span class="currencyinput"><input class="input-sm" type="number" min="0" step="0.01" ng-model="fat.amount">&nbsp;&euro;</span></td>
+                                    <td>--__fat.status__--</td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </form>
+                    <span><a ng-href="" ng-click="FatturazioneCtrl.addMiddleBudget()">Aggiungi fattura</a></span>&nbsp;
+                    <span><a ng-href="" ng-click="FatturazioneCtrl.removeMiddleBudget()">Rimuovi fattura</a></span><br>
+                </div>
+            </div>
+            <div ng-controller="IncassoController as IncassoCtrl" id="incasso">
+                <div id="tabellaIncasso">
+                    <h4>PIANO DI INCASSI</h4>
+                    <p class="text-muted">Inserire gli incassi previsti con le date e gli importi relativi, specificando la tipologia.</p>
+                    <form novalidate class="form">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Ammontare</th>
+                                    <th>Tipologia</th>
+                                    <th>Stato</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="!budgetIncasso.length">
+                                    <td colspan="3">Nessun incasso presente in stato budget</td>
+                                </tr>
+                                <tr ng-repeat="inc in budgetIncasso">
+                                    <td><input class="input-sm" type="date" ng-model="inc.date"></td>
+                                    <td><span class="currencyinput"><input class="input-sm" type="number" min="0" step="0.01" ng-model="inc.amount">&nbsp;&euro;</span></td>
+                                    <td>
+                                        <select class="input-sm" ng-model="inc.type">
+                                            <option value="1">Assegno</option>
+                                            <option value="2">Bonifico</option>
+                                            <option value="3">Contante</option>
+                                        </select>
+                                    </td>
+                                    <td>--__inc.status__--</td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </form>
+                    <span><a ng-href="" ng-click="IncassoCtrl.addMiddleBudget()">Aggiungi incasso</a></span>&nbsp;
+                    <span><a ng-href="" ng-click="IncassoCtrl.removeMiddleBudget()">Rimuovi incasso</a></span><br>
+                </div>
+            </div>
+        </div>
+        <br><br><br><br>
+        <div id="third-container" ng-controller="PulsantieraController as PulsantieraCtrl">
+            <div class="pulsantiera" ng-show="!(elaborazione)">
+                <button class="btn btn-primary" ng-click="PulsantieraCtrl.conferma()">Procedi</button>
+            </div>
+            <div id="conferma" ng-show="!(elaborazione - 1)">
+                <div class="riepilogo">
+                    Stai per confermare i seguenti dati:
+                    <div class="riepilogo">
+                        <p ng-if="{$root}.budgetApertura.actualDate">
+                            Il progetto &eacute; stato avviato in data: --__{$root}.budgetApertura.actualDate__--
+                        </p>
+                        <p class="text-danger" ng-if="!{$root}.budgetApertura.actualDate">
+                            Attenzione: non &eacute; stata specificata la data di apertura effettiva!<br>
+                        </p>
+
+                        Piano di esecuzione.<br>Sono preventivate le seguenti scadenze:
+                        <ul>
+                            <li ng-repeat="sc in ({$root}.budgetEsecuzione)">
+                                --__sc.budgetDate|date:"dd/MM/yyyy"|emptyDatum__-- : --__sc.label__--
+                            </li>
+                            <li ng-if="{$root}.budgetChiusura">--__{$root}.budgetChiusura.budgetDate|date:"dd/MM/yyyy"|emptyDatum__-- : --__{$root}.budgetChiusura.label__--</li>
+                        </ul>
+                        <!--                        <p class="text-danger" ng-if="!{$root}.budgetChiusura.actualDate">
+                                                    Attenzione: non &eacute; stata specificata la chiusura del progetto!<br>
+                                                </p>-->
+                    </div>
+                    <div class="riepilogo">
+                        Attivit&agrave;.<br>Verranno eseguite le seguenti attivit&agrave;:
+                        <dl class="dl-horizontal">
+                            <div ng-repeat="att in {$root}.budgetAttivita">
+                                <dt>--__att.name__--</dt>
+                                <dd>--__att.description__--</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <div class="riepilogo">
+                        Fatturazione.<br>La fatturazione del totale progetto sar&agrave; cos&igrave; ripartita:
+                        <ul class="dl-horizontal">
+                            <li ng-repeat="fat in {$root}.budgetFattura">--__fat.date|date:"dd/MM/yyyy"|emptyDatum__-- : --__fat.amount|currency:"&euro;"__--</li>
+                        </ul>
+                    </div>
+                    <div class="riepilogo">
+                        Incassi.<br>L'incasso del totale progetto sar&agrave; cos&igrave; ripartito:
+                        <ul class="dl-horizontal">
+                            <li ng-repeat="inc in {$root}.budgetIncasso">--__inc.date|date:"dd/MM/yyyy"|emptyDatum__-- : --__inc.amount|currency:"&euro;"__-- a mezzo --__inc.type|tipoIncasso__--</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pulsantiera">
+                    <button class="btn btn-primary" ng-click="PulsantieraCtrl.edita()">Modifica</button>&nbsp;
+                    <button class="btn btn-danger" ng-click="PulsantieraCtrl.salva()">Conferma</button>
+                </div>
+
+            </div>
+            <div id="salvataggio" ng-show="!(elaborazione - 2)">
+                <div class="riepilogo">
+                    <p>Piano di esecuzione:&nbsp;--__{$root}.confermaEsecuzione__--<img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.confermataEsecuzione"></p>
+                    <p>Piano delle attivit&agrave;:&nbsp;--__{$root}.confermaAttivita__--<img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.confermataAttivita"></p>
+                    <p>Piano di fatturazione:&nbsp;--__{$root}.confermaFattura__--<img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.confermataFattura"></p>
+                    <p>Piano di incasso:&nbsp;--__{$root}.confermaIncasso__--<img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.confermataIncasso"></p>
+                    <button class="btn btn-primary" ng-if="{$root}.confermataEsecuzione" ng-click="PulsantieraCtrl.backToList()">Torna ad elenco</button>
+                </div>
+            </div>
+            <div>
+                <!----__elaborazione__--<br>-->
+            </div>
+        </div>
+
+        <br><br><br><br>
+    </div>
+
+</div>

@@ -1,0 +1,41 @@
+<div style="width: 100%;">
+    <div style="width: 49%; display: inline-block; float: left; margin-right: 1%;">
+        <div class="form-group">
+            <div class="input-group">
+                <!--<div class="input-group-addon"><img src="../../img/search.png" style="width: 20px; height: 20px;"></div>-->
+                <div class="input-group-addon"><img src="autoimg/search.png" style="width: 20px; height: 20px;"></div>
+                <input class="form-control filteredTableSearchBar" type="search" placeholder="Ricerca generale" ng-model="FilteredTable.getTableDynamics(tableId).generalFilter">
+            </div>
+        </div>
+    </div>
+    <div style="width: 49%; margin-left: 1%; display: inline-block; float: left;">
+        <div class="form-group" ng-show="!(FilteredTable.getTableDynamics(tableId).colSelection.length - 1)">
+            <div class="input-group">
+                <div class="input-group-addon">--__FilteredTable.getTableStructure(tableId).labels[FilteredTable.getTableDynamics(tableId).colSelection[0]]__--:</div>
+                <input class="form-control filteredTableSearchBar" type="search" 
+                       placeholder="Cerca in --__FilteredTable.getTableStructure(tableId).labels[FilteredTable.getTableDynamics(tableId).colSelection[0]]__--" 
+                       ng-model="FilteredTable.getTableDynamics(tableId).filterings[FilteredTable.getTableStructure(tableId).labels[FilteredTable.getTableDynamics(tableId).colSelection[0]]]">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="filteredTableContainer">
+    <table class="tableFiltered table-hover">
+        <thead>
+        <th>#</th>
+        <th ng-repeat="field in FilteredTable.getTableStructure(tableId).fields" ng-click="FilteredTable.selectCol(tableId, field)" 
+            ng-class="FilteredTable.getClass(tableId, FilteredTable.getTableStructure(tableId).labels[$index])">
+            --__FilteredTable.getTableStructure(tableId).labels[$index]__--
+        </th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in filteredData = (FilteredTable.getTableData(tableId)|FilteredTableGeneralFilter: FilteredTable.getTableDynamics(tableId).generalFilter|FilteredTableSelectedColFilter: FilteredTable.getTableDynamics(tableId).filterings)">
+                <td style=" --__'width: '+((filteredData.length+'').length*13)+'px'__--"
+                    ng-click="FilteredTable.selectRow(tableId, row[FilteredTable.getTableStructure(tableId).tracking])">--__$index+1__--</td>
+                <td ng-repeat="field in FilteredTable.getTableStructure(tableId).labels" ng-class="FilteredTable.getClass(tableId, field, row[FilteredTable.getTableStructure(tableId).tracking])">
+                    --__FilteredTable.showFiltered(tableId, field, row[field])__--
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

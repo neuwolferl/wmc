@@ -1,0 +1,107 @@
+
+<body>
+    {if isset($navigator)}
+    {echo $navigator}
+    {/if}
+
+    <h1> Model analyzer</h1>
+    <h2>Nuovo modello</h2>
+    {if isset($mmodname)}
+    {echo $mmodname}
+    {/if}
+    {if isset($tabname)}
+    {echo $tabname}
+    Campo: {if isset($campo)}
+    {echo $campo}
+    {/if}
+    <br><br>
+    {/if}
+    <style>
+        .record {
+            border: 1px solid;
+            border-color: #000000;
+            overflow: scroll;
+        }
+        .field {
+            display:block;
+            width:200px;
+            background-color:#ccc;
+            /*left:210px;*/
+            border: 1px solid;
+            border-color: #000000;
+            background: #999999;
+            border-radius: 35px;
+            height: 300px;
+        }
+        .field:hover {
+            background-color: #cccccc
+        }
+    </style>
+    <div class="record" style="width: 100%; height: 500px;">
+        <div class="field"></div>
+        <div class="field"></div>
+        <div class="field"></div>
+        <div class="field"></div>
+        <div class="field"></div>
+        <div class="field"></div>
+        <div class="field"></div>
+    </div>
+
+    <!--Descrizione verbale:<br>-->
+    <!--La tabella <b>{if isset($tabella1)}{echo $tabella1}{/if}</b> &eacute;-->
+    <!--collegata alla tabella <b><span class="tabella2"></span></b>. <br>-->
+    <!--<i><span class="mult2"></span></i> record di <b>{if isset($tabella1)}{echo $tabella1}{/if}</b>, identificat<i><span class="mult3"></span></i> dal campo <b>{if isset($campo1)}{echo $campo1}{/if}</b>, in-->
+    <!--tabella <b><span class="tabella2"></span></b> <i><span class="mult1"></span></i> dal campo <b><span class="campo2"></span></b>.<br>-->
+    <!--        In virt&ugrave; di questo collegamento sar&agrave; possibile accedere da <b>{if isset($campo1)}{echo $campo1}{/if}</b> <b><span class="view2"></span></b> di <b><span class="tabella2"></span></b>.-->
+    <br><br>
+    <form method="post" id="formnewmodel" action={if isset($formaction)}{echo $formaction}{/if}>
+          <!--          <fieldset>
+                      <legend>Principali</legend>
+
+            <label for="maindb">DB principale</label>
+            <select required name="maindb" id="maindb">
+                <option value="-1">Scegli</option>
+            </select>
+
+            <br><br>
+
+            <label for="maintable">Tabella principale</label>
+            <select required name="maintable" id="maintable">
+                <option value="-1">Scegli</option>
+            </select>
+            <br><br>
+            <button type="button" id="btngotostep2">Avanti</button>
+
+        </fieldset>-->
+          <br><br>
+
+        <!--        <label id="labeltable" for="table">Tabella&nbsp;</label>
+                <select required name="table" id="table">
+                    {if isset($tableoptions)}
+                    {echo $tableoptions}
+                    {/if} 
+                </select>
+        
+                <br><br>
+                <label id="labelfield" for="field">Field&nbsp;</label>
+                <select required name="field" id="field">
+                    {if isset($fieldoptions)}
+                    {echo $fieldoptions}
+                    {/if} 
+                </select>
+                <br><br>
+                <label id="labelview" for="view">Visibilit&agrave;&nbsp;</label>
+                <select required name="view" id="view">
+                    <option value="-1">Scegli</option>
+                    <option value="0">Self</option>
+                    <option value="1">Record</option>
+                    <option value="2">Campo alias</option> 
+                </select>
+                &nbsp;&nbsp;&nbsp;
+                <select name="al" id="al">
+                    <option value="-1">Scegli</option>
+                </select>
+                <br><br>
+                <button id ="insertlink" name="insertlink" type="submit">Inserisci</button>-->
+    </form>
+    <br><br>

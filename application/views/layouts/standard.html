@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <title>{if isset($custompagetitle)}{echo $custompagetitle}{/if}{else}{echo $stdpagetitle}{/else}</title>
+
+        {if isset($bootstrap)}
+        <link rel="stylesheet" href="{echo $bootstrap}">
+         {/if}
+        {else} 
+        <link rel="stylesheet" href="/tsnw/public/css/bs/bootstrap.min.css">
+        {/else}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        {if isset($script_inc)}{echo $script_inc}{/if}
+        {if isset($system_js_including)}{echo $system_js_including}{/if}
+        {if isset($css_autoinclude)}
+        {foreach $css in $css_autoinclude}
+        <link rel="stylesheet" href="{echo $css}">
+        {/foreach}
+        {/if}
+        {if isset($js_autoinclude)}
+        {foreach $js in $js_autoinclude}
+        <script type="text/javascript" src="{echo $js}"></script>
+        {/foreach}
+        {/if}
+
+    </head>
+    <body>
+        <div style="height: 80px; width: 100%; background-color: rgb(0, 83, 128); vertical-align: middle;">
+            {if isset($customlogo)}
+            <div style="float: left; margin-left: 20px; margin-top: 7px;">
+                <img src="{$customlogo}">
+            </div>
+            <div style="position: absolute; left: 40%; top: 10px; color:#ffffff; ">
+                {if (isset($moduleName))}
+                <h1 style="font-family: sans-serif;">{echo $moduleName}</h1>
+                {/if}
+            </div>
+            {/if}
+            {if !isset($noUser)}
+            {if isset($user)}
+            {if $user}
+            <div style="float: right; margin-right: 20px; margin-top: 7px;">
+                <p style="color: #ffffff">
+                    {if isset($gLogged)}
+                    <img src="{$googleIcon}" width="20px" heigth="20px" alt="Loggato con Google">
+                    {/if}
+                    {if isset($vtiger_logged_user_id)}
+                    <img src="{$vtigerIcon}" width="20px" heigth="20px" alt="Loggato con Vtiger">
+                    {/if}
+                    {echo $user} 
+                    <!--<a style="color: #ffffff" href="/tsnwprerelease/public/authenticate/logout">Logout</a>-->
+                    <button class="btn btn-danger" type="button" onclick="window.location.href = {$logoutpath}">Logout</button>
+                </p>
+                <p style="text-align: right">
+                    <a href="{$sitepath}"><img src="{$homeIcon}" width="25px" heigth="25px"></a>
+                </p>
+            </div>
+            {/if}
+            {/if}
+            {/if}
+        </div>
+        {if isset($news)}
+        <div class="bg-info">Aggiornamenti: <marquee scrollamount="1" loop="10" scrolldelay="100" style="display: inline; height: 20px;"> {echo $news}</marquee></div>
+        {/if}
+        {if isset($breadCrumb)}
+        <div>
+            <ol class="breadcrumb">
+                {echo $breadCrumb}
+
+            </ol>
+        </div>
+        {/if}
+        {echo $template}
+        {if isset($adminPanel)}
+        <div style="width: 100%;">
+        {echo $adminPanel}
+        </div>
+        {/if}
+    </body>
+</html>

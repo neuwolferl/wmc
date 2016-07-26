@@ -1,0 +1,10 @@
+<div class="multiselectcontainer" style="width:100%; overflow-y: scroll">
+    <ul class="list-group multiselectul">
+        <li class="list-group-item" ng-repeat="opt in model" style="padding-bottom: 0px; padding-top: 0px;" 
+            ng-style="colorer(opt)"
+            ng-click="toggleSelected($index)">
+            <span class="badge" ng-if="opt.badge">--__opt.badge__--</span>
+            --__opt.value__--
+        </li>
+    </ul>
+</div>

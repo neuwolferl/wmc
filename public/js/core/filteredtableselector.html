@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Selezione</div>
+    <div class="panel-body">
+        <table class="table-condensed" ng-if="FilteredTable.isDefined(tableId)">
+            <tr ng-repeat="ind in FilteredTable.getTableDynamics(tableId).colSelection">
+                <td>--__FilteredTable.getTableStructure(tableId).labels[ind]__--</td>
+            </tr>
+        </table>
+    </div>
+</div>

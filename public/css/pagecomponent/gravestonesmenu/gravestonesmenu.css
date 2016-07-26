@@ -1,0 +1,52 @@
+.pageComponent {
+    display: block;
+    position: absolute;
+    top: 20px; 
+    left: 300px;
+}
+.gravestonesMenu {
+}
+
+.gravestonesTitleInfo {
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 16px;
+}
+.gravestonesTitleInfo p:first-child{
+    font: 16px sans-serif black;
+    font-weight: bold;
+}
+.gravestonesTitleInfo p:nth-child(2){
+    font: 13px sans-serif black;
+    font-style: italic;
+}
+
+.gravestonesNavLeft {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 5px;
+    left: 5px;
+    background: url('../../../img/pagecomponent/gravestonesmenu/arrowleft.png') no-repeat;
+    background-size: 40px 40px;
+}
+
+.gravestonesNavRight {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 5px;
+    right: 5px;
+    background: url('../../../img/pagecomponent/gravestonesmenu/arrowright.png') no-repeat;
+    background-size: 40px 40px;
+}
+
+.gravestone {
+    position: absolute;
+    border-radius: 5%;
+    background: #d8bebe;
+}

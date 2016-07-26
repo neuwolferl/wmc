@@ -1,0 +1,17 @@
+<ul class="nav nav-list nav-pills nav-stacked tree-menu">
+  <li ng-repeat="row in treeRows | filter:{visible:true} track by row.node.id" ng-animate="'tree-menu-animate'" 
+      ng-class="'level-' + --__ row.level __-- + (row.node.selected ? ' active':'')" class="tree-menu-row" ui-on-Drop="dropMan($event,$data,row.node)"
+       ui-draggable="true" drag="row.node" ods="ods" ode="ode">
+    <a ng-style="formatNode(row.node)">
+      <i ng-class="rowClass(row)" ng-click="expandNode(row.node)" class="indented tree-icon"> </i>
+      <span style="display: inline-block;" ng-click="clickOnNode(row.node)" ng-class="{'tree-label-unconfirmed': row.node.unconfirmed}" class="indented tree-label">--__row.label+" "+(row.node.unconfirmed? '(non salvato)':'')__--</span>
+      <span class="badge" ng-if="row.node.badge">--__row.node.badge__--</span>
+    </a>
+  </li>
+  <li class="level-1 tree-menu-row tree-menu-row-placeholder" ui-on-Drop="dropMan($event,$data,0)">
+    <a>
+      <i class="indented tree-icon"> </i>
+      <span style="display: inline-block;" class="indented tree-label">nuova radice</span>
+    </a>
+  </li>
+</ul>

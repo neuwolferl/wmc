@@ -1,0 +1,75 @@
+<div ng-app="Analyze" style="width: 100%;">
+    <div ng-controller="AnalyzeController as ACTRL" class="topcontainer">
+        <error-mask ng-if="ACTRL.errorMask"></error-mask> 
+        <div>
+            <div style="width: 98%; height: 60px; display: block;">
+            </div>
+
+            <br>
+            <div class="container" style="width: 100%;">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h3>Elenco modelli registrati</h3>
+                        <div style="border: 1px dashed lightgray; text-align: center; margin-bottom: 10px;">
+                            <button tabindex="button" class="btn btn-primary btn-sm" ng-if="sNodeConnector.label"
+                                    ng-click="treeNav.addNode(treeNav.getSelectedNode())">Nuovo figlio di --__sNodeConnector.label__--</button> 
+                            <button tabindex="button" class="btn btn-primary btn-sm" ng-if="!sNodeConnector.label"
+                                    ng-click="treeNav.addNode()">Nuovo nodo radice</button> 
+                        </div>
+                        <div style="border: 1px dashed lightgray;">
+                            <tree-menu 
+                                data="albero" 
+                                navigator="treeNav" 
+                                global-selection-callback="true" 
+                                initial-expand="2" 
+                                selected-node-connector="sNodeConnector"
+                                initial-selection="">
+                            </tree-menu>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div style="width: 100%;" ng-show="sNodeConnector.label">
+                            <form name="Dettagli Risorsa" class="form form-aligned">
+                                <fieldset>
+                                    <legend>Dettagli risorsa</legend>
+                                    <label for="sNodeConnectorLabel">Nome</label>
+                                    <input type="text" ng-model="sNodeConnector.label"
+                                           id="sNodeConnectorLabel" name="sNodeConnectorLabel"><br>
+                                    <label for="sNodeConnectorDescription">Descrizione</label>
+                                    <textarea type="text" ng-model="sNodeConnector.data.description"
+                                              id="sNodeConnectorDescription" name="sNodeConnectorDescription"></textarea>
+                                </fieldset>
+                            </form>
+
+                        </div>
+                        <pre>--__sNodeConnector|json__--</pre>
+                    </div>
+                    <div class="col-sm-3">
+                        <div style="border: 1px dashed lightgray;">
+                            <button tabindex="button" class="btn btn-primary"
+                                    ng-click="treeNav.expandAll()">Espandi tutto</button><br>
+                            <button tabindex="button" class="btn btn-primary"
+                                    ng-click="treeNav.collapseAll()">Collassa tutto</button><br>
+                            <button tabindex="button" class="btn btn-primary"
+                                    ng-click="treeNav.selectFirstNode()">Primo nodo</button><br>
+                            <button tabindex="button" class="btn btn-primary"
+                                    ng-click="treeNav.selectParentNode()">Seleziona nodo padre</button><br>
+                            <button tabindex="button" class="btn btn-primary"
+                                    ng-click="treeNav.addNode(treeNav.getSelectedNode())">Nuovo nodo</button><br>
+                            <button tabindex="button" class="btn btn-primary"
+                                    ng-click="treeNav.removeNode()">Rimuovi nodo</button><br>
+                            <button tabindex="button" class="btn btn-primary"
+                                    ng-click="treeNav.toggleExpandNode()">Espandi/Collassa</button><br>
+                            <button tabindex="button" class="btn btn-primary"
+                                    ng-click="treeNav.moveNodeUnder()">Sposta in fondo</button><br>
+                            <button tabindex="button" class="btn btn-primary"
+                                    ng-click="treeNav.moveNodeUnder(treeNav.getSelectedNode(), treeNav.getParentNode(treeNav.getSelectedNode()))">Ultimo figlio</button><br>
+                            <pre>--__treeNav|json__--</pre>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,38 @@
+<table class="lead-search table table-condensed table-hover" style="width: 1300px">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 100px;">P. Iva</th>
+                                        <th style="width: 250px;">R. Sociale</th>
+                                        <th style="width: 150px;">Localit&agrave;</th>
+                                        <th style="width: 50px;">Punteggio</th>
+                                        <th style="width: 30px;">Dip</th>
+                                        <th style="width: 30px;">Fatt</th>
+                                        <th style="width: 30px;">F. Soc</th>
+                                        <th style="width: 100px;">Selezione</th>
+                                        <th style="width: 70px;">Tipo</th>
+                                        <th style="width: 90px;">Attualmente</th>
+                                        <th style="width: 100px;">Tmk</th>
+                                        <th style="width: 100px;">Vend</th>
+                                        <th style="width: 150px;">Esclusione</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="lead in data" ng-class="LCTRL.classLead(lead)"
+                                        ng-dblclick="LCTRL.ricercaLeadDetails({$index})">
+                                        <td>--__lead.piva__--</td>
+                                        <td>--__lead.RagioneSociale__--</td>
+                                        <td>--__lead.Localita+" ("+lead.Provincia_Sigla+")"__--</td>
+                                        <td>--__lead.Punteggio_Azienda__--</td>
+                                        <td class="lead-icon3">&nbsp;</td>
+                                        <td class="lead-icon4">&nbsp;</td>
+                                        <td class="lead-icon5">&nbsp;</td>
+                                        <td>--__(lead|statoGeneraleLead:opPar.tmkList:opPar.vendList).selezione__--</td>
+                                        <td>--__(lead|statoGeneraleLead:opPar.tmkList:opPar.vendList).chiamata__--</td>
+                                        <td>--__(lead|statoGeneraleLead:opPar.tmkList:opPar.vendList).attuale__--</td>
+                                        <td>--__(lead|statoGeneraleLead:opPar.tmkList:opPar.vendList).assegnazioneTmk__--</td>
+                                        <td>--__(lead|statoGeneraleLead:opPar.tmkList:opPar.vendList).assegnazioneVend__--</td>
+                                        <td>--__lead.Esclusione|esclusione__--</td>
+                                        <!--<td><pre>--__lead|json__--</pre></td>-->
+                                    </tr>
+                                </tbody>
+                            </table>

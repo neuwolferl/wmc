@@ -1,0 +1,20 @@
+{if isset($navigator)}
+{echo $navigator}
+{/if}
+<h1> Db analyzer</h1>
+I seguenti dati provengono dalla copia sincronizzata del db. Potrebbero non essere aggiornati.
+<br>
+{if isset($dbname)}
+{echo $dbname}
+{/if}
+<br>
+{if isset($last_sync)}
+{echo $last_sync}
+{/if}
+<br>
+{if isset($sync)}
+{echo $sync}
+{/if}
+{if isset($html)}
+{echo $html}
+{/if}

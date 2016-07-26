@@ -1,0 +1,106 @@
+<div class="loader">
+    <img src="../../img/newmodel/omeo.gif">
+</div>
+
+<div class="backfilter"> 
+<!--    for filter-->
+</div>
+
+
+
+<div id="cont">
+    <div id="top">
+        {if isset($navigator)}
+        {echo $navigator}
+        {/if}
+
+        <h1> Model analyzer</h1>
+        <h2>Editor modello</h2>
+        <label for="modelname">Nome modello:</label><br>
+        <input type="text" name="modelname" value="senzanome" id="modelname"><br>
+        {if isset($mmodname)}
+        {echo $mmodname}
+        {/if}
+        {if isset($tabname)}
+        {echo $tabname}
+        Campo: {if isset($campo)}
+        {echo $campo}
+        {/if}
+        <br><br>
+        {/if}
+    </div>
+    <div id="bottom-container">
+        <div id="navigator">
+            <div id="first-form">
+                <form method="post" id="formnewmodel">
+                </form>
+            </div>
+        </div>
+        <div id="right-part">
+            <div id="right-top-part">
+                <button id="btnPreview" type="button" style="display: none; margin-right: 30px;">Preview</button>
+                <button id="btnSave" type="button" style="display: none; margin-right: 30px;">Salva</button>
+            </div>
+            <div id="composer">
+            </div>
+        </div>
+    </div>
+    <div id="preview">&nbsp;
+    </div>
+    <div class="MODElementFilterPanel">
+        <ul class="MODElementFilterTokens">
+            <li class="MODElementFilterTokens" id="MODElementFilterTokens_newgroup">Nuovo gruppo</li>
+            <li class="MODElementFilterTokens" id="MODElementFilterTokens_newstatic">Nuovo filtro statico</li>
+            <li class="MODElementFilterTokens" id="MODElementFilterTokens_and">Congiunzione e</li>
+            <li class="MODElementFilterTokens" id="MODElementFilterTokens_or">Congiunzione o</li>
+        </ul>
+        <div class="MODElementFilterPanelTitle">
+            <div class="MODElementFilterPanelMODElementId" style="display: none;"></div>
+            Filtri per: <span id="MODElementFilterPanelTitle"></span>
+        </div>
+        <div class="MODElementFilterPanelContainer">
+            <div class="MODElementFilterPanelNewGroup"> 
+                Trascina qui un gruppo
+            </div>
+            <div class="MODElementFilterPanelNewGroup" style="display: none;"> 
+                Trascina qui un gruppo
+            </div>
+            <div class="MODElementFilterPanelGroupTemplate">
+                <div class="MODElementFilterGroupDelete">&nbsp;&nbsp;</div>
+                <div class="MODElementFilterPanelNewFilter">
+                    Trascina qui un filtro
+                </div>
+                <div class="MODElementFilterPanelNewFilter" style="display: none;">
+                    Trascina qui un filtro
+                </div>
+                <div class="MODElementFilterPanelNewGroupJoin">AND/OR</div>
+            </div>
+            <div class="MODElementFilterPanelFilterTemplate">
+                <div class="MODElementFilterDelete">&nbsp;&nbsp;</div>
+                <span class="MODElementFilterField1Name"></span>
+                <select class="MODElementFilterOperator">
+                    <option value="-1" selected>Scegli</option>
+                    <option value="=">=</option>
+                    <option value="<>">&NotEqual;</option>
+                    <option value="<">&lt;</option>
+                    <option value="<=">&le;</option>
+                    <option value=">">&gt;</option>
+                    <option value=">=">&ge;</option>
+                </select>
+                <input class="MODElementFilterField2Name">
+                <div class="MODElementFilterPanelNewFilterJoin">AND/OR</div>
+            </div>
+        </div>
+        <div class="MODElementFilterButtons" id="MODElementFilterButtons_asd">
+            <div class="MODElementFilterButtonOk" id="MODElementFilterButtonOk_asd">
+                OK
+            </div>
+            <div class="MODElementFilterButtonCancel" id="MODElementFilterButtonCancel_asd">
+                Annulla
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

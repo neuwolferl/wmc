@@ -1,0 +1,144 @@
+<div id="pagina">
+    <div ng-app="AssegnazioneProgetto" style="width: 100%;" ng-init="elaborazione = 0">
+
+        <h2>ASSEGNAZIONE PROGETTO</h2>
+        <div id="specchietto-container">
+            <div ng-controller="SpecchiettoController as SpecchiettoCtrl" id="specchietto">
+                <div id="tabellaSpecchietto">
+                    <div id="titoloSpecchietto">
+                        <h4>PROGETTO</h4>
+                    </div>
+                    <img src="../../img/ajax-loader.gif" ng-if="!SpecchiettoCtrl.specchiettoLoaded">
+                    <dl class="dl-horizontal">
+                        <div ng-repeat="field in SpecchiettoCtrl.schemaProgetto" ng-if="SpecchiettoCtrl.specchiettoLoaded">
+                            <!----__field__---->
+                            <dt >--__field.label__--</dt>
+                            <dd ng-if="{$fieldIsString}">--__field.content__--</dd>
+                            <dd ng-if="{$fieldIsDate}">--__field.content|date:"dd/MM/yyyy"__--</dd>
+                            <dd ng-if="{$fieldIsCurrency}">--__field.content|currency:"&euro;&nbsp;"__--</dd>
+                        </div>
+                    </dl>
+
+                </div>
+                <div id="tabellaSpecchietto2">
+                    <div id="titoloSpecchietto">
+                        <h4>CLIENTE</h4>
+                    </div>
+                    <img src="../../img/ajax-loader.gif" ng-if="!SpecchiettoCtrl.specchiettoLoaded">
+                    <dl class="dl-horizontal">
+                        <div ng-repeat="field in SpecchiettoCtrl.schemaCliente" ng-if="SpecchiettoCtrl.specchiettoLoaded">
+                            <!----__field__---->
+                            <dt >--__field.label__--</dt>
+                            <dd ng-if="{$fieldIsString}">--__field.content__--</dd>
+                            <dd ng-if="{$fieldIsDate}">--__field.content|date:"dd/MM/yyyy"__--</dd>
+                            <dd ng-if="{$fieldIsCurrency}">--__field.content|currency:"&euro;&nbsp;"__--</dd>
+                        </div>
+                    </dl>
+
+                </div>
+                <div id="tabellaSpecchietto3">
+                    <div id="titoloSpecchietto">
+                        <h4>CONTATTI</h4>
+                    </div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ng-repeat="cont in {$root}.contatti"><a href="" ng-click="SpecchiettoCtrl.changeContattoAttivo({$index})">--__{$root}.nomicontatti[$index]__--</a></li>
+                    </ul>
+                    <dl class="dl-horizontal">
+                        <div ng-repeat="datum in {$root}.contatti[SpecchiettoCtrl.contattoAttivo]">
+                            <dt >
+                            --__datum.key__--
+                            </dt>
+                            <dd>
+                                --__datum.value__--
+                            </dd>
+                        </div> 
+                    </dl>
+
+                </div>
+            </div>
+
+        </div>
+        <div id="first-container" ng-show="!(elaborazione)">
+            <div ng-controller="FormController as FormCtrl" id="esecuzione">
+
+
+                <div id="tabellaForm">  
+                    <h4>COMPILARE I SEGUENTI CAMPI</h4><br>
+                    <form novalidate class="form">
+                        <label for="nuovoNomeProgetto">Nuovo nome progetto</label>
+                        <input size="100" class="input-sm" type="text" ng-model="{$root}.nuovoNomeProgetto" name="nuovoNomeProgetto" id="nuovoNomeProgetto"><br><br>
+                        <label for="nuovoTipoProgetto">Nuova tipologia progetto</label>
+                        <select class="input-sm" ng-model="{$root}.nuovoTipoProgetto" name="nuovoTipoProgetto" id="nuovoTipoProgetto">
+                            <option ng-repeat="tipo in {$root}.tipoProgettoList" value="--__tipo__--">--__tipo__--</option>
+                        </select><br><br>
+                        <label for="nuovaDataAvvio">Nuova data avvio progetto</label>
+                        <input class="input-sm" type="date" ng-model="{$root}.nuovaDataProgetto" name="nuovaDataProgetto" id="nuovaDataProgetto"><br><br>
+                        <label for="nuovoAssegnatoA">Nuovo assegnatario progetto</label>
+                        <select class="input-sm" ng-model="{$root}.nuovoAssegnatoA" name="nuovoAssegnatoA" id="nuovoAssegnatoA"><br><br>
+                            <option ng-repeat="cons in {$root}.consList" value="--__cons.val__--">--__cons.name__--</option>
+                        </select>
+                        <img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.consLoaded">
+                        <br><br>
+                        <label for="nuovaSo">Associazione Progetto-So</label>
+                        <select class="input-sm" ng-model="{$root}.nuovaSo" name="nuovaSo" id="nuovaSo"><br><br>
+                            <option ng-repeat="so in {$root}.soList" value="--__so.val__--">--__so.name__--</option>
+                        </select>
+                        <img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.soLoaded">
+                    </form>
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+        <br><br><br><br>
+        <div id="third-container" ng-controller="PulsantieraController as PulsantieraCtrl">
+            <div class="pulsantiera" ng-show="!(elaborazione)">
+                <button class="btn btn-primary" ng-click="PulsantieraCtrl.conferma()">Procedi</button>
+            </div>
+            <div id="conferma" ng-show="!(elaborazione - 1)">
+                <div class="riepilogo">
+                    Stai per confermare i seguenti dati:
+                    <!--<div class="riepilogo">-->
+                    <p class="text-danger" ng-if="!PulsantieraCtrl.isSoConfirmed()">
+                        Attenzione: non &eacute; possibile confermare l'assegnazione, 
+                        ma solo salvare i dati inseriti, in quanto la SO non &eacute; stata scelta oppure
+                        quella scelta non &eacute; stata confermata.
+                    </p>
+                    <dl class="dl-horizontal" style="width: 100%">
+                        <dt>Nome progetto</dt>
+                        <dd>--__($root).nuovoNomeProgetto__--</dd>
+                        <dt>Tipologia progetto</dt>
+                        <dd>--__($root).nuovoTipoProgetto__--</dd>
+                        <dt>Data di avvio</dt>
+                        <dd>--__($root).nuovaDataProgetto|date:"dd/MM/yyyy"__--</dd>
+                        <dt>Assegnatario</dt>
+                        <dd>--__PulsantieraCtrl.consIdToName(($root).nuovoAssegnatoA)__--</dd>
+                        <dt>So</dt>
+                        <dd>--__PulsantieraCtrl.soIdToName(($root).nuovaSo)__--</dd>
+                    </dl>
+                    <p></p>
+                    <!--</div>-->
+                </div>
+                <div class="pulsantiera">
+                    <button class="btn btn-primary" ng-click="PulsantieraCtrl.edita()">Modifica</button>&nbsp;
+                    <button class="btn btn-primary" ng-click="PulsantieraCtrl.salva(false)">Salva</button>&nbsp;
+                    <button class="btn btn-danger" ng-if="PulsantieraCtrl.isSoConfirmed()" ng-click="PulsantieraCtrl.salva(true)">Assegna</button>
+                </div>
+
+            </div>
+            <div id="salvataggio" ng-show="!(elaborazione - 2)">
+                <div class="riepilogo">
+                    <p>Salvataggio:&nbsp;--__{$root}.confermaSalvataggio__--<img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.confermataSalvataggio"></p>
+                    <button class="btn btn-primary" ng-if="{$root}.confermataSalvataggio" ng-click="PulsantieraCtrl.backToList()">Torna ad elenco</button>
+                    <!--<p ng-if="PulsantieraCtrl.isSoConfirmed()">Assegnazione:&nbsp;--__{$root}.confermaAssegnazione__--<img ng-src="../../img/ajax-loader-smaller.gif" ng-if="!{$root}.confermataAssegnazione"></p>-->
+                </div>
+            </div>
+        </div>
+
+        <br><br><br><br>
+    </div>
+
+</div>

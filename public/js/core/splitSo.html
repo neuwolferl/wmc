@@ -1,0 +1,39 @@
+
+<div class="splitSoLabel"><h3>Sales Orders</h3></div>
+<div class="soContainer">
+    <div class="so" ng-repeat="s in data.draw.so" style="width: --__s.ll__--%; background-color: --__assignColor('so',s.idSo)__--" 
+         ui-on-Drop="confirmCollOnSo($event,$data,s.idSo)" ng-mouseenter="setDet(s)" ng-mouseleave="unsetDet()">
+        <strong>--__s.amountSo__--</strong>
+    </div>
+</div>
+<div class="splitSoLabel"><h3>Fatture</h3></div>
+<div class="invContainer">
+    <div class="soReferer" ng-repeat="s in data.draw.inv" style="width: --__data.draw.so[$index].ll__--%;">
+        <div class="inv" ng-repeat="i in data.draw.inv[$index]"
+              ng-mouseenter="setDet(i)" ng-mouseleave="unsetDet()"
+             style="width: --__i.ll__--%; background-color: --__assignColor('inv',i.idInv)__--">
+            <strong>--__i.amountInv__--</strong>
+        </div>
+    </div>
+</div>
+<div class="splitSoLabel"><h3>Incassi assegnati</h3></div>
+<div class="colContainer">
+    <div class="soReferer" ng-repeat="s in data.draw.collSo" style="width: --__data.draw.so[$index].ll__--%;">
+        <div class="col" ng-repeat="c in data.draw.collSo[$index]" 
+              ng-mouseenter="setDet(c)" ng-mouseleave="unsetDet()"
+             style="width: --__c.ll__--%; background-color: --__assignColor('col',c.idCol)__--">
+            <strong>--__c.amountCol__--</strong>
+        </div>
+    </div>
+</div>
+<div class="splitSoLabel"><h3>Incassi non assegnati</h3></div>
+<div class="newCollectionsContainer">
+    <div ng-repeat="c in data.draw.collFree" ui-draggable="true" drag="c" on-drop-success="console.log(c);" 
+          ng-mouseenter="setDet(c)" ng-mouseleave="unsetDet()"
+         class="newcol noselect" style="width: 100px; background-color: #dcdcdc">
+        --__c.amountCol__--
+    </div>
+</div>
+<div class="splitDetails">
+    <pre>--__splitDetails|json__--</pre>
+</div>

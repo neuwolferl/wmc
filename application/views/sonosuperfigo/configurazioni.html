@@ -1,0 +1,65 @@
+<div ng-app="Configurazioni" class="container" style="width: 100%; margin-top: 1%;">
+    <div>
+        <div class="row">
+            <h3>Configurazioni</h3>
+            <div class="col-md-2" ng-controller="SitesController as SCTRL" class="greybox">
+                <table class="table-hover" style="width:100%;">
+                    <tr>
+                        <th style="width:50%;">#</th>
+                        <th style="width:50%;">Sito</th>
+                        <th style="width:50%;">Dominio</th>
+                    </tr>
+                    <tr ng-repeat="site in SCTRL.sites" ng-class="{selectedRow: SCTRL.isSelectedSite(site.index)}" ng-click="SCTRL.selectSite(site.index)">
+                        <td>--__site.index__--</td>
+                        <td>--__site.name|uppercase__--</td>
+                        <td>--__site.domain__--</td>
+                    </tr>
+                    <tr ng-if="SCTRL.sites.length > 0">
+                        <td colspan="2" style="text-align: center;">
+                            <button type="button" class="btn-sm btn-primary">Aggiungi nuovo sito</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-9" ng-controller="MainController as MCTRL">
+
+                <div class="greybox">
+                    <table class="table-hover" style="width: 100%;">
+                        <tr ng-repeat="file in MCTRL.confs">
+                            <td>
+                                --__file.index__--
+                                <table class="table-hover" style="width: 100%;" ng-if="file.value">
+                                    <tr ng-repeat="(subfile,other) in file.value">
+                                        <td style="width:20%;">
+                                        </td>
+                                        <td>
+                                            --__subfile__--
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <pre>--__MCTRL.confs|json__--</pre>
+
+
+
+                </div>
+
+
+                <div class="greybox">
+
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+
+    </div>
+
+</div>
+</div>
+

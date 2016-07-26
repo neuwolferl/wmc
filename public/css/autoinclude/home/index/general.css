@@ -1,0 +1,17 @@
+
+
+
+.mainMenuButton {
+    display: inline-block; 
+    float: left; 
+    width: 33%;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    
+}
+.mainMenuButton:hover {
+    display: inline-block; 
+    float: left; 
+    width: 33%; 
+    box-shadow: 1px 1px 1px #000;
+}

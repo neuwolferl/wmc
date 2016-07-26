@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Ordinamento</div>
+    <div class="panel-body">
+        <table class="table-condensed" ng-if="FilteredTable.isDefined(tableId)">
+            <tr ng-repeat="item in FilteredTable.getTableDynamics(tableId).orderings">
+                <td>
+                    <button class="btn-default">
+                        <span ng-click="FilteredTable.unsetOrder(tableId, item.field)">--__item.field__--</span>
+                        <span class="badge" ng-if="!(item.direction - 1)" ng-click="FilteredTable.setOrder(tableId, item.field)">ASC</span>
+                        <span class="badge" ng-if="!(item.direction + 1)" ng-click="FilteredTable.setOrder(tableId, item.field)">DESC</span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <button ng-if="FilteredTable.getTableDynamics(tableId).colSelection.length" class="btn btn-primary btn-sm" ng-click="FilteredTable.selToOrder(tableId)">
+            Da selezione
+        </button>
+    </div>
+</div>

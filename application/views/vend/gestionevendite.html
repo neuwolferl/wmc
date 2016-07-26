@@ -1,0 +1,863 @@
+<style>
+    .animate.ng-enter,
+    .animate.ng-leave
+    { 
+        -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        position: relative;
+        display: block;
+    } 
+
+    .animate.ng-enter.ng-enter-active, 
+    .animate.ng-leave {
+        opacity: 1;
+        top: 0;
+        height: 30px;
+    }
+
+    .animate.ng-leave.ng-leave-active,
+    .animate.ng-enter {
+        opacity: 0;
+        top: -50px;
+        height: 0px;
+    }
+</style>
+<div ng-app="GestioneVendite" class="container">
+    <div ng-controller="GestioneVenditeController as GCTRL" class="topcontainer">
+        {if isset($breadCrumb)}
+        <div>
+            <ol class="breadcrumb">
+                {echo $breadCrumb}
+            </ol>
+        </div>
+        {/if}
+        <error-mask ng-show="GCTRL.errorMask"></error-mask>
+        <header class="page-header row hidden-sm hidden-xs">
+            <h1>Gestione appuntamenti commerciali</h1>
+        </header>
+        <h1 class="visible-sm visible-xs">Gestione appuntamenti commerciali</h1>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header"></div>
+                <!--<div class="collapse navbar-collapse">-->
+                <div class="navbar">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li ng-show="st.get() === &apos;init&apos;|| st.get() === &apos;richiestaDati&apos;|| st.get() === &apos;analisiDati&apos;|| st.get() === &apos;agenda&apos;">
+                            <a class="collapsed" data-toggle="collapse" ng-click="selectVendors(0)">
+                                <span>
+                                    Stai visualizzando gli appuntamenti di: --__selectedVendors|userInfo: vendors|listFilt__--
+                                </span>
+                                <span class="caret"></span>
+                            </a>
+
+                        </li>
+                    </ul>
+                </div>
+        </nav>
+        <div class="row" role="menu" id="vendorChooser" style="text-align: center; display: none;">
+            <h4>Scelta venditore</h4>
+            <div>
+                <div>
+                    <select ng-model="preSelectedVendors" size="10" width="300" style="width: 300px" ng-options="vend.USERID as (vend.USERID| userInfo: vendors) for vend in vendors" multiple></select>
+                    <br>
+                    <button type="button" class="btn btn-sm btn-warning" ng-click="selectVendors(2)">
+                        Annulla&nbsp;<i class="fa fa-remove fa-2x"></i>
+                    </button>&nbsp;
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="selectVendors(1)">
+                        Ok&nbsp;<i class="fa fa-check fa-2x"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" ng-if="st.get() === &apos;richiestaDati&apos;" style="text-align: center;">
+            <p class="center-block">
+            <h2><i class="fa fa-spinner fa-spin fa-2x"></i>
+                Richiesta dati
+                <i class="fa fa-spinner fa-spin fa-2x"></i></h2>
+            </p>
+        </div>
+        <div class="row" ng-show="st.get() === &apos;analisiDati&apos;">
+            <div ng-show="validated.errors.length"> 
+                <h3><i class="fa fa-exclamation-triangle fa-2x"></i>&nbsp;I dati sono stati scaricati correttamente, tuttavia sono stati rilevati alcuni errori che &eacute; necessario esaminare
+                    prima di proseguire.</h3><br>
+
+                <p>Totale errori riscontrati: --__validated.errors.length__--</p>
+                <div class="col-sm-12 col-xs-12 animate alert" ng-class="{&apos;alert-danger&apos;: err.unsolved, &apos;alert-success&apos;: err.solved, &apos;alert-warning&apos;: !err.unsolved && !err.solved}"
+                     ng-repeat="err in validated.errors" ng-style="transDel($index)">
+                    <div class="col-sm-10 col-xs-10" role="alert">
+                        <p>
+                            Ragione sociale: --__err.datum.ragione_sociale__--<br>
+                            Opportunit&agrave;: --__err.datum.numero_opportunita__--<br>
+                            Data appuntamento: --__GCTRL.Common.usDateStringToIta(err.datum.data_chiusura_attesa.date.replace(" 00:00:00",""))__--<br>
+                            Commerciale: --__err.datum.venditore__--<br>
+                            <span ng-show="!err.unsolved && !err.solved">Problema riscontrato: <strong>--__err.error__--</strong><br></span>
+                            <span ng-show="err.unsolved">Problema non risolto: <strong>--__err.error__--</strong><br></span>
+                            <span ng-show="err.solved">Problema risolto: <strong>--__err.error__--</strong><br></span>
+                        </p>
+                        <p ng-show="$index === 0">
+                            <button ng-show="!err.working && !err.solved" class="btn btn-sm btn-primary" ng-click="correctApp($index)"><i class="fa fa-pencil-square-o"></i>&nbsp;CORREGGI</button>
+                        </p>
+                    </div>
+                    <div class="col-sm-2 col-xs-2" ng-show="!err.working && !err.solved && !err.unsolved">
+                        <i class="fa fa-exclamation fa-5x"></i>
+                    </div>
+                    <div class="col-sm-2 col-xs-2" ng-show="err.working">
+                        <i class="fa fa-spinner fa-spin fa-4x"></i>
+                    </div>
+                    <div class="col-sm-2 col-xs-2" ng-show="err.solved">
+                        <i class="fa fa-thumbs-o-up fa-4x"></i>
+                    </div>
+                    <div class="col-sm-2 col-xs-2" ng-show="err.unsolved">
+                        <i class="fa fa-thumbs-o-down fa-4x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="selectedApp" ng-show="st.get() === &apos;esito&apos;">
+            <!--<pre>--__GCTRL.op.esito|json__--</pre>-->
+            <form-propagate driver="GCTRL.op.esito" formstep="GCTRL.op.fs.esito">
+                <form name="setEsito">
+                    <fieldset>
+
+                        <legend>Supervisione</legend>
+                        <!--<pre>--__model|json__--</pre>-->
+                        <p class="help-block">* campi obbligatori</p>
+                        <div>
+                            <p>
+                                <i class="fa fa-clock-o"></i>&nbsp;Data appuntamento: --__driver.selectedAppDetails.opportunita.data_chiusura_attesa.date.replace(" 00:00:00","")__--
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <i class="fa fa-clock-o"></i>&nbsp;Attuale scadenza: --__driver.selectedAppDetails.expDisplay__--
+                            </p>
+                        </div>
+                        <div class="form-group" ng-if="driver.selectedAppDetails.opportunita.stadio_vendita === &apos;Prospecting&apos;">
+                            <label>Nuova scadenza</label>
+                            <input class="form-control" ng-model="model.supervisioneScadenza" type="date" name="supervisioneScadenza" ng-value="driver.selectedAppDetails.exp"/>
+                        </div>
+                        <div class="col-xs-12 col-md-12 text-center">
+                            <a class="text-success superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-check fa-2x"></i>
+                                </span><br>
+                                Applica
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-md-12 text-center">
+                            <p class="text-info">In caso si voglia modificare la data di scadenza é necessario applicare la modifica adesso.</p>
+                        </div>
+                        <hr>
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-warning superform-button">
+                                <span class="btn btn-warning btn-circle btn-xl">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </span><br>
+                                Annulla e torna ad agenda
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-success superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-arrow-right fa-2x"></i>
+                                </span><br>
+                                Supervisione esito
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+                            <i class="fa fa-spin fa-spinner fa-2x" ng-show="model.updating"></i>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Dati cliente</legend>
+                        <!--<pre>--__model|json__--</pre>-->
+                        <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+                            <h2>I dati cliente sono corretti?</h2>
+                            <small class="text-info">Controllare accuratamente le informazioni a schermo.
+                                Per modificarle in seguito sarà necessario annullare loperazione in corso e ricominciare.</small>
+                            <br>
+                        </div>
+
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-warning superform-button">
+                                <span class="btn btn-warning btn-circle btn-xl">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </span><br>
+                                Annulla e torna ad agenda
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-success superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-check fa-2x"></i>
+                                </span><br>
+                                Dati corretti
+                            </a>
+                        </div>
+
+                    </fieldset>
+                    <fieldset>
+                        <legend>Contatti</legend>
+                        <!--<pre>--__model|json__--</pre>-->
+                        <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+                            <h2>I dati dei contatti sono corretti?</h2>
+                            <small class="text-info">Controllare accuratamente le informazioni a schermo.
+                                Per modificarle in seguito sarà necessario annullare loperazione in corso e ricominciare.</small>
+                            <br>
+                        </div>
+
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-warning superform-button">
+                                <span class="btn btn-warning btn-circle btn-xl">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </span><br>
+                                Annulla e torna ad agenda                               
+                            </a>
+                        </div><!-- /col -->
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-success superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-check fa-2x"></i>
+                                </span><br>
+                                Contatti corretti
+                            </a>
+                        </div>
+                    </fieldset>
+                    <fieldset> 
+                        <legend>Rapporto di vendita</legend>
+                        <!--<pre>--__model|json__--</pre>-->
+                        <!--<pre>--__driver.selectedAppDetails.contatti|json__--</pre>--> 
+                        <p class="help-block">* campi obbligatori</p>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label>Contatto di riferimento *</label>
+                                <p class="help-block text-info">In caso di check indicare la persona che ha autorizzato l&apos;analisi, altrimenti indicare il contatto di riferimento per eventuali ulteriori passaggi commerciali.</p>
+                                <div class="radio" ng-repeat="cont in model.contattiList">
+                                    <label>
+
+                                        <input type="radio" ng-model="model.autorizzatoreAnalisi" name="autorizzatoreAnalisi" ng-value="cont.id" required>
+                                        --__cont.nome__--
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Note su soci, titolari e gruppo direttivo, Situazione finanziaria, Motivazione per l&apos;autorizzazione all&apos;analisi *</label>
+                            <p class="help-block text-info">Segnalare le notizie rilevanti completando i paragrafi proposti</p>
+                            <textarea class="form-control" rows="15" name="polpettone" ng-model="model.polpettone" required></textarea>
+                        </div>
+
+                        <!--                        <div class="form-group">
+                                                    <label>Note visita *</label>
+                                                    <textarea class="form-control" rows="3" name="noteGeneraliVisita" ng-model="model.noteGeneraliVisita" required 
+                                                              placeholder="Note generali sulla visita e sullappuntamento">a</textarea>
+                                                </div>-->
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-warning superform-button">
+                                <span class="btn btn-warning btn-circle btn-xl">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </span><br>
+                                Annulla e torna ad agenda
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-success superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-check fa-2x"></i>
+                                </span><br>
+                                Avanti                          
+                            </a>
+                        </div>
+
+                    </fieldset>
+                    <fieldset>
+                        <!--<pre>--__model|json__--</pre>-->
+                        <legend>Esito vendita</legend>
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-danger superform-button">
+                                <span class="btn btn-danger btn-circle btn-xl">
+                                    <i class="fa fa-close fa-2x"></i>
+                                </span><br>
+                                No Check
+                            </a>
+                        </div><!-- /col -->
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-success superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-check fa-2x"></i>
+                                </span><br>
+                                Check
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-info superform-button">
+                                <span class="btn btn-info btn-circle btn-xl">
+                                    <i class="fa fa-refresh fa-2x"></i>
+                                </span><br>
+                                Richiedi ripasso
+                            </a>
+                        </div><!-- /col -->
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-warning superform-button">
+                                <span class="btn btn-warning btn-circle btn-xl">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </span><br>
+                                Annulla e torna ad agenda
+                            </a>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>No Check</legend>
+                        <!--<pre>--__model|json__--</pre>-->
+                        <p class="help-block">* campi obbligatori</p>
+                        <div class="form-group">
+                            <label>Motivazione *</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" ng-model="model.motivazioneNoCheck" name="motivazioneNocheck" value="No quota" required>
+                                    Non quota
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" ng-model="model.motivazioneNoCheck" name="motivazioneNocheck" value="No show" required>
+                                    No show
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" ng-model="model.motivazioneNoCheck" name="motivazioneNocheck" value="Altri consulenti" required>
+                                    Altri consulenti
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" ng-model="model.motivazioneNoCheck" name="motivazioneNocheck" value="Non interessato" required>
+                                    Non interessato
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" ng-model="model.motivazioneNoCheck" name="motivazioneNocheck" value="No vendita" required>
+                                    No vendita
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Esclusione azienda</label><br>
+                            <input type="checkbox" name="esclusioneNoCheck" ng-model="model.esclusioneNoCheck" id="esclusioneNoCheck">
+                            <span class="text-info">Barrare questa casella per suggerire l&apos;esclusione dell&apos;azienda da futuri tentativi di vendita</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Note aggiuntive *</label>
+                            <textarea class="form-control" rows="3" name="noteNocheck" ng-model="model.noteNoCheck" id="noteNocheck" required></textarea>
+                        </div>
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-warning superform-button">
+                                <span class="btn btn-warning btn-circle btn-xl">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </span><br>
+                                Annulla e torna ad agenda
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-success superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-check fa-2x"></i>
+                                </span><br>
+                                Conferma
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+                            <i class="fa fa-spin fa-spinner fa-2x" ng-show="model.updating"></i>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Check - Data analisi</legend>
+                        <p class="help-block">* campi obbligatori</p>
+                        <!--<pre>--__model|json__--</pre>-->
+                        <!--<pre>--__model.dataEsito|date:"yyyy-MM-dd":driver.modelOptions.timezone__--</pre>-->
+                        <!--<pre>--__model.oraEsito|date:"HH:mm:ss":driver.modelOptions.timezone__--</pre>-->
+                        <div class="form-group">
+                            <label>Data appuntamento *</label>
+                            <input class="form-control" ng-model="model.dataEsito" name="dataesito" type="date" required 
+                                   ng-model-options="driver.modelOptions">
+                        </div>
+                        <div class="form-group">
+                            <label>Ora e minuti appuntamento *</label>
+                            <input class="form-control" ng-model="model.oraEsito" name="oraesito" type="time" required min="08:00:00" max="20:00:00" 
+                                   ng-model-options="driver.modelOptions">
+                        </div>
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-warning superform-button">
+                                <span class="btn btn-warning btn-circle btn-xl">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </span><br>
+                                Annulla e torna ad agenda
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-danger superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-arrow-right fa-2x"></i>
+                                </span><br>
+                                Avanti                          
+                            </a>
+                        </div>
+
+                    </fieldset>
+                    <fieldset>
+
+                        <legend>Check - Venduto</legend>
+                        <p class="help-block">* campi obbligatori</p>
+                        <!--<pre>--__model|json__--</pre>-->
+                        <div class="form-group">
+
+                            <label>Check venduto a *</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">€</div>
+                                <input type="tel" ng-model="model.valoreEsito" name="valoreesito" class="form-control" placeholder="valore in cifre" required pattern="\d+">
+                                <div class="input-group-addon">iva esclusa</div>
+                            </div>
+                        </div><!-- /form-group -->
+                        <div class="form-group">
+                            <label>Di cui caparra confirmatoria *</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">€</div>
+                                <input type="tel" ng-model="model.caparraEsito" name="caparraesito" class="form-control" placeholder="valore in cifre" required pattern="\d+">
+                                <div class="input-group-addon">iva esclusa</div>
+                            </div>
+                        </div><!-- /form-group -->
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label>Stato caparra *</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" ng-model="model.statoCaparraEsito" name="statocaparraesito" value="1" required>
+                                        Incassata
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" ng-model="model.statoCaparraEsito" name="statocaparraesito" value="0" required>
+                                        Non Incassata
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-warning superform-button">
+                                <span class="btn btn-warning btn-circle btn-xl">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </span><br>
+                                Annulla e torna ad agenda
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-success superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-arrow-right fa-2x"></i>
+                                </span><br>
+                                Conferma                          
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+                            <i class="fa fa-spin fa-spinner fa-2x" ng-show="model.updating"></i>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Impostazione ripasso</legend>
+                        <!--<pre>--__model|json__--</pre>-->
+                        <p class="help-block">* campi obbligatori</p>
+                        <div class="form-group">
+                            <label>Data appuntamento *</label>
+                            <input class="form-control" name="dataRipasso" ng-model="model.dataRipasso" type="date" required>
+                        </div><!-- /form-group -->
+                        <div class="form-group">
+                            <label>Ora e minuti appuntamento *</label>
+                            <input class="form-control" name="oraRipasso" ng-model="model.oraRipasso" type="time" required>
+                        </div><!-- /form-group -->
+                        <div class="form-group">
+                            <label>Motivazione del ripasso *</label>
+                            <textarea class="form-control" name="noteRipasso" ng-model="model.noteRipasso" rows="3" required 
+                                      placeholder="Inserisci breve motivazione del ripasso"></textarea>
+                        </div>
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-warning superform-button">
+                                <span class="btn btn-warning btn-circle btn-xl">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </span><br>
+                                Annulla e torna ad agenda
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-success superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-arrow-right fa-2x"></i>
+                                </span><br>
+                                Conferma                          
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+                            <i class="fa fa-spin fa-spinner fa-2x" ng-show="model.updating"></i>
+                        </div>
+                    </fieldset>
+                </form>
+            </form-propagate>
+
+        </div>
+        <div class="row" ng-show="GCTRL.op.esito.visibleFieldset === &apos;Contatti&apos;&& st.get() === &apos;esito&apos;">
+            <div class="col-xs-12 col-md-12"> 
+
+                <ul class="nav nav-tabs">
+                    <li ng-repeat="cont in GCTRL.selectedAppDetails.contatti" role="presentation">
+                        <a ng-click="$parent.viewedContact = cont.id_contatto">--__cont.nome+" "+cont.cognome__--</a>
+                    </li>
+                    <li role="presentation">
+                        <a ng-click="GCTRL.op.esito.initCreaNuovoContatto(); viewedContact = - 1"><i class="fa fa-plus"></i>&nbsp;Nuovo</a>
+                    </li>
+                </ul> 
+                <table class="table table-condensed table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                    <p>
+                        <a ng-show="!GCTRL.op.esito.editDatiContatti && viewedContact && viewedContact > 0" ng-click="initEditDatiContatti(viewedContact)"> <i class="fa fa-edit"></i>&nbsp;Modifica</a>
+                        <a class="text-warning" ng-show="GCTRL.op.esito.editDatiContatti || viewedContact === - 1" ng-click="cancelEditDatiContatti(); viewedContact = 0;"><i class="fa fa-remove"></i>&nbsp;Annulla</a>
+                        &nbsp;&nbsp;
+                        <a class="text-success" ng-show="GCTRL.op.esito.editDatiContatti || viewedContact === - 1" ng-click="saveEditDatiContatti(); viewedContact = 0;"><i class="fa fa-save"></i>&nbsp;Salva</a><br>
+                        <small ng-show="GCTRL.op.esito.editDatiContatti" class="text-info">Attenzione: le modifiche saranno effettuate solo dopo aver premuto il tasto salva qui sopra.</small>
+                    </p>
+                    </th>
+                    </tr>
+
+                    </thead>
+                    <tbody ng-repeat="cont in GCTRL.selectedAppDetails.contatti track by cont.id_contatto" ng-show="cont.id_contatto === $parent.viewedContact">
+                        <tr>
+                            <td>Nome</td>
+                            <td>--__GCTRL.selectedAppDetails.contatti[$index].nome__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiContatti === cont.id_contatto">
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.nome" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Cognome</td>
+                            <td>--__GCTRL.selectedAppDetails.contatti[$index].cognome__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiContatti === cont.id_contatto">
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.cognome" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Ruolo</td>
+                            <td>--__GCTRL.selectedAppDetails.contatti[$index].ruolo__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiContatti === cont.id_contatto">
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.ruolo" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Telefono</td>
+                            <td>--__GCTRL.selectedAppDetails.contatti[$index].telefono__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiContatti === cont.id_contatto">
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.telefono" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Cellulare</td>
+                            <td>--__GCTRL.selectedAppDetails.contatti[$index].cellulare__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiContatti === cont.id_contatto">
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.cellulare" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Fax</td>
+                            <td>--__GCTRL.selectedAppDetails.contatti[$index].fax__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiContatti === cont.id_contatto">
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.fax" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>--__GCTRL.selectedAppDetails.contatti[$index].email__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiContatti === cont.id_contatto">
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.email" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="viewedContact === - 1">
+                        <tr>
+                            <td>Nome</td>
+                            <td>
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.nome" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Cognome</td>
+                            <td>
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.cognome" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Ruolo</td>
+                            <td>
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.ruolo" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Telefono</td>
+                            <td>
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.telefono" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Cellulare</td>
+                            <td>
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.cellulare" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Fax</td>
+                            <td>
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.fax" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
+                                <input ng-model="GCTRL.op.esito.newDatiContatti.email" ng-disabled="GCTRL.op.esito.updatingContatti"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row" ng-show="GCTRL.op.esito.visibleFieldset === &apos;Dati cliente&apos;&& st.get() === &apos;esito&apos;">
+            <div class="col-xs-12 col-md-12">
+                <table class="table table-condensed table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                    <p>
+                        <a ng-show="!GCTRL.op.esito.editDatiCliente" ng-click="initEditDatiCliente()"> <i class="fa fa-edit"></i>&nbsp;Modifica</a>
+                        <a class="text-warning" ng-show="GCTRL.op.esito.editDatiCliente" ng-click="cancelEditDatiCliente()"><i class="fa fa-remove"></i>&nbsp;Annulla</a>
+                        &nbsp;&nbsp;
+                        <a class="text-success" ng-show="GCTRL.op.esito.editDatiCliente" ng-click="saveEditDatiCliente()"><i class="fa fa-save"></i>&nbsp;Salva</a><br>
+                        <small ng-show="GCTRL.op.esito.editDatiCliente" class="text-info">Attenzione: le modifiche saranno effettuate solo dopo aver premuto il tasto salva qui sopra.</small>
+                    </p>
+                    </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Ragione Sociale</th>
+                            <td>--__GCTRL.selectedAppDetails.account.ragione_sociale__--</td>
+                        </tr>
+                        <tr>
+                            <th>Partita Iva</th>
+                            <td>--__GCTRL.selectedAppDetails.account.partita_iva__--</td>
+
+                        </tr>
+                        <tr>
+                            <th>Indirizzo</th>
+                            <td>--__GCTRL.selectedAppDetails.account.via__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiCliente">
+                                <input ng-model="GCTRL.op.esito.newDatiCliente.account.via" ng-disabled="GCTRL.op.esito.updatingCliente"></td>
+                        </tr>
+                        <tr>
+                            <th>Località</th>
+                            <td>--__GCTRL.selectedAppDetails.account.citta__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiCliente">
+                                <input ng-model="GCTRL.op.esito.newDatiCliente.account.citta" ng-disabled="GCTRL.op.esito.updatingCliente"></td>
+                        </tr>
+                        <tr>
+                            <th>Cap</th>
+                            <td>--__GCTRL.selectedAppDetails.account.cap__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiCliente">
+                                <input ng-model="GCTRL.op.esito.newDatiCliente.account.cap" ng-disabled="GCTRL.op.esito.updatingCliente"></td>
+                        </tr>
+                        <tr>
+                            <th>Provincia</th>
+                            <td>--__GCTRL.selectedAppDetails.account.provincia__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiCliente">
+                                <input ng-model="GCTRL.op.esito.newDatiCliente.account.provincia" ng-disabled="GCTRL.op.esito.updatingCliente"></td>
+                        </tr>
+                        <tr>
+                            <th>Regione</th>
+                            <td>--__GCTRL.selectedAppDetails.account.regione__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiCliente">
+                                <input ng-model="GCTRL.op.esito.newDatiCliente.account.regione" ng-disabled="GCTRL.op.esito.updatingCliente"></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>--__GCTRL.selectedAppDetails.account.email__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiCliente">
+                                <input ng-model="GCTRL.op.esito.newDatiCliente.account.email" ng-disabled="GCTRL.op.esito.updatingCliente"></td>
+                        </tr>
+                        <tr>
+                            <th>Sito web</th>
+                            <td>--__GCTRL.selectedAppDetails.account.sito__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiCliente">
+                                <input ng-model="GCTRL.op.esito.newDatiCliente.account.sito" ng-disabled="GCTRL.op.esito.updatingCliente"></td>
+                        </tr>
+                        <tr>
+                            <th>Forma giuridica rilevata da Tmk</th>
+                            <td>--__GCTRL.selectedAppDetails.account.forma_giuridica__--</td>
+                        </tr> 
+                        <tr>
+                            <th>Fascia fatturato rilevata da Tmk</th>
+                            <td>--__GCTRL.selectedAppDetails.account.fascia_fatturato__--</td>
+
+                        </tr> 
+                        <tr> 
+                            <th>Classe dipendenti rilevata da Tmk</td>
+                            <td>--__GCTRL.selectedAppDetails.account.classe_dipendenti__--</td>
+                        </tr> 
+                        <tr>
+                            <th>Forma giuridica rilevata da Commerciale</th>
+                            <td>--__GCTRL.selectedAppDetails.account.forma_giuridica_com__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiCliente">
+                                <select ng-model="GCTRL.op.esito.newDatiCliente.account.forma_giuridica_com" ng-disabled="GCTRL.op.esito.updatingCliente">
+                                    <option ng-repeat="fg in GCTRL.op.esito.formaGiuridicaList" ng-value="fg">--__fg__--</option>
+                                </select>
+                        </tr> 
+                        <tr>
+                            <th>Fascia fatturato rilevata da Commerciale</th>
+                            <td>--__GCTRL.selectedAppDetails.account.fascia_fatturato_com__--</td>
+
+                            <td ng-show="GCTRL.op.esito.editDatiCliente">
+                                <select ng-model="GCTRL.op.esito.newDatiCliente.account.fascia_fatturato_com" ng-disabled="GCTRL.op.esito.updatingCliente">
+                                    <option ng-repeat="fatt in GCTRL.op.esito.fasciaFatturatoList" ng-value="fatt">--__fatt__--</option>
+                                </select>
+                            </td>
+                        </tr> 
+                        <tr> 
+                            <th>Classe dipendenti rilevata da Commerciale</td>
+                            <td>--__GCTRL.selectedAppDetails.account.classe_dipendenti_com__--</td>
+                            <td ng-show="GCTRL.op.esito.editDatiCliente">
+                                <select ng-model="GCTRL.op.esito.newDatiCliente.account.classe_dipendenti_com" ng-disabled="GCTRL.op.esito.updatingCliente">
+                                    <option ng-repeat="cd in GCTRL.op.esito.classeDipendentiList" ng-value="cd">--__cd__--</option>
+                                </select>    
+                            </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div ng-show="st.get() === &apos;storico&apos;" ng-if="selectedApp">
+            <div class="col-xs-12 col-md-6 col-md-offset-3 text-center" ng-show="!GCTRL.logReloading">
+                <a class="text-success" ng-click="GCTRL.stopLog() && goToAgenda()">
+                    <span class="btn btn-warning btn-circle btn-xl">
+                        <i class="fa fa-arrow-left fa-2x"></i>
+                    </span><br>
+                    Annulla e torna ad agenda
+                </a>
+            </div>
+            <div class="col-xs-12 col-md-6 col-md-offset-3 text-center" ng-show="GCTRL.logReloading">
+                <a class="text-success">
+                    <span class="btn btn-warning btn-circle btn-xl">
+                        <i class="fa fa-spin fa-spinner fa-2x"></i>
+                    </span><br>
+                    &nbsp;
+                </a>
+            </div>
+            <log-general logid="GCTRL.logger[0]" logdescriptor="logGeneral"></log-general>
+        </div>
+        <div ng-show="st.get() === &apos;rifisso&apos;" ng-if="selectedApp">
+            <form-propagate driver="GCTRL.op.rifisso" formstep="GCTRL.op.fs.rifisso">
+                <form name="setRifisso" novalidate>
+                    <fieldset>
+                        <!--<pre>--__model|json__--</pre>-->
+                        <legend>Imposta rifisso</legend>
+                        <p class="help-block">* campi obbligatori</p>
+                        <div class="form-group">
+                            <label>Motivazione del rifisso *</label>
+                            <div class="radio">
+                                <label>
+                                    <input ng-model="model.motivazioneRifisso" type="radio" name="motivazioneRifisso" id="motivazioneRifisso_1" value="1" required />
+                                    Assente <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="L’imprenditore non era disponibile"></i>
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input ng-model="model.motivazioneRifisso" type="radio" name="motivazioneRifisso" id="motivazioneRifisso_2" value="2" required />
+                                    Non decisionale <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="L’interlocutore non era decisionale e il telemarketing cercherà di rifissarlo col decisionale."></i>
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input ng-model="model.motivazioneRifisso" type="radio" name="motivazioneRifisso" id="motivazioneRifisso_3" value="3" required />
+                                    Impossibilità del commerciale <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Non è stato possibile andare all’appuntamento"></i>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Note aggiuntive *</label>
+                            <textarea ng-model="model.noteRifisso" name="noteRifisso" class="form-control" rows="3" required /></textarea>
+                        </div>
+                        <div class="col-xs-6 col-md-3 col-md-offset-3 text-center">
+                            <a class="text-warning superform-button">
+                                <span class="btn btn-warning btn-circle btn-xl">
+                                    <i class="fa fa-arrow-left fa-2x"></i>
+                                </span><br>
+                                Annulla e torna ad agenda
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3 text-center">
+                            <a class="text-success superform-button">
+                                <span class="btn btn-success btn-circle btn-xl">
+                                    <i class="fa fa-check fa-2x"></i>
+                                </span><br>
+                                Conferma                          
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+                            <i class="fa fa-spin fa-spinner fa-2x" ng-show="model.updating"></i>
+                        </div>
+                    </fieldset>
+
+
+
+                </form>
+            </form-propagate>
+        </div>
+
+
+        <div ng-show="st.get() === &apos;agenda&apos;">
+
+            <menu-visite conf="menuVisiteConf" ng-show="menuVisiteConf.loaded">
+                <div class="panel" ng-class="panelClass(localStatus[1])" ng-style="panelAuxStyle()">
+                    <div class="panel-heading" ng-click="toggleShowDetails()">
+                        <h3 class="panel-title">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i> --__app.ora_inizio__-- 
+                            <span class="pull-right">--__localStatus[0]__--</span></h3>
+                    </div>
+                    <div class="panel-body">
+                        <h4 class="text-uppercase">
+                            <small>--__app.id__--</small></br>
+                            <small>--__app.numero_opportunita__--</small></br>
+                            --__app.ragione_sociale__-- <br>
+                            <small>--__app.venditore__--</small></br>
+                            <small>PIVA: --__app.piva__--</small></br>
+                        </h4>
+
+                        <div class="small" ng-if="!show.details && show.bar">
+                            <strong class="text-warning">--__localStatus[3]__--</strong>
+                        </div>
+
+                        <div class="progress" ng-if="!show.details && show.bar && exp.length">
+                            <div class="progress-bar" ng-class="progressClass(prog[0])" role="progressbar" aria-valuenow="--__prog[1]__--" 
+                                 aria-valuemin="0" aria-valuemax="100" ng-style="progressValue(prog[1])">
+                                <span ng-if="exp[0] > 0 && 3 * (exp[0].length + exp[1].length) < prog[1]">--__exp[0]+" "+exp[1]__--</span>
+                                <span ng-if="exp[0] < 0">SCADUTO</span>
+                            </div>
+                            <div class="center-block" ng-if="3 * (exp[0].length + exp[1].length) >= prog[1]">--__exp[0]+" "+exp[1]__--</div>
+                        </div>
+                        <actions></actions>
+                        <div class="" aria-label="..."  ng-if="menuStatus.showingDetails === app[conf.ider]">
+                            <p>Telefono: <a ng-href="--__&apos;tel:&apos;+app.telefono__--">--__app.telefono__--</a></p>
+                            <p>Email: <a ng-href="--__&apos;mailto:&apos;+app.email__--">--__app.email__--</a></p>
+                            <p>Indirizzo: <a ng-href="--__&apos;https://www.google.it/maps/place/&apos;+app.indirizzo__--">--__app.indirizzo__--</a></p>
+                        </div>
+                    </div>
+
+                </div>
+            </menu-visite>
+        </div>
+        <!--        <div ng-show="selectedApp">
+                    <pre>--__GCTRL.selectedAppDetails|json__--</pre>
+                </div>-->
+
+    </div>
+</div>

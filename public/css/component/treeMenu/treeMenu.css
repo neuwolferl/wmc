@@ -1,0 +1,117 @@
+
+.tree-menu-animate-enter,
+li.tree-menu-row.ng-enter {
+  transition: 200ms linear all;
+  position: relative;
+  display: block;
+  opacity: 0;
+  max-height:0px;
+}
+.tree-menu-animate-enter.tree-menu-animate-enter-active,
+li.tree-menu-row.ng-enter-active{
+  opacity: 1;
+  max-height:30px;
+}
+
+.tree-menu-animate-leave,
+li.tree-menu-row.ng-leave {
+  transition: 200ms linear all;
+  position: relative;
+  display: block;
+  height:30px;
+  max-height: 30px;
+  opacity: 1;
+}
+.tree-menu-animate-leave.tree-menu-animate-leave-active,
+li.tree-menu-row.ng-leave-active {  
+  height: 0px;
+  max-height:0px;
+  opacity: 0;
+}
+.tree-menu-animate.ng-enter{
+    -webkit-transition: 200ms linear all;
+    transition: 200ms linear all;
+    position: relative;
+    display: block;
+    opacity: 0;
+    max-height:0px;
+}
+.tree-menu-animate.ng-enter{
+    height: 0px;
+    max-height:0px;
+    opacity: 0;
+}
+
+
+
+
+ul.tree-menu li.tree-menu-row {  
+    padding: 0px;
+    margin:0px;
+}
+ul.tree-menu li.tree-menu-row-placeholder {  
+    padding: 0px;
+    margin:0px;
+    color: gray;
+    display: none;
+}
+ul.tree-menu li.tree-menu-row-placeholder span.tree-label{  
+    color: gray;
+}
+
+
+
+ul.tree-menu li.tree-menu-row a {
+    padding: 3px 10px;
+}
+
+ul.tree-menu i.indented {
+    padding: 2px;
+}
+
+.tree-menu {
+    cursor: pointer;
+}
+ul.nav.tree-menu .level-1 .indented {
+    position: relative;
+    left: 0px;
+}
+ul.nav.tree-menu .level-2 .indented {
+    position: relative;
+    left: 20px;
+}
+ul.nav.tree-menu .level-3 .indented {
+    position: relative;
+    left: 40px;
+}
+ul.nav.tree-menu .level-4 .indented {
+    position: relative;
+    left: 60px;
+}
+ul.nav.tree-menu .level-5 .indented {
+    position: relative;
+    left: 80px;
+}
+ul.nav.tree-menu .level-6 .indented {
+    position: relative;
+    left: 100px;
+}
+ul.nav.nav-list.tree-menu .level-7 .indented {
+    position: relative;
+    left: 120px;
+}
+ul.nav.nav-list.tree-menu .level-8 .indented {
+    position: relative;
+    left: 140px;
+}
+ul.nav.nav-list.tree-menu .level-9 .indented {
+    position: relative;
+    left: 160px;
+}
+.tree-label-unconfirmed {
+    color: #a6a6a6;
+}
+
+.tree-menu-row.on-drag-hover {
+    border: 1px dashed lightgray;
+}

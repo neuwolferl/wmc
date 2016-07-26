@@ -1,0 +1,104 @@
+<!-- PAGINA CADUTA IN DISUSO PERCHE' SI E' SCELTO DI NON USARE LE CAMPAGNE..-->
+<div id="pagina">
+    <div ng-app="CodeMkt" class="container" style="width: 100%;">
+        <div ng-controller="CampaignsController as CCTRL" class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8" style="border: 1px dashed lightgray;">
+                {if isset($error_no_db)}
+                Errore no db
+                {/if}
+                {if isset($error_no_campaigns)}
+                Errore no campaigns
+                {/if}
+                <div ng-controller="NewCampaignsController as NCCTRL">
+                    <button type="button" class="btn-primary" style="width: 20px; height: 20px; padding: 1px;" ng-click="NCCTRL.newCampaign()">
+                        <div class="campPlus"></div>
+                    </button>&nbsp;Nuova campagna
+                </div>
+                <h3>Campagne aperte</h3>
+                <div ng-if="!(CCTRL.campaigns | filter: CCTRL.isAvail).length" style="width: 100%" class="alert-info">
+                    Non ci sono campagne aperte.
+                </div>
+                <table class="table table-hover table-striped" style="width: 100%;" ng-if="CCTRL.campaigns.length">
+                    <thead>
+                    <th>#</th>
+                    <th>Lotti</th>
+                    <th>Nome Campagna</th>
+                    <th>Creazione</th>
+                    <th>Ultima modifica</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="camp in campagneAperte = (CCTRL.campaigns| filter: CCTRL.isAvail)">
+                            <td>--__camp.id__--</td>
+                            <td>--__camp.lots__--</td>
+                            <td>--__camp.name__--</td>
+                            <td>--__camp.create_date|date:"dd-MM-yyyy @ H:mm:ss"__--</td>
+                            <td>--__camp.edit_date|date:"dd-MM-yyyy @ H:mm:ss"__--</td>
+                            <td><button type="button" class="btn btn-sm btn-primary" ng-click="CCTRL.goToCampaign(camp.id)">Modifica</button></td>
+                            <td><button type="button" class="btn btn-sm btn-primary" ng-click="CCTRL.suspendCampaign(camp.id)">Sospendi</button></td>
+                            <td><button type="button" class="btn btn-sm btn-primary" ng-click="CCTRL.closeCampaign(camp.id)">Chiudi</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Campagne sospese</h3>
+                <div ng-if="!(CCTRL.campaigns | filter: CCTRL.isSusp).length" style="width: 100%" class="alert-info">
+                    Non ci sono campagne sospese.
+                </div>
+                <table class="table table-hover table-striped" style="width: 100%;" ng-if="CCTRL.campaigns.length">
+                    <thead>
+                    <th>#</th>
+                    <th>Lotti</th>
+                    <th>Nome Campagna</th>
+                    <th>Creazione</th>
+                    <th>Ultima modifica</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="camp in campagneSospese = (CCTRL.campaigns| filter: CCTRL.isSusp)">
+                            <td>--__camp.id__--</td>
+                            <td>--__camp.lots__--</td>
+                            <td>--__camp.name__--</td>
+                            <td>--__camp.create_date|date:"dd-MM-yyyy @ H:mm:ss"__--</td>
+                            <td>--__camp.edit_date|date:"dd-MM-yyyy @ H:mm:ss"__--</td>
+                            <td>&nbsp;</td>
+                            <td><button type="button" class="btn btn-sm btn-primary" ng-click="CCTRL.restoreCampaign(camp.id)">Ripristina</button></td>
+                            <td><button type="button" class="btn btn-sm btn-primary" ng-click="CCTRL.closeCampaign(camp.id)">Chiudi</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Campagne chiuse</h3>
+                <div ng-if="!(CCTRL.campaigns | filter: CCTRL.isClosed).length" style="width: 100%" class="alert-info">
+                    Non ci sono campagne chiuse.
+                </div>
+                <table class="table table-hover table-striped" style="width: 100%;" ng-if="CCTRL.campaigns.length">
+                    <thead>
+                    <th>#</th>
+                    <th>Lotti</th>
+                    <th>Nome Campagna</th>
+                    <th>Creazione</th>
+                    <th>Ultima modifica</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="camp in campagneSospese = (CCTRL.campaigns| filter: CCTRL.isClosed)">
+                            <td>--__camp.id__--</td>
+                            <td>--__camp.lots__--</td>
+                            <td>--__camp.name__--</td>                        
+                            <td>--__camp.create_date|date:"dd-MM-yyyy @ H:mm:ss"__--</td>
+                            <td>--__camp.edit_date|date:"dd-MM-yyyy @ H:mm:ss"__--</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+</div>

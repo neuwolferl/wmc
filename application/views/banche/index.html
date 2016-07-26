@@ -1,0 +1,19 @@
+
+<h1> Gestione incassi</h1>
+{if isset($marquee)}
+{echo $marquee}
+<br>
+{/if}
+<form method="post" action="{echo $insert_path}">
+    <button type="submit" name="insert">Inserisci nuovo incasso</button>
+    {if isset($first_error)}
+    {echo $first_error}
+    {/if}
+</form>
+<form method="post" action="{echo $gest_path}">
+    <button type="submit" name="action">Gestione incassi</button>
+</form>
+<form method="post" action="{echo $amm_path}">
+    <button type="submit" name="action">Amministrazione incassi</button>
+</form>
+

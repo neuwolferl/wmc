@@ -1,0 +1,28 @@
+    .alertseedanimate-enter, 
+    .alertseedanimate-leave
+    { 
+        -webkit-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -moz-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -ms-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -o-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        position: relative;
+        display: block;
+        overflow: hidden;
+        text-overflow: clip;
+        white-space:nowrap;
+    } 
+
+    .alertseedanimate-leave.alertseedanimate-leave-active,
+    .alertseedanimate-enter {
+        opacity: 0;
+        width: 0px;
+        height: 0px;
+    }
+
+    .alertseedanimate-enter.alertseedanimate-enter-active, 
+    .alertseedanimate-leave {
+        opacity: 1;
+        width: 150px;
+        height: 30px;
+    }

@@ -1,0 +1,627 @@
+<div ng-app="GestioneTelefonate" style="width: 100%;">
+    <div ng-controller="CallController as CCTRL" class="topcontainer">
+        <error-mask ng-if="CCTRL.errorMask"></error-mask>
+        <div style="width: 98%; height: 60px; display: block;">
+            <div style="display: inline-block; float: left; width: 50%;">
+                <h1>Gestione telefonata</h1>
+                <h4>--__dataPar.kind.main__--</h4>
+                <h5>--__dataPar.kind.reserve__--</h5>
+
+            </div>
+            <div style="display: inline-block; float: left; width: 50%; text-align: right;">
+                <h2 ng-show="opPar.vendorName.length">--__opPar.vendorName__--</h2>
+                <h2 ng-show="!opPar.vendorName.length && !workFlow.waitingForConf">Errore venditore</h2>
+                <h2 ng-show="!opPar.vendorName.length && workFlow.waitingForConf">Caricamento...</h2>
+                <h4><button class="btn btn-primary btn-sm" type="button" ng-click="CCTRL.apriSelezione()">
+                        <span ng-if="opPar.selezione && !(opPar.selezione-1)">90-100</span>
+                        <span ng-if="opPar.selezione && !(opPar.selezione-2)">50-90</span>
+                        <span ng-if="opPar.selezione && !(opPar.selezione-3)">0-50</span>
+                        <span ng-if="!opPar.selezione">Scegli punteggio</span>
+                        
+                    </button>&nbsp;&nbsp;
+                <button class="btn btn-primary btn-sm" type="button" ng-click="CCTRL.apriCalendario()">Calendario</button>&nbsp;&nbsp;
+                    <button class="btn btn-primary btn-sm" type="button" ng-click="CCTRL.apriInventario()">Inventario</button></h4>
+                <h5 ng-show="dataPar.kind.ric.length">--__dataPar.kind.ric__--</h5>
+                <h5 ng-show="!dataPar.kind.ric.length">&nbsp;</h5>
+            </div>
+        </div>
+
+        <br>
+        <div class="container" style="width: 100%;">
+            <div class="row">
+
+                <div class="col-sm-3" ng-show="!workFlow.waitingForSheet && !workFlow.waitingForConf && !workFlow.sheetError">
+
+                    <h3>Azienda</h3>
+                    <div style="border: 1px dashed lightgray;">
+                        <table class="table table-condensed tabella-azienda">
+                            <thead></thead>
+                            <tbody>
+                                <tr>
+                                    <td>Punteggio</td>
+                                    <td>--__dataPar.show.azienda.Punteggio__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Ragione Sociale</td>
+                                    <td ng-show="dataPar.editable && CCTRL.editIs(0)">
+                                        <input type="text" ng-model="dataPar.edit.newValue">&nbsp;
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-success"
+                                                ng-click="CCTRL.salvaModificheAzienda()">OK</button>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                ng-click="CCTRL.annullaModificheAzienda()">Annulla</button>
+                                    </td>
+                                    <td ng-show="dataPar.editable && !CCTRL.editIs(0)"
+                                        ng-dblclick="CCTRL.modificaCampoAzienda(0)"
+                                        >
+                                        --__dataPar.show.azienda.RagioneSociale__--
+                                        <div ng-class="{notConfirmedDatum: dataPar.show.amend.azienda[dataPar.editable[0]]}">&nbsp;</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Partita Iva</td>
+                                    <td>--__dataPar.show.azienda.PartitaIva__--</td>
+                                </tr>
+                                <tr class="lb">
+                                </tr>
+                                <tr>
+                                    <td>Indirizzo</td>
+                                    <td ng-show="dataPar.editable && CCTRL.editIs(1)">
+                                        <input type="text" ng-model="dataPar.edit.newValue">&nbsp;
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-success"
+                                                ng-click="CCTRL.salvaModificheAzienda()">ok</button>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                ng-click="CCTRL.annullaModificheAzienda()">Annulla</button>
+                                    </td>
+                                    <td ng-show="dataPar.editable && !CCTRL.editIs(1)"
+                                        ng-dblclick="CCTRL.modificaCampoAzienda(1)"
+                                        >
+                                        --__dataPar.show.azienda.Indirizzo__--
+                                        <div ng-class="{notConfirmedDatum: dataPar.show.amend.azienda[dataPar.editable[1]]}">&nbsp;</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Localit&agrave;</td>
+                                    <td ng-show="dataPar.editable && CCTRL.editIs(2)">
+                                        <input type="text" ng-model="dataPar.edit.newValue">&nbsp;
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-success"
+                                                ng-click="CCTRL.salvaModificheAzienda()">OK</button>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                ng-click="CCTRL.annullaModificheAzienda()">Annulla</button>
+                                    </td>  
+                                    <td ng-show="dataPar.editable && !CCTRL.editIs(2)"
+                                        ng-dblclick="CCTRL.modificaCampoAzienda(2)"
+                                        >
+                                        --__dataPar.show.azienda.Localita__--
+                                        <div ng-class="{notConfirmedDatum: dataPar.show.amend.azienda[dataPar.editable[2]]}">&nbsp;</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Cap</td>
+                                    <td ng-show="dataPar.editable && CCTRL.editIs(3)">
+                                        <input type="text" ng-model="dataPar.edit.newValue">&nbsp;
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-success"
+                                                ng-click="CCTRL.salvaModificheAzienda()">OK</button>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                ng-click="CCTRL.annullaModificheAzienda()">Annulla</button>
+                                    </td>  
+                                    <td ng-show="dataPar.editable && !CCTRL.editIs(3)"
+                                        ng-dblclick="CCTRL.modificaCampoAzienda(3)"
+                                        >
+                                        --__dataPar.show.azienda.Cap__--
+                                        <div ng-class="{notConfirmedDatum: dataPar.show.amend.azienda[dataPar.editable[3]]}">&nbsp;</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Provincia</td>
+                                    <td ng-show="dataPar.editable && CCTRL.editIs(4)">
+                                        <select ng-model="dataPar.edit.newValue"
+                                                ng-options="prov for prov in (province[dataPar.show.azienda.Regione])"></select>&nbsp;
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-success"
+                                                ng-click="CCTRL.salvaModificheAzienda()">OK</button>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                ng-click="CCTRL.annullaModificheAzienda()">Annulla</button>
+                                    </td>  
+                                    <td ng-show="dataPar.editable && !CCTRL.editIs(4)"
+                                        ng-dblclick="CCTRL.modificaCampoAzienda(4)"
+                                        >
+                                        --__dataPar.show.azienda.Provincia__--
+                                        <div ng-class="{notConfirmedDatum: dataPar.show.amend.azienda[dataPar.editable[4]]}">&nbsp;</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Regione</td>
+                                    <td ng-show="dataPar.editable && CCTRL.editIs(5)">
+                                        <select ng-model="dataPar.edit.newValue"
+                                                ng-options="reg for reg in regioni"></select>&nbsp;
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-success"
+                                                ng-click="CCTRL.salvaModificheAzienda()">OK</button>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                ng-click="CCTRL.annullaModificheAzienda()">Annulla</button>
+                                    </td>  
+                                    <td ng-show="dataPar.editable && !CCTRL.editIs(5)"
+                                        ng-dblclick="CCTRL.modificaCampoAzienda(5)"
+                                        >
+                                        --__dataPar.show.azienda.Regione__--
+                                        <div ng-class="{notConfirmedDatum: dataPar.show.amend.azienda[dataPar.editable[5]]}">&nbsp;</div>
+                                    </td>
+                                </tr>
+                                <tr class="lb">
+                                </tr>
+                                <tr>
+                                    <td>Sede principale</td>
+                                    <td>--__dataPar.show.azienda.SedePrincipale__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td ng-show="dataPar.editable && CCTRL.editIs(6)">
+                                        <input type="text" ng-model="dataPar.edit.newValue">&nbsp;
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-success"
+                                                ng-click="CCTRL.salvaModificheAzienda()">OK</button>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                ng-click="CCTRL.annullaModificheAzienda()">Annulla</button>
+                                    </td>
+                                    <td ng-show="dataPar.editable && !CCTRL.editIs(6)"
+                                        ng-dblclick="CCTRL.modificaCampoAzienda(6)"
+                                        >
+                                        --__dataPar.show.azienda.Email__--
+                                        <div ng-class="{notConfirmedDatum: dataPar.show.amend.azienda[dataPar.editable[6]]}">&nbsp;</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sito</td>
+                                    <td ng-show="dataPar.editable && CCTRL.editIs(7)">
+                                        <input type="text" ng-model="dataPar.edit.newValue">&nbsp;
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-success"
+                                                ng-click="CCTRL.salvaModificheAzienda()">OK</button>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                ng-click="CCTRL.annullaModificheAzienda()">Annulla</button>
+                                    </td>
+                                    <td ng-show="dataPar.editable && !CCTRL.editIs(7)"
+                                        ng-dblclick="CCTRL.modificaCampoAzienda(7)"
+                                        >
+                                        <a target="_blank" ng-href="--__dataPar.show.azienda.Sito__--">--__dataPar.show.azienda.Sito__--</a>
+                                        <div ng-class="{notConfirmedDatum: dataPar.show.amend.azienda[dataPar.editable[7]]}">&nbsp;</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Data costituzione</td>
+                                    <td>--__dataPar.show.azienda.DataCostituzione__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Forma giuridica</td>
+                                    <td>--__dataPar.show.azienda.FormaGiuridica__--</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>Fascia fatturato</td>
+                                    <td>--__dataPar.show.azienda.FasciaFatturato|fasciaFatturato__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Classe dipendenti</td>
+                                    <td>--__dataPar.show.azienda.ClasseDipendenti|classeDipendenti__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Attivit&agrave; ATECO</td>
+                                    <td>--__dataPar.show.azienda.AttivitaAteco__--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-12" style="text-align: center;" ng-show="workFlow.sheetError">
+                    <div style="width: 100%;">
+                        <h1>Non &eacute; stato possibile caricare una scheda, sembra che manchi una corretta assegnazione.</h1>
+                        <p>Ricaricare questa pagina dopo qualche secondo potrebbe risolvere il problema. In caso contrario contattare il responsabile delle assegnazioni per una verifica dello stato della coda.</p>
+                    </div>
+                </div>
+                <div class="col-sm-12" style="text-align: center;" ng-show="workFlow.waitingForConf">
+                    <h1>Caricamento configurazione in corso</h1>
+                    <pre style="font: 16px sans-serif black;">--__opPar.sheetLoadTimer.now - opPar.sheetLoadTimer.start|date:"mm:ss"__--</pre>
+                    <div class="hloader-back">&nbsp;</div>
+                </div>
+                <div class="col-sm-12" style="text-align: center;" ng-show="workFlow.waitingForSheet">
+                    <h1>Caricamento scheda in corso</h1>
+                    <pre style="font: 16px sans-serif black;">--__opPar.sheetLoadTimer.now - opPar.sheetLoadTimer.start|date:"mm:ss"__--</pre>
+                    <div class="hloader-back">&nbsp;</div>
+                </div>
+                <div class="col-sm-6" ng-show="!workFlow.waitingForSheet && !workFlow.waitingForConf && !workFlow.sheetError">
+                    <h3>Registro Attivit&agrave;</h3>
+                    <div style="border: 1px dashed lightgray; overflow-y: scroll; height: 180px;">
+                        <log-general logid="CCTRL.logger[0]" logdescriptor="logGeneral"></log-general>
+                    </div>
+                    <h3>Esito</h3> 
+
+                    <div style="text-align: center;" ng-show="workFlow.preCall">
+                        <form class="form form-aligned">
+                            <div style="width: 100%; padding-bottom: 15px;">
+                                <fieldset>
+                                    <legend>Pre-esito</legend>
+                                    <div style="display: inline-block; float: left; width: 100%; text-align: center;">
+                                        <button type="button" class="btn btn-warning btn-lg btn-esito"
+                                                ng-click="CCTRL.impostaRichiamoRapido(2)">Ritarda</button>
+                                    </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div style="text-align: center;" ng-show="workFlow.waitingForNegotiationOutcome">
+                        <form class="form form-aligned">
+                            <fieldset>
+                                <legend>Trattativa conclusa</legend>
+                                <div style="width: 100%; padding-bottom: 15px;">
+                                    <div style="display: inline-block; float: left; width: 50%;">
+                                        <button type="button" class="btn btn-success btn-lg btn-esito"
+                                                ng-disabled="CCTRL.gestisciSchedaFarlocca() < 2"
+                                                ng-click="CCTRL.impostaCreazioneAppuntamento()">Crea appuntamento</button>
+                                    </div>
+                                    <div style="display: inline-block; float: left; width: 50%;">
+                                        <button type="button" class="btn btn-warning btn-lg btn-esito"
+                                                ng-disabled="CCTRL.gestisciSchedaFarlocca() < 2"
+                                                ng-click="CCTRL.chiudiScheda(0)">Non passato filtro</button>
+                                    </div>
+                                </div>
+                                <div style="width: 100%; padding-top: 15px;">
+
+                                    <div style="display: inline-block; float: left; width: 50%;">
+                                        <button type="button" class="btn btn-warning btn-lg btn-esito"
+                                                ng-disabled="CCTRL.gestisciSchedaFarlocca() < 2"
+                                                ng-click="CCTRL.chiudiScheda(1)">Non interessato</button>
+                                    </div>
+                                    <div style="display: inline-block; float: left; width: 50%;">
+                                        <button type="button" class="btn btn-danger btn-lg btn-esito"
+                                                ng-click="CCTRL.chiudiScheda(2)">Escludi azienda</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <br><br><br><br>
+                        <form class="form form-aligned">
+                            <div style="width: 100%; margin-top: 15px;">
+                                <legend>Trattativa non conclusa</legend>
+
+                                <div style="display: inline-block; float: left; width: 50%;">
+                                    <button type="button" class="btn btn-info btn-lg btn-esito"
+                                            ng-disabled="CCTRL.gestisciSchedaFarlocca() < 1"
+                                            ng-click="CCTRL.impostaRichiamo()">Fissa Richiamo</button>
+                                </div>
+                                <div style="display: inline-block; float: left; width: 50%;">
+                                    <button type="button" class="btn btn-info btn-lg btn-esito"
+                                            ng-disabled="(CCTRL.gestisciSchedaFarlocca() < 1) || (CCTRL.gestisciSchedaFarlocca() === 2)"
+                                            ng-click="CCTRL.impostaRichiamoRapido(1)">Richiamo rapido</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div style="text-align: center;" ng-show="workFlow.waitingForAppOutcome">
+                        <h4>Creazione appuntamento</h4>
+                        <div style="width: 100%;">                      
+                            <form class="form form-aligned">
+                                <p ng-show="CCTRL.creazioneAppuntamento.formDataError.date" class="text-danger">Data non valida</p>
+                                <label class="text-uppercase" for="appDate">Data:</label>&nbsp;
+                                <input class="input" type="date" id="appDate" name="appDate" min="2014-12-16"
+                                       ng-model="CCTRL.creazioneAppuntamento.formData.date"><br><br>
+                                <p ng-show="CCTRL.creazioneAppuntamento.formDataError.time" class="text-danger">Orario non valido</p>
+                                <label class="text-uppercase" for="appTime">Orario:</label>&nbsp;
+                                <input class="input" type="time" id="appTime" name="appTime"
+                                       ng-model="CCTRL.creazioneAppuntamento.formData.time"><br><br>
+                                <p ng-show="CCTRL.creazioneAppuntamento.formDataError.contact" class="text-danger">Contatto non valido</p>
+                                <label class="text-uppercase" for="appContact">Persona da incontrare:</label><br>
+                                <select class="select" name="appContact" id="appContact"
+                                        ng-options="con as CCTRL.renderContact(con) for con in dataPar.show.contatti"
+                                        ng-model="CCTRL.creazioneAppuntamento.formData.contact"></select><br>
+                                <p ng-show="CCTRL.creazioneAppuntamento.formDataError.contact" class="text-danger">Note richieste</p>
+                                <label class="text-uppercase" for="appNote">Note:</label><br>
+                                <textarea class="input" id="appNote" name="appNote" style="width: 85%; max-width: 900px;"
+                                          ng-model="CCTRL.creazioneAppuntamento.formData.note">
+                                    Indicazioni per il consulente commerciale
+                                </textarea><br>
+                                <button type="button" class="btn btn-success btn-lg" ng-disabled="CCTRL.disableBtnAppuntamento()"
+                                        ng-click="CCTRL.creaAppuntamento()">Crea appuntamento</button>&nbsp;&nbsp;
+                                <button type="button" class="btn btn-warning btn-lg"
+                                        ng-click="CCTRL.cambiaEsito()">Cambia esito</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div style="text-align: center;" ng-show="workFlow.waitingForRecallOutcome">
+                        <h4>Fissa richiamo</h4>
+                        <div style="width: 100%;">
+                            <form class="form form-aligned">
+                                <label class="text" for="ricSelf">Richiamo personale:</label>&nbsp;
+                                <input class="checkbox-inline" type="checkbox" id="ricSelf" name="ricSelf"
+                                       ng-model="CCTRL.impostazioneRichiamo.formData.self">
+                                <br><br>
+                                <p ng-show="CCTRL.impostazioneRichiamo.formDataError.date" class="text-danger">Data non valida</p>
+                                <label class="text-uppercase" for="ricDate">Data:</label>&nbsp;
+                                <input class="input" type="date" id="ricDate" name="ricDate" min="2014-12-16"
+                                       ng-model="CCTRL.impostazioneRichiamo.formData.date"><br><br>
+                                <p ng-show="CCTRL.impostazioneRichiamo.formDataError.time" class="text-danger">Orario non valido</p>
+                                <label class="text-uppercase" for="ricTime">Orario:</label>&nbsp;
+                                <input class="input" type="time" id="ricTime" name="ricTime"
+                                       ng-model="CCTRL.impostazioneRichiamo.formData.time"><br><br>
+                                <p ng-show="CCTRL.impostazioneRichiamo.formDataError.note" class="text-danger">Note richieste</p>
+                                <label class="text-uppercase" for="ricNote">Note:</label><br>
+                                <textarea class="input" id="ricNote" name="ricNote" style="width: 85%; max-width: 900px;"
+                                          ng-model="CCTRL.impostazioneRichiamo.formData.note">
+                                    Indicazioni sul motivo del richiamo
+                                </textarea>
+                                <button type="button" class="btn btn-success btn-lg"
+                                        ng-disabled="CCTRL.disableBtnRichiamo()"
+                                        ng-click="CCTRL.creaRichiamo()">Fissa richiamo</button>&nbsp;&nbsp;
+                                <button type="button" class="btn btn-warning btn-lg"
+                                        ng-click="CCTRL.cambiaEsito()">Cambia esito</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3" ng-show="workFlow.waitingForSheet">
+                </div>
+                <div class="col-sm-3" ng-show="!workFlow.waitingForSheet && !workFlow.waitingForConf && !workFlow.sheetError">
+                    <h3>Contatti</h3>
+                    <div style="border: 1px dashed lightgray;">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <!--<li><a href="">Giovanni Russo</a></li>-->
+                            <li ng-repeat="cont in dataPar.show.contatti"><a href="" ng-click="CCTRL.cambiaContatto({$index})">--__cont.nome+" "+cont.cognome__--</a></li>
+                            <li ng-show="workFlow.waitingForAppOutcome"><a ng-click="CCTRL.proceduraNuovoContatto()">Nuovo contatto --__{$index}__--</a></li>
+                        </ul>
+                        <table class="table table-condensed tabella-contatto" ng-repeat="cont in dataPar.show.contatti" ng-show="cont.active">
+                            <thead></thead>
+                            <tbody>
+                                <tr> 
+                                    <td>Nome</td>
+                                    <td>--__cont.nome__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Cognome</td>
+                                    <td>--__cont.cognome__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Ruolo</td>
+                                    <td>--__cont.ruolo__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Telefono</td>
+                                    <td>--__cont.phone__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Cellulare</td>
+                                    <td>--__cont.cel__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Fax</td>
+                                    <td>--__cont.fax__--</td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>--__cont.email__--</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center;"><a ng-click="CCTRL.cancellaContatto($index)">Cancella</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <h3>Numeri disponibili</h3>
+                    <div style="border: 1px dashed lightgray;">
+                        <table class="table table-condensed">
+                            <thead></thead>
+                            <tbody>
+                                <tr ng-repeat="tel in dataPar.show.numeri| orderBy:{$status}">
+                                    <td style="width: 20px;">
+                                        <div ng-class="{notConfirmedDatum: dataPar.show.amend.numeri[tel.num]}">&nbsp;</div>
+                                    </td>
+                                    <td>--__tel.num__--</td>
+                                    <td ng-if="!(tel.status) && workFlow.preCall"><a ng-click="CCTRL.chiama(tel.num)">--__tel.status|renderNumero__--</a></td>
+                                    <td ng-if="!(tel.status) && !workFlow.preCall">Chiamabile</td>
+                                    <td ng-if="(tel.status > 0)">--__tel.status|renderNumero__--</td>
+                                    <td>
+                                        <select ng-show="!(tel.status - 1)" ng-model="tel.esito">
+                                            <option val="-1">&nbsp;</option>
+                                            <optgroup label="Esito chiamata">
+                                                <option val="Numero inesistente">Numero inesistente</option>
+                                                <option val="Numero errato">Numero errato</option>
+                                                <option val="Era occupato">Era occupato</option>
+                                                <option val="Non ha risposto">Non ha risposto</option>
+                                                <option val="Richiamo questo numero">Richiamo questo numero</option>
+                                                <option val="Chiamo un altro numero">Chiamo un altro numero</option>
+                                                <option val="Ho parlato">Ho parlato</option>
+                                            </optgroup>
+                                        </select>&nbsp;
+                                        <button class="btn btn-default btn-sm" ng-show="!(tel.status - 1)" ng-click="CCTRL.esitoChiamata(tel.num)">OK</button>
+                                        <span ng-show="(tel.status > 1)">--__tel.esito__--</span>
+                                    </td>
+                                </tr>
+                                <!--                                <tr>
+                                                                    <td>0287654</td>
+                                                                    <td><a href="">Chiama</a></td>
+                                                                    <td>&nbsp;</td>
+                                                                </tr>-->
+                            </tbody>
+                        </table>
+                        <p class="text-info" ng-click="CCTRL.proceduraNuovoNumero()">Aggiungi nuovo numero</p>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <maschera titlep="Nuovo numero" 
+                  sizep="sm" maskid="CCTRL.mascheraNuovoNumero[0]" buttons="Inserisci|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+                    <fieldset>
+                        <legend>Inserisci nuovo numero</legend>
+                        <div style="text-align: center;">
+                            <p ng-show="CCTRL.nuovoNumero.errore" class="text-danger">
+                                Non &eacute; un numero valido!
+                            </p>
+                            <form class="form form-aligned">
+                                <label for="nuovoNumero">Nuovo numero: </label>
+                                <input type="text" id="nuovoNumero" name="nuovoNumero" ng-model="CCTRL.nuovoNumero.numero">
+                            </form>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </maschera>
+        <maschera titlep="Nuovo contatto" 
+                  sizep="sm" maskid="CCTRL.mascheraNuovoContatto[0]" buttons="Inserisci|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+                    <fieldset>
+                        <legend>Inserisci nuovo contatto</legend>
+                        <div style="text-align: center;">
+
+                            <form class="form form-aligned">
+                                <p ng-show="CCTRL.nuovoContatto.errore.nome" class="text-danger">Nome non valido</p>
+                                <label for="nuovoContattoNome">Nome: </label>
+                                <input type="text" id="nuovoContattoNome" name="nuovoContattoNome" ng-model="CCTRL.nuovoContatto.nome"><br>
+                                <p ng-show="CCTRL.nuovoContatto.errore.cognome" class="text-danger">Cognome non valido</p>
+                                <label for="nuovoCognome">Cognome: </label>
+                                <input type="text" id="nuovoContattoCognome" name="nuovoContattoCognome" ng-model="CCTRL.nuovoContatto.cognome"><br>
+                                <p ng-show="CCTRL.nuovoContatto.errore.ruolo" class="text-danger">Ruolo non valido</p>
+                                <label for="nuovoContattoRuolo">Ruolo: </label>
+                                <input type="text" id="nuovoContattoRuolo" name="nuovoContattoRuolo" ng-model="CCTRL.nuovoContatto.ruolo"><br>
+                                <p ng-show="CCTRL.nuovoContatto.errore.phone" class="text-danger">Numero non valido</p>
+                                <label for="nuovoContattoPhone">Tel: </label>
+                                <!--<input type="text" id="nuovoContattoPhone" name="nuovoContattoPhone" ng-model="CCTRL.nuovoContatto.phone"><br>-->
+                                <select id="nuovoContattoPhone" name="nuovoContattoPhone" ng-model="CCTRL.nuovoContatto.phone"
+                                        ng-options="tel.num as tel.num for tel in dataPar.show.numeri"></select><br>
+                                <p ng-show="CCTRL.nuovoContatto.errore.cel" class="text-danger">Numero non valido</p>
+                                <label for="nuovoContattoCel">Cel: </label>
+                                <select id="nuovoContattoCel" name="nuovoContattoCel" ng-model="CCTRL.nuovoContatto.cel"
+                                        ng-options="tel.num as tel.num for tel in dataPar.show.numeri"></select><br>
+                                <!--<input type="text" id="nuovoContattoCel" name="nuovoContattoCel" ng-model="CCTRL.nuovoContatto.cel"><br>-->
+                                <p ng-show="CCTRL.nuovoContatto.errore.fax" class="text-danger">Numero non valido</p>
+                                <label for="nuovoContattoFax">Fax: </label>
+                                <input type="text" id="nuovoContattoFax" name="nuovoContattoFax" ng-model="CCTRL.nuovoContatto.fax"><br>
+                                <p ng-show="CCTRL.nuovoContatto.errore.email" class="text-danger">Email non valida</p>
+                                <label for="nuovoContattoEmail">Email: </label>
+                                <input type="text" id="nuovoContattoEmail" name="nuovoContattoEmail" ng-model="CCTRL.nuovoContatto.email"><br>
+                            </form>
+
+
+
+
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </maschera>
+
+
+        <maschera titlep="Creazione appuntamento" 
+                  sizep="sm" maskid="CCTRL.mascheraCreazioneAppuntamento[0]" buttons="Procedi">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+                    <fieldset>
+                        <legend>Report inserimento</legend>
+                        <div style="text-align: center;">
+                            <p ng-show="CCTRL.creazioneAppuntamento.pending.account" class="text-info">Inserimento anagrafica del potenziale cliente.</p>
+                            <p ng-show="!(CCTRL.creazioneAppuntamento.result.account - 1)" class="text-success">Anagrafica del potenziale cliente correttamente inserita.</p>
+                            <p ng-show="!(CCTRL.creazioneAppuntamento.result.account + 1)" class="text-danger">Si &eacute; verificato un errore nell&apos;inserimento dell&apos;anagrafica del potenziale cliente.<br>
+                                &Eacute; possibile tentare nuovamente la procedura di inserimento cliccando <a ng-click="CCTRL.ricreaAppuntamento()">qui</a>. <br>
+                                Se il problema si dovesse ripresentare, provare a ricaricare la pagina e contattare un amministratore.</p>
+                            <p ng-show="CCTRL.creazioneAppuntamento.pending.contacts" class="text-info">Inserimento --__CCTRL.creazioneAppuntamento.contacts.length__-- contatti.</p>
+                            <p ng-show="!(CCTRL.creazioneAppuntamento.result.contacts - 1)" class="text-success">--__CCTRL.creazioneAppuntamento.contacts.length__-- contatto/i correttamente inserito/i.</p>
+                            <p ng-show="!(CCTRL.creazioneAppuntamento.result.contacts + 1)" class="text-danger">Si &eacute; verificato un errore nell&apos;inserimento di un contatto.<br>
+                                &Eacute; possibile tentare nuovamente la procedura di inserimento cliccando <a ng-click="CCTRL.ricreaAppuntamento()">qui</a>. <br>
+                                Se il problema si dovesse ripresentare, provare a ricaricare la pagina e contattare un amministratore.</p>
+                            <p ng-show="CCTRL.creazioneAppuntamento.pending.potential" class="text-info">Inserimento opportunit&agrave; di vendita.</p>
+                            <p ng-show="!(CCTRL.creazioneAppuntamento.result.potential - 1)" class="text-success">Opportunit&agrave; di vendita correttamente inserita.</p>
+                            <p ng-show="!(CCTRL.creazioneAppuntamento.result.potential + 1)" class="text-danger">Si &eacute; verificato un errore nell&apos;inserimento dell&apos;opportunit&agrave; di vendita.<br>
+                                &Eacute; possibile tentare nuovamente la procedura di inserimento cliccando <a ng-click="CCTRL.ricreaAppuntamento()">qui</a>. <br>
+                                Se il problema si dovesse ripresentare, provare a ricaricare la pagina e contattare un amministratore.</p>
+                            <p ng-show="CCTRL.creazioneAppuntamento.pending.activity" class="text-info">Inserimento evento in calendario.</p>
+                            <p ng-show="!(CCTRL.creazioneAppuntamento.result.activity - 1)" class="text-success">Evento correttamente inserito in calendario.</p>
+                            <p ng-show="!(CCTRL.creazioneAppuntamento.result.activity + 1)" class="text-danger">Si &eacute; verificato un errore nell&apos;inserimento dell'evento in calendario.<br>
+                                &Eacute; possibile tentare nuovamente la procedura di inserimento cliccando <a ng-click="CCTRL.ricreaAppuntamento()">qui</a>. <br>
+                                Se il problema si dovesse ripresentare, provare a ricaricare la pagina e contattare un amministratore.</p>
+                            <p ng-show="!(CCTRL.creazioneAppuntamento.creatoAppuntamento - 1)" class="text-success">Appuntamento creato.</p>
+                            <p ng-show="!(CCTRL.creazioneAppuntamento.creatoAppuntamento + 1)" class="text-danger">Appuntamento non creato, si è verificato un errore.<br>
+                                &Eacute; possibile tentare nuovamente la procedura di inserimento cliccando <a ng-click="CCTRL.ricreaAppuntamento()">qui</a>. <br>
+                                Se il problema si dovesse ripresentare, provare a ricaricare la pagina e contattare un amministratore.</p>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </maschera>
+        <maschera titlep="Impostazione richiamo" 
+                  sizep="sm" maskid="CCTRL.mascheraImpostazioneRichiamo[0]" buttons="Procedi">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+                    <fieldset>
+                        <legend>Report inserimento</legend>
+                        <div style="text-align: center;">
+                            <p ng-show="CCTRL.impostazioneRichiamo.pending" class="text-info">Impostazione richiamo.</p>
+                            <p ng-show="!(CCTRL.impostazioneRichiamo.result - 1)" class="text-success">Richiamo fissato correttamente.</p>
+                            <p ng-show="!(CCTRL.impostazioneRichiamo.result + 1)" class="text-warning">Si &eacute; verificato un errore nell'impostazione del richiamo.<br>
+                                &Eacute; possibile tentare nuovamente la procedura di inserimento cliccando <a ng-click="CCTRL.ricreaRichiamo()">qui</a>. <br>
+                                Se il problema si dovesse ripresentare, provare a ricaricare la pagina e contattare un amministratore.</p>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </maschera>
+        <maschera titlep="Scarta scheda" 
+                  sizep="lg" maskid="CCTRL.mascheraScartaScheda[0]" buttons="Procedi|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+                    <fieldset>
+                        <legend>Dettagli scarto scheda</legend>
+                        <div style="text-align: center;">
+                            <label for="scartaDettagli" class="text-uppercase">Motivazione: </label>
+                            <textarea id="scartaDettagli" name="scartaDettagli" class="text" style="width:80%;" 
+                                      placeholder="Dettagli" ng-model="CCTRL.scartoScheda.formData.dettagli">
+
+                            </textarea>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </maschera>
+        <maschera titlep="Inventario personale" 
+                  sizep="lg" maskid="CCTRL.mascheraInventario[0]" buttons="Chiudi">
+            <div class="dimensionatore" style="display: block;">
+                <div style="text-align: center; overflow-y: scroll;" ng-if="opPar.statoInventario && !(opPar.statoInventario - 1)">
+                    <lead-table-inventario data="dataPar.inventario" dblclick="CCTRL.apriInventarioDettagli"></lead-table-inventario>
+                </div>
+                <div style="text-align: left; overflow-y: scroll;" ng-if="opPar.statoInventario && !(opPar.statoInventario - 2)">
+                    <div>
+                        <button type="button" class="btn btn-sm btn-primary"
+                                ng-click="CCTRL.chiudiInventarioDettagli()">Indietro</button>
+                    </div>
+                    <log-general logid="CCTRL.loggerInventario[0]" logdescriptor="logGeneral"></log-general>
+                </div>
+            </div>
+            
+        </maschera>
+        <maschera titlep="Selezione" 
+                  sizep="sm" maskid="CCTRL.mascheraSelezione[0]" buttons="Ok">
+            <div class="dimensionatore" style="display: block;">
+                <form class="form-aligned" novalidate>
+                    <fieldset>
+                        <legend>Selezione schede per punteggio</legend>
+                        <div style="text-align: left;">
+                            
+                            <input type="radio" ng-model="opPar.selezione" value="1">&nbsp;&nbsp;90-100<br>
+                            <input type="radio" ng-model="opPar.selezione" value="2">&nbsp;&nbsp;70-90<br>
+                            <input type="radio" ng-model="opPar.selezione" value="3">&nbsp;&nbsp;50-70<br>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            
+        </maschera>
+        <calendario-sinottico calId="CCTRL.sinottico[0]" title="Calendario Venditori" style="display: none;"></calendario-sinottico>
+    </div>
+</div>

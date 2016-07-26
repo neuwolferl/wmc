@@ -1,0 +1,27 @@
+<table class="lead-search table table-condensed table-hover" style="width: 750px; position: relative; max-height: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 100px;">P. Iva</th>
+                                        <th style="width: 250px;">R. Sociale</th>
+                                        <th style="width: 150px;">Localit&agrave;</th>
+                                        <th style="width: 50px;">Punteggio</th>
+                                        <th style="width: 90px;" colspan="3">Caratteristiche</th>
+<!--                                        <th style="width: 30px;">Fatt</th>
+                                        <th style="width: 30px;">F. Soc</th>-->
+                                        <th style="width: 100px;">Da richiamare</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="max-height: 100%;">
+                                    <tr ng-repeat="lead in data" ng-class="classLead(lead)"
+                                        ng-dblclick="dblclick($index)">
+                                        <td>--__lead.piva__--</td>
+                                        <td>--__lead.lead.ragionesociale__--</td>
+                                        <td>--__lead.lead.localita+" ("+lead.lead.provincia_sigla+")"__--</td>
+                                        <td>--__lead.lead.punteggio_azienda__--</td>
+                                        <td class="lead-icon3">&nbsp;</td>
+                                        <td class="lead-icon4">&nbsp;</td>
+                                        <td class="lead-icon5">&nbsp;</td>
+                                        <td>--__lead.donotcallbefore__--</td>
+                                    </tr>
+                                </tbody>
+                            </table>

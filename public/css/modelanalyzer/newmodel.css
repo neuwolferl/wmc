@@ -1,0 +1,860 @@
+/*
+Questo software è stato creato da Alberto Brudaglio per TopSource S.r.l. Tutti i diritti sono riservati.
+This software has ben developed by Alberto Brudaglio for Topsource S.r.l. All rights reserved.
+*/
+/* 
+    Created on : 24-giu-2014, 10.38.09
+    Author     : albertomint
+*/
+body, html {
+
+    overflow: scroll;
+    width: 100%;
+    height: 100%;
+    margin: 0; 
+    border: 0 none; 
+    padding: 0;
+}
+
+.loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    display: block;
+    text-align: center;
+    vertical-align: middle;
+    background-color: rgba(255,255,255,0.5);
+    z-index: 10000;
+    display: none;
+}
+.loader img{
+    position: absolute;
+    top: 300px;
+    left: 46%;
+    z-index: 10001;
+}
+
+#cont {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    text-align: center;
+}
+#top {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    height: 150px;
+    text-align: center;
+}
+#bottom-container {
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    top: 160px;
+}
+#preview {
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    top: 100%;
+    border: 1px solid black;
+    text-align: left;
+}
+#navigator {
+    display: block;
+    text-align: center;
+    overflow-x: no-content;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 270px;
+    height: 100%;
+    z-index: 2000;
+    /*background: black;*/
+}
+#first-form {
+    display:block;
+    position: absolute;
+    padding: 0px;
+    margin: 15px;
+    width:215px;
+    border: 1px dotted #d3d5d5;
+    box-shadow:  5px 5px 10px 2px #ccc;
+    background: #e5e5e5;
+    border-radius: 35px;
+    height: 190px;
+    font-weight: bold;
+}
+
+#right-part {
+    /*float: left;*/
+    position: absolute;
+    display: block;
+    top: 1px;
+    left: 252px;
+    width: calc(100% - 235px);
+    height: 100%;
+}
+#right-top-part {
+    /*float: left;*/
+    position: absolute;
+    top: 1px;
+    display: block;
+    width: calc(100% - 10px);
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 2px;
+    text-align: right;
+
+    height: 25px;
+}
+#composer {
+    /*float:left;*/
+    position: absolute;
+    display: block;
+    top: 27px;
+    margin-top: 3px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(100% - 10px);
+    height: calc(100% - 35px);
+    overflow: scroll;
+    z-index: 1000;
+}
+
+
+/*
+* TABELLA
+*/
+
+.MODTable{
+    position: absolute;
+    width: 200px;
+    text-align: center;
+    background: #cdd0d7;
+    border: 2px solid #9498a1;
+    border-radius: 6px;
+    box-shadow: -1px -1px 0px #74777c;
+    padding: 10px;
+    height: 500px;
+}
+
+.MODTableAlias {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    text-align: left;
+    width: calc(100% - 25px);
+    font: sans-serif 16px;
+    line-height: 16px;
+}
+
+.MODTableName {
+    position: absolute;
+    top: 30px;
+    left: 15px;
+    text-align: left;
+    width: calc(100% - 25px);
+    font: 16px sans-serif;
+    line-height: 16px;
+
+}
+
+.MODTableDependency {
+    position: absolute;
+    top: 50px;
+    left: 15px;
+    heigth: 50px;
+    text-align: left;
+    width: calc(100% - 25px);
+    font: sans-serif 16px;
+    line-height: 16px;
+}
+
+.MODTableOpen {
+    position: absolute;
+    right: 10px;
+    border: 1px solid #74777c;
+    margin-right: 1px;
+    box-shadow: -1px -1px #74777c;
+    width: 16px;
+    height: 16px;
+    font: 16px sans-serif;
+    line-height: 16px;
+
+}
+.MODTableOpen:hover {
+    position: absolute;
+    right: 10px;
+    border: 1px solid #6f7376;
+    box-shadow: -1px -1px #74777c;
+    width: 16px;
+    height: 16px;
+    font: 16px sans-serif;
+    line-height: 16px;
+    cursor: default;
+}
+
+.MODFieldList{
+    position: absolute;
+    /*border: 1px solid black;*/
+    top: 125px;
+    left: 10px;
+    width: calc(100% - 20px);
+
+}
+.MODTableSep {
+    position: absolute;
+    top: 115px;
+    width: calc(100% - 10px);
+    left: 5px;
+    background: #9498a1;
+    height: 2px;
+
+}
+
+.MODField {
+    width: 100%;
+    float: left;
+    margin-bottom: 8px;
+    text-align: center;
+    border: 1px dashed #d3d5d5;
+    background: #d3d5d5;
+    border-radius: 5px;
+    box-shadow: 1px 1px 0px #6f7376;
+}
+
+.MODFieldDetails {
+    position: absolute;
+    display: hidden;
+    top: 0px;
+    left: 0px;
+    border: 1px solid black;
+    width: 100px;
+    height: 35px;
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: normal;
+    background: white;
+    opacity: 0.9;
+    z-index: 20;
+
+}
+
+
+/*
+ELEMENT
+*/
+
+.MODElement {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    top: 30%;
+    left: 30%;
+    /*border: 1px solid blueviolet;*/
+
+}
+.MODElementVerticalLine {
+    position: absolute;
+    left: 15px;
+    top: 30px;
+    background: black;
+    width: 2px;
+    height: 150px; 
+}
+.MODElementTitle {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 200px;
+    height: 30px;
+    background: #bdbdbd;
+    border: 1px black dotted;
+    border-radius: 20px;
+    text-align: left;
+    vertical-align: middle;
+    padding-left: 10px;
+    font: 14px sans-serif;
+    line-height: 14px;
+    box-shadow: 5px 5px 10px #999999;
+}
+
+.MODElementBottom {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    width: 200px;
+    height: 30px;
+    font: 16px sans-serif;
+    color: grey;
+    margin: 5px;
+}
+.MODElementRole {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    width: 200px;
+    height: 30px;
+    font: 18px sans-serif;
+    margin: 5px;
+    text-align: left;
+    padding-left: 20px;
+}
+.MODElementFilter {
+    position: absolute;
+    top: 70px;
+    left: 0px;
+    width: 200px;
+    height: 30px;
+    font: 18px sans-serif;
+    margin: 5px;
+    padding-left: 20px;
+    text-align: left;
+}
+.MODElementOperation {
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    width: 200px;
+    height: 30px;
+    font: 18px sans-serif;
+    margin: 5px;
+    text-align: left;
+    padding-left: 20px;
+}
+.MODElementOpen {
+    cursor: default;
+    position: absolute;
+    top: 8px;
+    left: 160px;
+    width: 16px;
+    height: 15px;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 3;
+    /*font: 18px sans-serif;*/
+    /*border: 1px solid black;*/
+    background: url('../../img/set1_black/openclose.png') no-repeat;
+    background-size: 15px 30px;
+    background-position: 0px 0px;
+
+}
+.MODElementDelete {
+    cursor: default;
+    position: absolute;
+    top: 8px;
+    left: 178px;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 3;
+    font: 18px sans-serif ;
+    /*border: 1px solid black;*/
+    background-image: url('../../img/set1_black/remove_black.png');
+    background-size: 15px 15px;
+}
+.MODElementDeleteDisabled {
+    cursor: default;
+    position: absolute;
+    top: 8px;
+    left: 178px;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 3;
+    font: 18px sans-serif ;
+    /*border: 1px solid black;*/
+    opacity: 0.5;
+    background-image: url('../../img/set1_black/remove_white.png');
+    background-size: 15px 15px;
+}
+
+.MODElementRoleSelector{
+    position: absolute;
+    width: 200px;
+    height: 40px;
+}
+.MODElementRoleSquare{
+    float: left;
+    display: inline;
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+
+    background: url('../../img/newmodel/roleselector.png') no-repeat;
+    background-size: 200px 40px;
+}
+
+
+/*
+RELATION
+*/
+
+.MODRelation {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    top: 30%;
+    left: 30%;
+}
+.MODRelationBack {
+    position: absolute;
+    width: 180px;
+    height: 150px;
+    top: 30px;
+    left: 40px;
+    background: url('../../img/link.png') no-repeat;
+    opacity: 0.2;
+    /*border: 1px solid blueviolet;*/
+
+}
+.MODRelationVerticalLine {
+    position: absolute;
+    left: 15px;
+    top: 30px;
+    background: black;
+    width: 2px;
+    height: 150px; 
+}
+.MODRelationTitle {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 200px;
+    height: 30px;
+    background: #94fffb;
+    border: 1px black dotted;
+    border-radius: 20px;
+    text-align: left;
+    padding-left: 10px;
+    font: 14px sans-serif;
+    vertical-align: middle;
+    line-height: 14px;
+    box-shadow: 5px 5px 10px #999999;
+}
+
+.MODRelationBottom {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    width: 200px;
+    height: 30px;
+    font: 16px sans-serif;
+    color: grey;
+    margin: 5px;
+}
+
+.MODRelationOpen {
+    cursor: default;
+    position: absolute;
+    top: 8px;
+    left: 160px;
+    width: 16px;
+    height: 15px;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 3;
+    /*font: 18px sans-serif;*/
+    /*border: 1px solid black;*/
+    background: url('../../img/set1_black/openclose.png') no-repeat;
+    background-size: 15px 30px;
+    background-position: 0px 0px;
+
+}
+.MODRelationDelete {
+    cursor: default;
+    position: absolute;
+    top: 8px;
+    left: 178px;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 3;
+    font: 18px sans-serif ;
+    /*border: 1px solid black;*/
+    background-image: url('../../img/set1_black/remove_black.png');
+    background-size: 15px 15px;
+}
+.MODRelationChooseLink {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    width: 200px;
+    height: 30px;
+    font: 18px sans-serif;
+    margin: 5px;
+    text-align: left;
+    padding-left: 20px;
+}
+.MODRelationChooseLinkButton {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    width: 200px;
+    font: 14px sans-serif;
+    margin: 5px;
+    text-align: left;
+    padding-left: 20px;
+}
+.MODRelationLink {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    width: 200px;
+    height: 30px;
+    font: 18px sans-serif;
+    margin: 5px;
+    text-align: left;
+    padding-left: 20px; 
+}
+
+.MODRelationPM {
+    position: absolute;
+    top: 130px;
+    left: 20px;
+    width: 200px;
+    font: 14px sans-serif;
+    margin: 5px;
+    text-align: left;
+    padding-left: 20px;
+}
+
+/*
+PANNELLO FILTRI
+*/
+.backfilter {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3999;
+    left: 0px;
+    top: 0px;
+    background-color: rgba(255,255,255,0.7);
+    display: none;
+}
+.MODElementFilterPanel {
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 15px;
+    width: 600px;
+    height: 800px;
+    top: 50px;
+    left: calc(50% - 250px);
+    text-align: center;
+    background: #fde089;
+    display: none;
+    z-index: 4000;
+}
+ul.MODElementFilterTokens {
+    position: relative;
+    left: -250px;
+    list-style-type: none;
+    padding:0; margin:0;
+}
+li.MODElementFilterTokens{
+    list-style-type: none;
+    margin: 0 3px 3px 3px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid black;
+    background: #bcbcb9;
+    border-radius: 10px;
+    box-shadow: 1px 1px 0px black;
+
+}
+
+.MODElementFilterPanelTitle{
+    position: absolute;
+    top: 15px;
+    /*border: 1px solid yellow;*/
+    width: 100%;
+    font: 20px sans-serif;
+    font-weight: bold;
+
+}
+
+.MODElementFilterPanelContainer {
+    position: absolute;
+    top: 40px;
+    width: calc(100% - 30px);
+    height: calc(100% - 180px);
+    margin: 5px;
+    padding: 10px;
+    padding-top: 60px;
+    border: 1px dashed #ecc95e;
+    border-radius: 15px;
+    overflow-y: scroll;
+}
+.MODElementFilterPanelNewGroup{
+    /*    position: absolute;
+        top: 20px;
+        left: 10px;*/
+    width: calc(100% - 30px);
+    height: 30px;
+    padding: 5px;
+    background: #e8e0c7;
+    border: 1px dashed black; 
+    border-radius: 5px;
+    font: 14px sans-serif;
+    cursor: default;
+    opacity: 0.5;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #a5a5a5;
+}
+.MODElementFilterPanelNewGroupJoin {
+    width: 100px;
+    height: 30px;
+    padding: 5px;
+    background: #e8e0c7;
+    border: 1px dashed black; 
+    border-radius: 5px;
+    font: 14px sans-serif;
+    cursor: default;
+    opacity: 0.5;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #a5a5a5;
+}
+
+.MODElementFilterPanelGroupTemplate {
+    width: calc(100% - 30px);
+    padding: 5px;
+    background: #e8e0c7;
+    border: 1px dashed black; 
+    border-radius: 5px;
+    font: 16px sans-serif;
+    cursor: default;
+    opacity: 0.5;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.MODElementFilterPanelFilterTemplate{
+    width: calc(100% - 30px);
+    padding: 5px;
+    background: #e8e0c7;
+    border: 1px dashed black; 
+    border-radius: 5px;
+    font: 16px sans-serif;
+    cursor: default;
+    opacity: 0.5;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.MODElementFilterPanelGroup {
+    width: calc(100% - 30px);
+    min-height: 120px;
+    /*height: auto !important;*/
+    padding: 5px;
+    background: #ecc95e;
+    border: 1px solid black; 
+    border-radius: 5px;
+    font: 16px sans-serif;
+    cursor: default;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 50px;
+    overflow-y: auto;
+}
+
+.MODElementFilterGroupDelete {
+    width: 20px;
+    height: 20px;
+    position:relative;
+    left: 5px;
+    padding: 10px;
+    margin-left: 5px;
+    padding-top: 5px;
+    background: url('../../../public/img/remove.png') no-repeat;
+    background-size: 20px 20px;
+    background-clip: border-box;
+    z-index: 5;
+}
+
+.MODElementFilterPanelNewFilter{
+    width: calc(100% - 30px);
+    height: 30px;
+    padding: 5px;
+    background: #e8e0c7;
+    border: 1px dashed black; 
+    border-radius: 5px;
+    font: 14px sans-serif;
+    cursor: default;
+    opacity: 0.5;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #a5a5a5;
+}
+
+.MODElementFilterPanelNewFilterJoin{
+    position: relative;
+    top: 40px;
+    left: 40px;
+    width: 100px;
+    height: 20px;
+    background: #e8e0c7;
+    border: 1px dashed black; 
+    border-radius: 5px;
+    font: 14px sans-serif;
+    cursor: default;
+    opacity: 0.5;
+    line-height: 20px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #a5a5a5;
+}
+
+.MODElementFilterPanelFilter{
+    width: calc(100% - 20px);
+    min-height:30px;
+    /*height: auto !important;*/
+    padding: 0px;
+    background: #ce9648;
+    border: 1px solid black; 
+    border-radius: 5px;
+    font: 16px sans-serif;
+    cursor: default;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.MODElementFilterDelete {
+    display: inline;
+    width: 20px;
+    height: 20px;
+    /*position:relative;*/
+    /*border: 1px solid black;*/
+    /*left: 10px;*/
+    /*top: 10px;*/
+    padding: 10px;
+    margin-left: 5px;
+    padding-top: 5px;
+    background: url('../../../public/img/remove.png') no-repeat;
+    background-size: 20px 20px;
+    background-clip: border-box;
+}
+.MODElementFilterField1Name {
+    display: inline;
+    margin-left: 5px;
+}
+.MODElementFilterOperator {
+    display: inline;
+    width: 60px;
+    left: 70px;
+    margin-left: 25px;
+}
+
+.MODElementFilterField2Name {
+    display: inline;
+    width: 190px;
+    margin-left: 30px;
+}
+.MODElementFilterPanelGroupJoin{
+    width: 100px;
+    height: 30px;
+    padding: 5px;
+    background: #ce9648;
+    border: 1px solid black; 
+    border-radius: 5px;
+    font: 16px sans-serif;
+    cursor: default;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.MODElementFilterPanelFilterJoin{
+    position: relative;
+    top: 40px;
+    left: 40px;
+    width: 100px;
+    height: 20px;
+    background: #ce9648;
+    border: 1px solid black; 
+    border-radius: 5px;
+    font: 14px sans-serif;
+    cursor: default;
+    line-height: 20px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.MODElementFilterButtons {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.MODElementFilterButtonOk{
+
+    display: inline;
+    background: #c5af6b;
+    box-shadow: 1px 1px 0px #948a6b;
+    border-radius: 5px; 
+    padding: 10px;
+    margin : 5px;
+}
+.MODElementFilterButtonOk:hover{
+    background: #948a6b;
+    box-shadow: 0px 0px;
+}
+.MODElementFilterButtonCancel{
+    display: inline;
+    background: #c5af6b;
+    box-shadow: 1px 1px 0px #948a6b;
+    border-radius: 5px; 
+    padding: 10px;
+    margin : 5px;
+}
+.MODElementFilterButtonCancel:hover{
+    background: #948a6b;
+    box-shadow: 0px 0px;
+}

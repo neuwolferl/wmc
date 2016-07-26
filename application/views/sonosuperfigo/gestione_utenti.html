@@ -1,0 +1,161 @@
+<div ng-app="GestioneUtenti" class="container" style="width: 100%; margin-top: 1%;">
+    <div ng-controller="MainController as MainCtrl">
+        <div class="row">
+            <div class="col-md-1"></div>
+
+            <div class="col-md-10">
+
+                <div class="greybox">
+                    <h3>Gestione utenti</h3>
+                    <div style="display: inline-block; float: left; width: 80%;">
+                        <div id="listaUtenti" ng-if="{$root}.showNotShow.listaUtenti">
+                            <table class="table-striped table-utenti">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nome utente</th>
+                                        <th>Nome</th>
+                                        <th>Cognome</th>
+                                        <th>Attiva/Disattiva</th>
+                                        <th>Corrispondenza VT</th>
+                                        <th>Corrispondenza Google</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-if="!{$root}.showNotShow.corpoListaUtenti">
+                                    <tr>
+                                        <td colspan="7" style="text-align: center;">Caricamento in corso...<br><img ng-src="../../public/img/ajax-loader-h.gif"></td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-if="{$root}.showNotShow.corpoListaUtenti">
+                                    <tr ng-repeat="ut in MainCtrl.utenti.arrayData|utentiAttivi : MainCtrl.showOnlyActiveUsers">
+                                        <td>--__ut.index__--</td>
+                                        <td>--__ut.value["user_name"]__--</td>
+                                        <td>--__ut.value["first_name"]|uppercase__--</td>
+                                        <td>--__ut.value["last_name"]|uppercase__--</td>
+
+                                        <td ng-if="!ut.value.active">
+                                            <button type="button" class="btn btn-sm btn-success" ng-click="MainCtrl.activateUser(ut.value.id, ut.value.active)">Attiva</button>
+                                        </td>
+                                        <td ng-if="ut.value.active">
+                                            <button type="button" class="btn btn-sm btn-danger" ng-click="MainCtrl.activateUser(ut.value.id, ut.value.active)">Disattiva</button>
+                                        </td>
+                                        <td ng-if="ut.value.vt">
+                                            #--__ut.value.vtuid__--
+                                            <button type="button" class="btn btn-sm btn-danger" ng-click="MainCtrl.associateVTUser(ut.index)">Disassocia</button>
+                                        </td>
+                                        <td ng-if="!ut.value.vt">
+                                            <button type="button" class="btn btn-sm btn-success" ng-click="MainCtrl.associateVTUser(ut.index)">Associa</button>
+                                        </td>
+                                        <td><span class="text-muted">da implementare</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--<pre>--__MainCtrl.utenti.arrayData|json__--</pre>-->
+                        </div>
+                        <div ng-controller="NuovoUtenteController as NUCtrl" id="nuovoUtente" ng-if="{$root}.showNotShow.nuovoUtente">
+                            <form name="newUser" class="form form-aligned" autocomplete="off" novalidate="novalidate" ng-submit="NUCtrl.addUser()">
+                                <label class="input-sm" for="NUFirstName">Nome</label>
+                                <input ng-pattern="/^[a-zA-Z]{3,}$/" required type="text" name="NUFirstName" id="NUFirstName" class="input-sm" ng-model="{$root}.nuovoUtente.first_name" ng-change="NUCtrl.suggest()">
+                                <label class="input-sm" for="NULastName">Cognome</label>
+                                <input ng-pattern="/^[a-zA-Z]{3,}$/" required type="text" name="NULastName" id="NULastName" class="input-sm" ng-model="{$root}.nuovoUtente.last_name" ng-change="NUCtrl.suggest()">
+                                <br><br>
+                                <div class="danger">
+                                    <p class="text-danger" ng-show="{$root}.nuovoUtente.first_name !== {$root}.emptyString && newUser.NUFirstName.{$dirty} && newUser.NUFirstName.{$invalid}">
+                                        Nome non valido: almeno 3 lettere [a-z,A-Z]</p>
+                                    <p class="text-danger" ng-show="{$root}.nuovoUtente.last_name !== {$root}.emptyString && newUser.NULastName.{$dirty} && newUser.NULastName.{$invalid}">
+                                        Cognome non valido: almeno 3 lettere [a-z,A-Z]
+                                    </p>
+                                </div>
+                                <label required class="input-sm" for="NUUserName">Nome utente</label>
+                                <input ng-pattern="/^[a-zA-Z][a-zA-Z0-9\.]{2,}$/" type="text" name="NUUserName" id="NUUserName" class="input-sm" ng-model="{$root}.nuovoUtente.user_name">
+                                <br><br>
+                                <div class="text-info" id="suggerimentiUserName" ng-if="NUCtrl.suggEnable">
+                                    Suggerimenti: <div style="float: left; display: inline;" ng-repeat="s in NUCtrl.sugg"><span ng-click="NUCtrl.useSuggest($index)">--__s__--</span>&nbsp;&nbsp;&nbsp;</div>
+                                </div>
+                                <div class="danger">  
+                                    <p class="text-danger" ng-show="{$root}.nuovoUtente.user_name !== {$root}.emptyString && newUser.NUUserName.{$dirty} && newUser.NUUserName.{$invalid}">
+                                        Username non valido: --__{$root}.nuovoUtente.user_name__-- almeno 3 caratteri [a-z,A-Z,0-9,.] dei quali il primo lettera [a-z,A-Z]
+                                    </p>
+                                </div>
+                                <br>
+                                <label class="input-sm" for="password">Password</label>
+                                <input ng-pattern="/^.{8,}$/" required type="password" name="NUUserPassword" id="NUUserPassword" class="input-sm" ng-model="{$root}.nuovoUtente.user_password">
+                                <label class="input-sm" for="NUConfirmUserPassword">Ripeti password</label>
+                                <input required type="password" name="NUConfirmUserPassword" id="NUConfirmUserPassword" class="input-sm" ng-model="{$root}.nuovoUtente.confirm_user_password">
+                                <br><br>
+                                <div class="danger">
+                                    <p class="text-danger" ng-show="{$root}.nuovoUtente.user_password !== {$root}.emptyString && newUser.NUUserPassword.{$dirty} && newUser.NUUserPassword.{$invalid}">
+                                        Password non valida: almeno 8 caratteri
+                                    </p>
+                                </div>
+                                <br>
+                                <div class="danger">
+                                    <p class="text-danger" ng-show="{$root}.nuovoUtente.user_password !== {$root}.nuovoUtente.confirm_user_password && newUser.NUUserPassword.{$dirty} && newUser.NUConfirmUserPassword.{$dirty}">
+                                        Le password non coincidono
+                                    </p>   
+                                </div>
+                                <label class="input-sm" for="NUActive">Attivo</label> 
+                                <input type="checkbox" name="NUActive" id="NUActive" class="input-sm" ng-model="{$root}.nuovoUtente.active"> 
+                                <br><br>
+                                <div class="danger"><p class="text-danger" ng-show="NUCtrl.sendResult.fail">--__NUCtrl.sendResult.outcome__--</p></div>
+                                <div class="success"><p class="text-success" ng-show="NUCtrl.sendResult.success">Utente inserito correttamente</p></div>
+                                <button type="button" class="btn btn-success" ng-click="NUCtrl.addUser()" ng-disabled="newUser.$invalid || isUnchanged({$root}.nuovoUtente) || {$root}.nuovoUtente.user_password !== {$root}.nuovoUtente.confirm_user_password">Crea</button>
+                                <button type="button" class="btn btn-warning" ng-click="MainCtrl.chiudiNuovoUtente()">Annulla</button>
+                            </form>
+                            <br><br>
+                        </div>
+                        <div ng-controller="UtentiVTController as UVTCtrl" id="listaUtentiVT" ng-show="{$root}.showNotShow.listaUtentiVT"> 
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Username</th>
+                                        <th>Nome</th>
+                                        <th>Cognome</th>
+                                        <th>Stato</th>
+                                        <th>Ruolo</th>
+                                        <th>Attribuzione</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-if="!{$root}.showNotShow.corpoListaUtentiVT">
+                                    <tr>
+                                        <td colspan="7" style="text-align: center;">Caricamento in corso...<br><img ng-src="../../public/img/ajax-loader-h.gif"></td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-if="{$root}.showNotShow.corpoListaUtentiVT">
+                                    <tr ng-repeat="ut in UVTCtrl.utentiVT.arrayData" ng-click="ut.value.locked ? UVTCtrl.cancel() : UVTCtrl.associate(ut.value.id)">
+                                        <td>--__ut.value.id__--</td>
+                                        <td>--__ut.value.user_name__--</td>
+                                        <td>--__ut.value.first_name__--</td>
+                                        <td>--__ut.value.last_name__--</td>
+                                        <td>--__ut.value.status__--</td>
+                                        <td>--__ut.value.rolename__--</td>
+                                        <td ng-if="ut.value.locked">utente #--__ut.value.locked__--</td>
+                                        <td ng-if="!ut.value.locked"></td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="display: inline-block; float: left; width: 20%;">
+                        <div ng-if="{$root}.showNotShow.listaUtenti"> 
+                            <label for=showOnlyActiveUsers" >Mostra solo utenti attivi</label>
+                            <input type="checkbox" name="showOnlyActiveUsers" id="showOnlyActiveUsers" ng-model="MainCtrl.showOnlyActiveUsers">
+                            <br><br>
+                            <button ng-click="MainCtrl.nuovoUtente()" class="btn btn-primary">
+                                <img ng-src="--__{$root}.resUri.img.plus__--" style="width: 16px; height: 16px;">
+                                <span>Nuovo utente</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+
+    </div>
+
+</div>
+</div>
+

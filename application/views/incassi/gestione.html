@@ -1,0 +1,265 @@
+<div ng-app="GestioneIncassi" id="pagina"> 
+    <h2>GESTIONE INCASSI</h2>
+    <div ng-controller="ListController as LCTRL">
+        <maschera titlep="Nuovo incasso" sizep="lg" maskid="LCTRL.mascheraNuovoIncasso[0]" buttons="Avanti|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+                    <div ng-if="LCTRL.controlSuggerimentiCliente" style="margin-left: 95%; width: 5%; height: 10px; background-color: #00ff00;">&nbsp;</div>
+                    <div ng-if="!LCTRL.controlSuggerimentiCliente" style="margin-left: 95%; width: 5%; height: 10px; background-color: #ff0000">&nbsp;</div>
+                    <fieldset>
+                        <legend>Identificazione cliente</legend>
+                        <label for="cliente">
+                            Cliente:
+                        </label>
+                        <input type="search" placeholder="Cerca cliente.." ng-model="LCTRL.newCollection.partial.cliente"><br>
+                        <p class="panel-danger danger" ng-if="LCTRL.newCollection.partial.erroreCliente">Selezione cliente non valida, riprovare!</p>
+                        <div id="suggerimentiCliente" class="greybox suggestBox">
+                            <ul>
+                                <li ng-repeat="cliente in LCTRL.newCollection.partial.suggerimentiCliente"
+                                    ng-click="LCTRL.useSuggerimentoCliente(cliente.accountid, cliente.accountname)">
+                                    --__cliente.account_no + " " + cliente.accountname__-- 
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </maschera>
+        <maschera titlep="Nuovo incasso" sizep="sm" maskid="LCTRL.mascheraNuovoIncassoScelta[0]" buttons="Avanti|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+                    <fieldset>
+                        <legend>Forma di pagamento</legend>
+                        <p>Forma di pagamento adottata da --__LCTRL.newCollection.aux.accountname__--</p>
+                        <p class="panel-danger danger" ng-if="LCTRL.newCollection.partial.erroreTipo">Selezione tipo non valida, riprovare!</p>
+                        <input type="radio" value="1" id="chk_ASSEGNO" ng-model="LCTRL.newCollection.ending.type">
+                        <label for="chk_ASSEGNO">Assegno</label><br>
+                        <input type="radio" value="2" id="chk_BONIFICO" ng-model="LCTRL.newCollection.ending.type">
+                        <label for="chk_ASSEGNO">Bonifico</label><br>
+                        <input type="radio" value="3" id="chk_CONTANTE" ng-model="LCTRL.newCollection.ending.type">
+                        <label for="chk_ASSEGNO">Contante</label>
+
+                    </fieldset>
+                </form>
+            </div>
+        </maschera>
+        <maschera titlep="Nuovo incasso" sizep="lg" maskid="LCTRL.mascheraNuovoIncassoAssegno[0]" buttons="Avanti|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+
+                    <div ng-if="LCTRL.controlSuggerimentiBanca" style="margin-left: 95%; width: 5%; height: 10px; background-color: #00ff00;">&nbsp;</div>
+                    <div ng-if="!LCTRL.controlSuggerimentiBanca" style="margin-left: 95%; width: 5%; height: 10px; background-color: #ff0000">&nbsp;</div>
+                    <fieldset>
+                        <div class="dimensionatore-head">
+                            <legend>Dati assegno</legend>
+                            <p>Cliente che ha effettuato il pagamento: --__LCTRL.newCollection.aux.accountname__--</p>
+                            <p class="panel-danger danger" ng-if="LCTRL.newCollection.partial.erroreAmount">Ammontare non valido, riprovare!</p>
+                            <label for="AMOUNT">Ammontare</label>
+                            <input type="number" min="1" name="AMOUNT" id="AMOUNT" step="0.01" ng-model="LCTRL.newCollection.ending.amount" required>
+                            <p class="panel-danger danger" ng-if="LCTRL.newCollection.partial.erroreTipo">Data emissione non valida, riprovare!</p>
+                            <label for="EMISSIONDATE">Data di emissione</label>
+                            <input type="date" name="emission_date" id="EMISSIONDATE" ng-model="LCTRL.newCollection.ending.emissiondate">
+                            <br>
+                            <label for="REF">Numero assegno</label>
+                            <input type="text" size="50" name="ref" id="REF" ng-model="LCTRL.newCollection.ending.ref">
+                            <br>
+                            <p class="panel-danger danger" ng-if="LCTRL.newCollection.partial.erroreBanca">Banca scelta non valida, riprovare!</p>
+                            <label for="ABI">ABI</label>
+                            <input type="search" name="abi" id="ABI" ng-model="LCTRL.newCollection.partial.abi">
+                            <label for="CAB">CAB</label>
+                            <input type="search" name="cab" id="CAB" ng-model="LCTRL.newCollection.partial.cab">
+                            <br>
+                            <label for="BANCA">BANCA</label>
+                            <p style="width: 100%;" id="BANCA">--__LCTRL.newCollection.partial.banca+" "+LCTRL.newCollection.partial.street+" "+LCTRL.newCollection.partial.city__--</p>
+                        </div>
+                        <div class="dimensionatore-tail">
+                            <div id="suggerimentiBanca" class="greybox suggestBox">
+                                <ul style="height: 95%;">
+                                    <li ng-repeat="banca in LCTRL.newCollection.partial.suggerimentiBanca"
+                                        ng-click="LCTRL.useSuggerimentoBanca(banca)">
+                                        <p>--__banca.bankname + "   ABI: "+banca.bankabi + "  CAB"+banca.bankcab__-- </p>
+                                        <p><small>--__banca.bankstreet+" "+banca.bankcity__--</small></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </form>
+            </div>
+        </maschera>
+        <maschera titlep="Nuovo incasso" sizep="lg" maskid="LCTRL.mascheraNuovoIncassoBonifico[0]" buttons="Avanti|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+
+                    <div ng-if="LCTRL.controlSuggerimentiBanca" style="margin-left: 95%; width: 5%; height: 10px; background-color: #00ff00;">&nbsp;</div>
+                    <div ng-if="!LCTRL.controlSuggerimentiBanca" style="margin-left: 95%; width: 5%; height: 10px; background-color: #ff0000">&nbsp;</div>
+                    <fieldset>
+                        <div class="dimensionatore-head">
+                            <legend>Dati bonifico</legend>
+                            <p>Cliente che ha effettuato il pagamento: --__LCTRL.newCollection.aux.accountname__--</p>
+                            <p class="panel-danger danger" ng-if="LCTRL.newCollection.partial.erroreAmount">Ammontare non valido, riprovare!</p>
+                            <label for="AMOUNT">Ammontare</label>
+                            <input type="number" min="1" name="AMOUNT" id="AMOUNT" step="0.01" ng-model="LCTRL.newCollection.ending.amount" required>
+                            <p class="panel-danger danger" ng-if="LCTRL.newCollection.partial.erroreTipo">Data emissione non valida, riprovare!</p>
+                            <label for="EMISSIONDATE">Data di emissione</label>
+                            <input type="date" name="emission_date" id="EMISSIONDATE" ng-model="LCTRL.newCollection.ending.emissiondate">
+                            <br>
+                            <label for="REF">CRO</label>
+                            <input type="text" size="50" name="ref" id="REF" ng-model="LCTRL.newCollection.ending.ref">
+                            <br>
+                            <p class="panel-danger danger" ng-if="LCTRL.newCollection.partial.erroreBanca">Banca scelta non valida, riprovare!</p>
+                            <label for="ABI">ABI</label>
+                            <input type="search" name="abi" id="ABI" ng-model="LCTRL.newCollection.partial.abi">
+                            <label for="CAB">CAB</label>
+                            <input type="search" name="cab" id="CAB" ng-model="LCTRL.newCollection.partial.cab">
+                            <br>
+                            <label for="BANCA">BANCA</label>
+                            <p style="width: 100%;" id="BANCA">--__LCTRL.newCollection.partial.banca+" "+LCTRL.newCollection.partial.street+" "+LCTRL.newCollection.partial.city__--</p>
+                        </div>
+                        <div class="dimensionatore-tail">
+                            <div id="suggerimentiBanca" class="greybox suggestBox">
+                                <ul style="height: 95%;">
+                                    <li ng-repeat="banca in LCTRL.newCollection.partial.suggerimentiBanca"
+                                        ng-click="LCTRL.useSuggerimentoBanca(banca)">
+                                        <p>--__banca.bankname + "   ABI: "+banca.bankabi + "  CAB"+banca.bankcab__-- </p>
+                                        <p><small>--__banca.bankstreet+" "+banca.bankcity__--</small></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </form>
+            </div>
+        </maschera>
+        <maschera titlep="Nuovo incasso" sizep="lg" maskid="LCTRL.mascheraNuovoIncassoContante[0]" buttons="Avanti|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+
+                    <div ng-if="LCTRL.controlSuggerimentiBanca" style="margin-left: 95%; width: 5%; height: 10px; background-color: #00ff00;">&nbsp;</div>
+                    <div ng-if="!LCTRL.controlSuggerimentiBanca" style="margin-left: 95%; width: 5%; height: 10px; background-color: #ff0000">&nbsp;</div>
+                    <fieldset>
+                        <div class="dimensionatore-head">
+                            <legend>Dati pagamento in contanti</legend>
+                            <p>Cliente che ha effettuato il pagamento: --__LCTRL.newCollection.aux.accountname__--</p>
+                            <p class="panel-danger danger" ng-if="LCTRL.newCollection.partial.erroreAmount">Ammontare non valido, riprovare!</p>
+                            <label for="AMOUNT">Ammontare</label>
+                            <input type="number" min="1" name="AMOUNT" id="AMOUNT" step="0.01" ng-model="LCTRL.newCollection.ending.amount" required>
+                            <p class="panel-danger danger" ng-if="LCTRL.newCollection.partial.erroreTipo">Data emissione non valida, riprovare!</p>
+                            <label for="EMISSIONDATE">Data del pagamento</label>
+                            <input type="date" name="emission_date" id="EMISSIONDATE" ng-model="LCTRL.newCollection.ending.emissiondate">
+                            <br>
+
+                        </div>
+
+                    </fieldset>
+
+                </form>
+            </div>
+        </maschera>
+        <maschera titlep="Nuova banca" sizep="lg" maskid="LCTRL.mascheraNuovaBanca[0]" buttons="Inserisci|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned" novalidate>
+                    <fieldset>
+                        <div class="dimensionatore-head">
+                            <legend>Dati nuova banca</legend>
+                            <p class="panel-danger danger" ng-if="LCTRL.newBank.partial.erroreNuovaBanca">Banca gi&agrave; presente o non valida.</p>
+                            <label for="ABI">ABI</label>
+                            <input type="search" name="abi" id="ABI" ng-model="LCTRL.newBank.ending.bankabi">
+                            <label for="CAB">CAB</label>
+                            <input type="search" name="cab" id="CAB" ng-model="LCTRL.newBank.ending.bankcab">
+                            <br>
+                            <label for="BANCA">BANCA</label>
+                            <input type="text" name="name" id="BANCA" ng-model="LCTRL.newBank.ending.bankname" size ="100">
+                            <br>
+                            <label for="INDIRIZZO">INDIRIZZO</label>
+                            <input type="text" name="indirizzo" id="INDIRIZZO" ng-model="LCTRL.newBank.ending.bankstreet" size ="100">
+                            <br>
+                            <label for="CAP">CAP</label>
+                            <input type="text" name="cap" id="CAP" ng-model="LCTRL.newBank.ending.bankcode">
+                            <label for="CITY">LOCALIT&Agrave;</label>
+                            <input type="text" name="city" id="CITY" ng-model="LCTRL.newBank.ending.bankcity">
+                            <label for="PROVINCE">PROVINCIA</label>
+                            <input type="text" name="province" id="PROVINCE" ng-model="LCTRL.newBank.ending.bankprovince">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </maschera>
+        <maschera titlep="Cambiamento stato" sizep="sm" maskid="LCTRL.mascheraNuovoStato[0]" buttons="Cambia|Annulla">
+            <div class="dimensionatore">
+                <fieldset>
+                    <legend>Scegli il nuovo stato</legend>
+                    <select ng-options="key as value for (key,value) in LCTRL.nuovoStatoAllowed" ng-model="LCTRL.newstatus.newstatus">
+
+                    </select>
+                </fieldset>
+            </div>
+        </maschera>
+        <maschera titlep="Assegnazione nostra banca" sizep="sm" maskid="LCTRL.mascheraNostraBanca[0]" buttons="Assegna|Annulla">
+            <div class="dimensionatore">
+                <fieldset>
+                    <legend>Scegli la banca su cui &eacute; stato versato il pagamento</legend>
+                    <select ng-options="key as value for (key,value) in LCTRL.nostraBancaAllowed" ng-model="LCTRL.nostraBanca.ourbankid">
+
+                    </select>
+                </fieldset>
+            </div>
+        </maschera>
+        <maschera titlep="Date relative all&apos;incasso" sizep="lg" maskid="LCTRL.mascheraDates[0]" buttons="Conferma|Annulla">
+            <div class="dimensionatore">
+                <form class="form-aligned">
+                    <fieldset>
+                        <legend>Seleziona le date relative al pagamento</legend>
+                        <label class='label' for="EMISSIOND">Data di emissione</label>
+                        <input class='input-sm' type="date" id='EMISSIOND' name='EMISSIOND' ng-model="LCTRL.dates.emissiond"><br>
+                        <label class='label' for="RECEIPTD">Data di ricezione</label>
+                        <input class='input-sm' type="date" id='RECEIPTD' name='RECEIPTD' ng-model="LCTRL.dates.receiptd"><br>
+                        <label class='label' for="DEPOSITD">Data di versamento</label>
+                        <input class='input-sm' type="date" id='DEPOSITD' name='DEPOSITD' ng-model="LCTRL.dates.depositd"><br>
+                        <label class='label' for="VALUED">Data valuta</label>
+                        <input class='input-sm' type="date" id='EMISSIOND' name='EMISSIOND' ng-model="LCTRL.dates.valued"><br>
+                    </fieldset>
+                </form>
+            </div>
+        </maschera>
+        <div class="container" style="width: 100%;">
+            <div class="row">
+                <div class="col-sm-1" ng-show="showLeftBar" style="height: 100%;">
+                    <filteredtableselector tableid="LCTRL.tabella[0]"></filteredtableselector>
+                    <filteredtableorderer tableid="LCTRL.tabella[0]"></filteredtableorderer>
+                    <div class="panel panel-default" ng-if="{$root}.total.Ammontare">
+                        <div class="panel-heading">Totale</div>
+                        <div class="panel-body">
+                            <span>--__{$root}.total.Ammontare|currency:"€ ":2__--</span>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="" ng-class="LCTRL.tableClass()" ng-if="LCTRL.showNotShow.loader" style="text-align: center; width: 100%;"> 
+                    <img ng-src="--__LCTRL.loaderImagePath()__--">
+                </div>
+                <div class="" ng-class="LCTRL.tableClass()" ng-if="LCTRL.showNotShow.tabella"> 
+                    <button class="btn btn-success btn-sm" ng-click="LCTRL.proceduraNuovoIncasso()">Nuovo incasso</button>&nbsp;
+                    <button class="btn btn-success btn-sm" ng-click="LCTRL.proceduraNuovaBanca()">Nuova banca</button>
+                    <filteredtable tableid="LCTRL.tabella[0]"></filteredtable>
+                </div>
+                <div class="" ng-class="LCTRL.tableClass()" ng-if="LCTRL.showNotShow.splitSo"> 
+                    <button type="button" class="btn btn-primary" ng-click="LCTRL.splitSoBack()">Torna a lista</button>
+                    <div class="splitContainer" style="width: 100%;">
+                        <barrafatture data="LCTRL.splitSo"></barrafatture>
+                    </div>
+                </div>
+                <div class="col-sm-1" ng-show="showRightBar">
+                    <filteredtableinspector tableid="LCTRL.tabella[0]"></filteredtableinspector>
+                    <filteredtableoperation tableid="LCTRL.tabella[0]"></filteredtableoperation>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

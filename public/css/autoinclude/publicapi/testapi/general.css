@@ -1,0 +1,31 @@
+.emptysetcontainer{
+    display: inline-block;
+    position: relative;
+    width: 50%;
+}
+/*.emptysetdummy {
+    margin-top: 75%;  4:3 aspect ratio 
+}*/
+.emptysetcontainer:after {
+    content: '';
+    display: block;
+    margin-top: 75%;
+}
+.emptysetelement {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url('./img/emptyset.png');
+    background-position-x: 0;
+    background-position-y: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+pre {
+    font: 16px Verdana;
+    color: black;
+    background-color: #f2f2f2;
+}

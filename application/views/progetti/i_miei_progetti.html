@@ -1,0 +1,83 @@
+
+<div ng-app="IMieiProgetti" id="pagina">
+    <h2>I MIEI PROGETTI</h2>
+
+
+    <div ng-controller="ListoneController as ListoneCtrl">
+        <div id="topNavigator">
+            <div id="filterdiv">
+                <form class="form" style="display: inline-block; float: left;">
+                    <label for="ricerca" id="ricercaLabel">Filtra:</label>
+                    <input class="input-sm" size="100" ng-model="ListoneCtrl.ricerca" ng-change="ListoneCtrl.filter()" id="ricerca" name="ricerca" type="search">
+                </form><br>
+<!--                --__ListoneCtrl.filtered.length__-- progetti disponibili-->
+                <form class="form form-inline" style="display: inline-block; float: left;">
+                    <input type="radio" ng-model="statusFilter" ng-value="0" ng-change="ListoneCtrl.filter()">Tutti&nbsp;&nbsp;
+                    <input type="radio" ng-model="statusFilter" ng-value="1" ng-change="ListoneCtrl.filter()">In corso&nbsp;&nbsp;
+                    <input type="radio" ng-model="statusFilter" ng-value="2" ng-change="ListoneCtrl.filter()">In attesa di conferma&nbsp;&nbsp;
+                </form>
+
+            </div><br>
+            <div style="width: 100%; text-align: center;">
+            <span id="goBack"><a ng-show="ListoneCtrl.previousIsShown" ng-href="#" ng-click="ListoneCtrl.goBack()" >&lt;</a></span>
+            <span id="numeroPagina">pagina --__ (ListoneCtrl.currentPage+1) +" di "+ ListoneCtrl.totalNumberOfPages __--</span>
+            <span id="goForw"><a ng-show="ListoneCtrl.nextIsShown" ng-href="#" ng-click="ListoneCtrl.goForw()">&gt;</a></span>
+            </div>
+            <label for="pageCounterOption" id="pageCounterOptionLabel">Mostra</label>
+            <select class="btn btn-primary" name="pageCounterOption" id="pageCounterOption" ng-model="itemsInAPage" ng-change="ListoneCtrl.organizeData()">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+
+        <!--<br><br><br>-->
+
+        <div class="listone">
+
+            <table width="100%" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="10%">Numero progetto</th>
+                        <th width="15%">Titolo progetto</th>
+                        <th width="10%">Situazione progetto</th>
+                        <th width="25%">Tipologia progetto</th>
+                        <th width="20%">Azienda cliente</th>
+                        <th width="20%">Data apertura progetto</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="!(ListoneCtrl.listoneLoaded)">
+                    <tr>
+                        <td colspan="6" style="text-align: center;">Caricamento in corso...<br><img ng-src="../../img/ajax-loader-h.gif"></td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="(ListoneCtrl.listoneLoaded)">
+                    <tr ng-repeat="datum in {$root}.filtered = (data| filterSituazione : statusFilter | filter : ListoneCtrl.ricerca) | pagina : ListoneCtrl.currentPage * itemsInAPage | limitTo : itemsInAPage" ng-click="ListoneCtrl.avvia(datum.link,datum)">
+                    <!--<tr ng-repeat="datum in []" ng-click="ListoneCtrl.avvia(datum.link)">-->
+                        <td>--__datum["Numero progetto"]__--</td>
+                        <td>--__datum["Nome progetto"]__--</td>
+                        <td>--__datum["Situazione progetto"]|showSituazione__--</td>
+                        <!--<td>--__datum__--</td>-->
+                        <td>--__datum["Tipo progetto"]__--</td>
+                        <td>--__datum["Azienda cliente"]__--</td>
+                        <td>--__datum["Data apertura progetto"]|date:"dd-MM-yyyy"__--</td>
+                    </tr>
+                    <tr ng-if="!{$root}.filtered.length">
+                        <td colspan="6" style="text-align: center;">Nessun progetto rispetta le condizioni richieste.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div><br>
+        <div id="paginazione">
+            <ul class="pagination">
+                <li><a href="#" ng-click="ListoneCtrl.goFirst()">&laquo;</a></li>
+                <li ng-repeat="page in ListoneCtrl.pages" ng-class="ListoneCtrl.currentPageToClass(page)"><a href="#" ng-click="ListoneCtrl.goToPage(page - 1)">--__page__--</a>&nbsp;</li>
+                <li><a href="#" ng-click="ListoneCtrl.goLast()">&raquo;</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>

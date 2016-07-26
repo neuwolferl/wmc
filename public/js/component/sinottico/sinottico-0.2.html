@@ -1,0 +1,44 @@
+<div style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px; z-index: 1000;" ng-show="modal"></div>
+<div class="container" ng-style="containerStyle">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>--__title__--</h2>
+        </div>
+    </div>
+    <!----__modal__---->
+    <div class="row">
+        <div class="col-sm-2" style="text-align: center;" ng-show="modal">
+            <table style="width: 100%;">
+                <tr>
+                    <th>Attivi</th>
+                </tr>
+                <tr ng-repeat="label in calObj.labels">
+                    <td style="text-align: left;"><button style="width: 100%;" class="btn btn-success btn-sm" ng-show="label.active" ng-click="deactivateLabel($index)">--__label.label__--</button></td>
+                </tr>
+            </table> 
+            <table style="width: 100%;">
+                <tr>
+                    <th>Disattivi</th>
+                </tr>
+                <tr ng-repeat="label in calObj.labels">
+                    <td style="text-align: left;"><button style="width: 100%;" class="btn btn-danger btn-sm" ng-show="!label.active" ng-click="activateLabel($index)">--__label.label__--</button></td>
+                </tr>
+            </table> 
+            <button type="button" class="btn btn-primary" ng-click="changeLabels()">Applica</button>
+            <!--<smart-button class="btn btn-primary" btnid="btn[0]" label="Applica"></smart-button>-->
+        </div>
+        <div ng-class="{'col-sm-8': model, 'col-sm-12': !model}">
+            <input class="input-sm" type="date" id="calDate" ng-model="dateObj.date">
+            <div style="width:95%; height:90%;" class="canvas-container">
+                <canvas id="calId" width="100" height="100">Non supporti i canvas, cambia o aggiorna il browser!</canvas>
+            </div>
+        </div>
+        <div class="col-sm-2" style="text-align: left;" ng-show="modal">
+            <div id="calInfo" >
+            </div>
+        </div>
+    </div>
+    <div style="position: absolute; right:5px; top: 5px;" ng-if="modal">
+        <button class="btn btn-sm" type="button" ng-click="calObj.close()">X</button>
+    </div>
+</div>

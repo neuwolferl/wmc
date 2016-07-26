@@ -1,0 +1,284 @@
+
+{
+    "maintable": "table_0",
+    "tables":
+            {
+                "table_0":
+                        {
+                            "dbname": "vtiger",
+                            "tablename": "external_collections",
+                            "hasid": "true",
+                            "id": "accountid",
+                            "tablefrom": "",
+                            "fields": "field_0|field_1|field_6|field_7"
+                        },
+                "table_3":
+                        {
+                            "dbname": "vtiger",
+                            "tablename": "vtiger_account",
+                            "hasid": "true",
+                            "id": "accountid",
+                            "tablefrom": "table_0",
+                            "fieldfrom": "accountid",
+                            "fieldto": "accountid",
+                            "linkoperation": "#from# = #to#",
+                            "linkmult": "*",
+                            "partialmatching": true,
+                            "genericvalueformissingmatch": "ND",
+                            "fields": "field_2|field_3|field_5"
+                        },
+                "table_5":
+                        {
+                            "dbname": "vtiger",
+                            "tablename": "vtiger_accountscf",
+                            "hasid": "true",
+                            "id": "accountid",
+                            "tablefrom": "table_3",
+                            "fieldfrom": "accountid",
+                            "fieldto": "accountid",
+                            "linkoperation": "#from# = #to#",
+                            "linkmult": "!",
+                            "fields": "field_4"
+                        },
+                "table_7":
+                        {
+                            "dbname": "vtiger",
+                            "tablename": "external_banks",
+                            "hasid": "true",
+                            "id": "bankid",
+                            "tablefrom": "table_0",
+                            "fieldfrom": "bankid",
+                            "fieldto": "bankid",
+                            "linkoperation": "#from# = #to#",
+                            "linkmult": "*",
+                            "partialmatching": false
+                        },
+                "table_10":
+                        {
+                            "dbname": "vtiger",
+                            "tablename": "external_collections_state",
+                            "hasid": "true",
+                            "id": "bankid",
+                            "tablefrom": "table_0",
+                            "fieldfrom": "state",
+                            "fieldto": "state",
+                            "linkoperation": "#from# = #to#",
+                            "linkmult": "*",
+                            "partialmatching": true,
+                            "genericvalueformissingmatch": "ND"
+                        },
+                "table_11":
+                        {
+                            "dbname": "vtiger",
+                            "tablename": "external_collections_so",
+                            "hasid": "true",
+                            "id": "id",
+                            "tablefrom": "table_0",
+                            "fieldfrom": "id",
+                            "fieldto": "idcollection",
+                            "linkoperation": "#from# = #to#",
+                            "linkmult": "+",
+                            "partialmatching": true,
+                            "genericvalueformissingmatch": "ND",
+                            "listing": true,
+                            "sepforlisting": "|",
+                            "fields": "field_10"
+                        },
+                "table_12":
+                        {
+                            "dbname": "vtiger",
+                            "tablename": "vtiger_salesorder",
+                            "hasid": "true",
+                            "id": "salesorderid",
+                            "tablefrom": "table_11",
+                            "fieldfrom": "idso",
+                            "fieldto": "salesorderid",
+                            "linkoperation": "#from# = #to#",
+                            "linkmult": "*",
+                            "partialmatching": true,
+                            "genericvalueformissingmatch": "ND",
+                            "fields": "field_11"
+                        },
+                "table_13":
+                        {
+                            "dbname": "vtiger",
+                            "tablename": "vtiger_invoice",
+                            "hasid": "true",
+                            "id": "invoiceid",
+                            "tablefrom": "table_12",
+                            "fieldfrom": "salesorderid",
+                            "fieldto": "salesorderid",
+                            "linkoperation": "#from# = #to#",
+                            "linkmult": "*",
+                            "partialmatching": true,
+                            "genericvalueformissingmatch": "ND",
+                            "fields": "field_12"
+                        }
+            },
+    "structure":
+            {
+                "table_0":
+                        {
+                            "onetoone": "",
+                            "manytoone":
+                                    {
+                                        "table_3":
+                                                {
+                                                    "onetoone":
+                                                            {
+                                                                "table_5":
+                                                                        {
+                                                                            "onetoone": "",
+                                                                            "manytoone": "",
+                                                                            "onetomany": ""
+                                                                        }
+
+                                                            },
+                                                    "manytoone": "",
+                                                    "onetomany": ""
+                                                },
+                                        "table_7":
+                                                {
+                                                    "onetoone": "",
+                                                    "manytoone": "",
+                                                    "onetomany": ""
+                                                },
+                                        "table_10":
+                                                {
+                                                    "onetoone": "",
+                                                    "manytoone": "",
+                                                    "onetomany": ""
+                                                }
+
+                                    },
+                            "onetomany":
+                                    {
+                                        "table_11":
+                                                {
+                                                    "onetoone": "",
+                                                    "manytoone":
+                                                            {
+                                                                "table_12":
+                                                                        {
+                                                                            "onetoone": "",
+                                                                            "manytoone": "",
+                                                                            "onetomany":
+                                                                                    {
+                                                                                        "table_13":
+                                                                                                {
+                                                                                                    "onetoone": "",
+                                                                                                    "manytoone": "",
+                                                                                                    "onetomany": ""
+                                                                                                }
+
+                                                                                    }
+
+                                                                        }
+
+                                                            },
+                                                    "onetomany": ""
+                                                }
+
+                                    }
+
+                        }
+
+            },
+    "fields":
+            {
+                "field_0":
+                        {
+                            "fieldname": "id",
+                            "alias": "collectionid",
+                            "table": "table_0",
+                            "role": "ID"
+                        },
+                "field_1":
+                        {
+                            "fieldname": "amount",
+                            "alias": "Ammontare",
+                            "table": "table_0",
+                            "role": "PR"
+                        },
+                "field_2":
+                        {
+                            "fieldname": "accountid",
+                            "alias": "accountid",
+                            "table": "table_3",
+                            "role": "PR"
+                        },
+                "field_3":
+                        {
+                            "fieldname": "accountname",
+                            "alias": "nome cliente",
+                            "table": "table_3",
+                            "role": "PR"
+                        },
+                "field_4":
+                        {
+                            "fieldname": "cf_643",
+                            "alias": "vend",
+                            "table": "table_5",
+                            "role": "AT"
+                        },
+                "field_5":
+                        {
+                            "fieldname": "account_no",
+                            "alias": "account_no",
+                            "table": "table_3",
+                            "role": "AT"
+                        },
+                "field_6":
+                        {
+                            "fieldname": "ref",
+                            "alias": "riferimento",
+                            "table": "table_0",
+                            "role": "PR"
+                        },
+                "field_7":
+                        {
+                            "fieldname": "type",
+                            "alias": "Tipo",
+                            "table": "table_0",
+                            "role": "AT"
+                        },
+                "field_8":
+                        {
+                            "fieldname": "potentialid",
+                            "alias": "potentialid",
+                            "table": "table_0",
+                            "role": "AT"
+                        },
+                "field_9":
+                        {
+                            "fieldname": "type",
+                            "alias": "Tipo",
+                            "table": "table_0",
+                            "role": "AT"
+                        },
+                "field_10":
+                        {
+                            "fieldname": "amount",
+                            "alias": "Ammontare SO",
+                            "table": "table_11",
+                            "role": "LI"
+                        },
+                "field_11":
+                        {
+                            "fieldname": "subject",
+                            "alias": "Oggetto SO",
+                            "table": "table_12",
+                            "role": "LI"
+                        },
+                "field_12": {
+                    "fieldname": "subject",
+                    "alias": "Oggetto INV",
+                    "table": "table_13",
+                    "role": "LI"
+                }
+
+            }
+
+
+}
+	

@@ -1,0 +1,347 @@
+<div ng-app="InserimentoLead" class="container">
+    <div ng-controller="InserimentoLeadController as ICTRL" class="topcontainer">
+        {if isset($breadCrumb)}
+        <div>
+            <ol class="breadcrumb">
+                {echo $breadCrumb}
+            </ol>
+        </div>
+        {/if}
+        <error-mask ng-show="ICTRL.errorMask"></error-mask>
+        <header class="page-header row hidden-sm hidden-xs">
+            <h1>Controllo e inserimento lead</h1>
+        </header>
+        <div class="row">
+            <!--            <pre>--__pivaSearchString__--</pre>
+                        <pre>--__pivaSearch__--</pre>-->
+            <div class="col-md-12 text-center" ng-show="!ICTRL.newLead">
+            <form> 
+                <div class="form-group">
+                    <label>Cerca partita iva</label>
+                    <input type="search" class="form-control" name="pivaSearch" ng-model="pivaSearchString">
+                </div>
+                <div class="col-md-12 text-center">
+                    <a class="text-primary" ng-click="pivaSearchString && pivaSearchString.length && !ICTRL.searchingPiva && ICTRL.searchPiva()">
+                        <span class="btn btn-primary btn-circle btn-xl">
+                            <i class="fa fa-2x" ng-class="ICTRL.searchingPivaIcon()"></i>
+                        </span><br>
+                        Cerca
+                    </a>
+                </div>
+                <div ng-if="ICTRL.searchingPiva && ICTRL.searchPivaTimed && ICTRL.searchPivaTimed.index && ICTRL.searchPivaTimed.index>5">--__ICTRL.searchPivaTimed.index__-- secs
+                    <br>La ricerca ci sta mettendo troppo? <a ng-click="ICTRL.searchPivaStop()">ferma</a> e poi riprova.
+                </div>
+            </form>
+            </div>
+            <div ng-show="pivaSearch && !pivaSearch.length" class="col-md-12 text-center">
+                <h3>Nessuna lead risponde a questa partita iva</h3>
+                <div ng-show="!ICTRL.newLead">
+                    <p>&Eacute; possibile inserire una nuova lead.</p>
+                    <button type="button" class="btn btn-primary" ng-click="ICTRL.initInsert()"><i class="fa fa-edit"></i> Inserisci</button>
+                </div>
+                <div class="col-md-12" ng-show="ICTRL.newLead">
+                <form name="newlead" novalidate>
+                    <fieldset>
+                        <legend>Dati principali</legend>
+                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;partitaiva&apos;, true)">
+                            <label>
+                                Partita iva *
+                            </label>
+                            <input type="text" class="form-control" ng-model="ICTRL.newLead.partitaiva" name="partitaiva" required validatepiva>
+                            
+                            <p class="text-success" ng-if="newlead.partitaiva.$valid">Partita Iva formalmente valida</p>
+                            <p class="text-danger" ng-if="newlead.partitaiva.$invalid">Partita Iva formalmente non valida</p>
+                        </div>
+
+                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;ragionesociale&apos;)">
+                            <label>
+                                Ragione sociale * </label>
+                                <input type="text" class="form-control" name="ragionesociale" ng-model="ICTRL.newLead.ragionesociale" required>
+                           
+                            <p class="text-danger" ng-if="newlead.ragionesociale.$invalid">La ragione sociale &eacute; obbligatoria</p>
+                        </div>
+                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;telefono&apos;)">
+                            
+                            <label>
+                                Telefono <i class="fa fa-question-circle"  data-toggle="tooltip" data-placement="top" title="In caso di numeri multipli inserirli separandoli con virgole (es. 123456,654321)"></i>*
+                                 </label>
+                                <input type="text" class="form-control" name="telefono" ng-model="ICTRL.newLead.telefono" required pattern="\d+(\s*,\s*\d+)*">
+                           
+                            <p class="text-danger" ng-if="newlead.telefono.$error.required">Il telefono &eacute; obbligatorio</p>
+                            <p class="text-danger" ng-if="newlead.telefono.$error.pattern">L&apos;inserimento non sembra valido. Inserire solo numeri di telefono validi, separati da virgole</p>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Dati indirizzo</legend>
+                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;regione&apos;)">
+                            <label>
+                                Regione * </label>
+                                <select class="form-control" name="regione" ng-model="ICTRL.newLead.regione" required validateemptyoption
+                                        ng-options="reg for reg in ICTRL.newLeadAux.regioni"
+                                        ng-change="ICTRL.newLeadAux.resetRegione()"></select>
+                            
+                        </div>
+                        <div class="form-group" ng-show="ICTRL.newLead.regione.length" ng-class="ICTRL.validateClass(this, &apos;provincia&apos;)">
+                            <label>
+                                Provincia *</label>
+                                <select class="form-control" ng-model="ICTRL.newLead.provincia" name="provincia" required validateemptyoption
+                                        ng-options="prov for prov in ICTRL.newLeadAux.province"
+                                        ng-change="ICTRL.newLeadAux.resetProvincia()"
+                                        ng-model-options="{&apos;debounce&apos;: 1000}"></select>
+                            
+                        </div>
+                        <div class="form-group" ng-show="ICTRL.newLead.provincia.length" ng-class="ICTRL.validateClass(this, &apos;localita&apos;)">
+                            <label>
+                                Localita *</label>
+                                <select class="form-control" name="localita" ng-model="ICTRL.newLead.localita" required ng-options="loc as loc.localita for loc in ICTRL.newLeadAux.localita"></select>
+                            
+                        </div>
+                        <div class="form-group" ng-show="ICTRL.newLead.localita" ng-class="ICTRL.validateClass(this, &apos;cap&apos; )">
+                            <label>
+                                Cap * </label>
+                                <input type="text" class="form-control" name="cap" ng-model="ICTRL.newLead.cap" pattern="\d{5}" required validatecap="--__ICTRL.newLead.localita.cap__--">
+                            
+                            <p class="text-danger" ng-if="newlead.cap.$error && newlead.cap.$error.required">Il cap &eacute; obbligatorio</p>
+                            <p class="text-danger" ng-if="newlead.cap.$error && ! newlead.cap.$error.required && newlead.cap.$error.pattern">Il cap inserito non &eacute; valido</p>
+                            <p class="text-warning" ng-if="newlead.cap.$error && ! newlead.cap.$error.required && ! newlead.cap.$error.pattern && newlead.cap.$error.cap">
+                                Attenzione: il cap inserito non coincide con la localit&agrave; inserita. Suggerimento: --__ICTRL.newLead.localita.cap__--
+                            </p>
+                        </div>
+                        <div class="form-group" ng-show="ICTRL.newLead.localita" ng-class="ICTRL.validateClass(this, &apos;indirizzo&apos;)">
+                            <label>
+                                Indirizzo con numero civico *</label>
+                                <input type="text" class="form-control" ng-model="ICTRL.newLead.indirizzo" required>
+                            
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Dati contatto</legend>
+                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;email&apos;)">
+                            <label>
+                                Email</label>
+                                <input class="form-control" type="email" name="email" ng-model="ICTRL.newLead.email"> 
+                            
+                            <p class="text-danger" ng-if="newlead.email.$error.email">Email non valida</p>
+                        </div>
+                        <div class="form-group"  ng-class="ICTRL.validateClass(this, &apos;homepage&apos;)">
+                            <label>
+                                Home page</label>
+                                <input type="url" class="form-control" name="homepage" ng-model="ICTRL.newLead.homepage">
+                            
+                            <p class="text-danger" ng-if="newlead.homepage.$error.url">Indirizzo non valido</p>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Altri dati rilevanti</legend>
+                        <div class="form-group"  ng-class="ICTRL.validateClass(this, &apos;ateco&apos;)">
+                            <label>
+                                Attivit&agrave; ateco </label>
+                                <select class="form-control" name="ateco" ng-model="ICTRL.newLead.ateco" 
+                                        ng-options="ateco as ICTRL.formatAteco(ateco) group by ateco.desc_sezione for ateco in ICTRL.newLeadAux.ateco">
+                                    <option value="-1"> --- </option>
+                                </select>
+                           
+                        </div>
+                        <div class="form-group"  ng-class="ICTRL.validateClass(this, &apos;classedipendenti&apos;)">
+                            <label>
+                                Classe dipendenti * </label>
+                                <select class="form-control" name="classedipendenti" ng-model="ICTRL.newLead.classedipendenti" 
+                                        ng-options="cl.id as cl.value for cl in ICTRL.newLeadAux.classeDip" required></select>
+                           
+                        </div>
+                        <div class="form-group"  ng-class="ICTRL.validateClass(this, &apos;fasciafatturato&apos;)">
+                            <label>
+                                Fascia fatturato *</label>
+                                <select class="form-control" name="fasciafatturato" ng-model="ICTRL.newLead.fasciafatturato" 
+                                        ng-options="fa.id as fa.value for fa in ICTRL.newLeadAux.fasciaFat" required></select>
+                            
+                        </div>
+                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;formagiuridica&apos;)">
+                            <label>
+                                Forma giuridica *</label>
+                                <select class="form-control" name="formagiuridica" ng-model="ICTRL.newLead.formagiuridica" 
+                                        ng-options="fg for fg in ICTRL.newLeadAux.formaGiu" required></select>
+                            
+                        </div>
+                    </fieldset>
+                    <div class="col-sm-6" ng-show="!ICTRL.creatingLead">
+                        <a class="text-primary" ng-click="ICTRL.makeInsert()">
+                            <span class="btn btn-primary btn-circle btn-xl">
+                                <i class="fa fa-2x fa-check"></i>
+                            </span><br>
+                            Inserisci
+                        </a>
+                    </div>
+                    <div class="col-sm-6" ng-show="!ICTRL.creatingLead">
+                        <a class="text-warning" ng-click="ICTRL.cancelInsert()">
+                            <span class="btn btn-warning btn-circle btn-xl">
+                                <i class="fa fa-2x fa-remove"></i>
+                            </span><br>
+                            Annulla
+                        </a>
+                    </div>
+                    <div class="col-sm-12 text-center" ng-show="ICTRL.reportLead">
+                        <a class="text-primary" ng-click="ICTRL.reportToAdmin()">
+                            <span class="btn btn-primary btn-circle btn-xl">
+                                <i class="fa fa-2x fa-share"></i>
+                            </span><br>
+                            Segnala questo inserimento.
+                        </a>
+                    </div>
+                    <div class="col-sm-12" ng-show="ICTRL.creatingLead && ICTRL.createLeadTimed && ICTRL.createLeadTimed.index && ICTRL.createLeadTimed.index>5">--__ICTRL.createLeadTimed.index__-- secs
+                        <br>L&apos;operazione ci sta mettendo troppo? <a ng-click="ICTRL.makeInsertStop()">ferma</a> e poi riprova.
+                    </div>
+<!--                    <pre>--__ICTRL.newLead__--</pre>
+                    <pre>--__newlead|json__--</pre>-->
+                </form>
+                </div>
+            </div>
+                </div>
+            <div ng-show="pivaSearch && pivaSearch.length" class="col-md-12 text-center">
+                <h3>Lead trovate <span class="badge">--__pivaSearch.length__--</span></h3>
+                <div class="col-sm-12 col-xs-12 alert" ng-repeat="lead in pivaSearch" ng-init="amendShow={}">
+                    <div class="col-sm-12 col-xs-12 text-left" role="alert">
+                        <div class="col-sm-6 col-xs-6">
+                            <p>
+                                <i class="fa fa-arrow-right"></i> <strong>Partita iva:</strong> --__lead.partitaiva__--&nbsp;&nbsp;&nbsp;<i class="fa" ng-class="ICTRL.checkPivaIcon(lead)" data-toggle="tooltip" data-original-title="Controllo validità partita iva"></i><br>
+                                <i class="fa fa-arrow-right"></i> <strong>Ragione sociale:</strong> --__lead.ragionesociale__--<br>
+                                <i class="fa fa-arrow-right"></i> <strong>Indirizzo:</strong> --__lead.indirizzo+" "+lead.cap+" "+lead.localita+" "+lead.provincia_sigla__--<br>
+
+                                <span ng-if="!lead.telefono.length && !lead.telefono2.length">
+                                    <i class="fa fa-arrow-right"></i> <strong>Nessun numero disponibile</strong><br>
+                                </span>
+                                <span ng-if="lead.telefono.length || lead.telefono2.length">
+                                    <i class="fa fa-arrow-right"></i> <strong>Telefoni:</strong> --__lead.telefono+", "+lead.telefono2.join(", ")__--<br>
+                                </span>
+                                <i class="fa fa-arrow-right"></i> <strong>Ateco:</strong> --__lead.attivita_ateco__--<br>
+                                <i class="fa fa-arrow-right"></i> <strong>Punteggio:</strong> --__lead.punteggio_azienda__--<br>
+                                <br>
+                                <span ng-if="lead.ultimachiamata.date">
+                                    <i class="fa fa-arrow-right"></i> <strong>Ultima chiamata:</strong> --__lead.ultimachiamata.date|date:"dd-MM-yyyy HH:mm:ss"__--<br>    
+                                </span>
+                                <span ng-if="!lead.ultimachiamata.date">
+                                    <i class="fa fa-arrow-right"></i> <strong>Nessuna chiamata:</strong><br>    
+                                </span>
+
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                            <table style="width:100%;" class="table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="8" class="text-center">ESCLUSIONI</th>
+                                    </tr>
+                                    <tr> 
+                                        <th style="width:12%;" ng-repeat="lockCause in ICTRL.lockCauses" class="text-center">
+                                            --__lockCause.cause__--
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td ng-repeat="lockCause in ICTRL.lockCauses" class="text-center">
+                                            <i class="fa" ng-class="ICTRL.lockIcon(lead.esclusione, lockCause.value)"
+                                               ng-click="ICTRL.toggleEsc(lead.partitaiva, lockCause.bit)" ng-show="!lead.escWorking"></i>
+                                            <i class="fa fa-spin fa-spinner" ng-show="lead.escWorking"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <table style="width:100%;" class="table-bordered" ng-if="lead.pipe">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3" class="text-center">SITUAZIONE TUBO</th>
+                                    </tr>
+                                    <tr> 
+                                        <th class="text-center">
+                                            TUBO
+                                        </th>
+                                        <th class="text-center">
+                                            VEND
+                                        </th>
+                                        <th class="text-center">
+                                            LOTTO
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            --__lead.pipe.tubo__--
+                                        </td>
+                                        <td class="text-center">
+                                            --__lead.pipe.venditore__--
+                                        </td>
+                                        <td class="text-center">
+                                            --__lead.pipe.lotto__--
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>    
+                            <span ng-if="!lead.pipe">
+                                <i class="fa fa-arrow-right"></i> L&apos;azienda non &eacute; presente nel tubo.<br>    
+                            </span>
+                        </div>
+                        <div class="col-sm-12 col-xs-12" ng-show="lead.amend && lead.amend.length" ng-init="amendShow[lead.internal_id] = false;">
+                                
+                            <div><h4>Amend
+                                    <i class="fa fa-plus-square-o" ng-click="amendShow[lead.internal_id] = true" ng-show="!amendShow[lead.internal_id]"></i>
+                                    <i class="fa fa-minus-square-o" ng-click="amendShow[lead.internal_id] = false" ng-show="amendShow[lead.internal_id]"></i>
+                                </h4></div>
+                            <div role="alert" class="alert alert-info" ng-repeat="am in lead.amend" ng-show="amendShow[lead.internal_id]">
+                                <div class="panel">
+                                    <div class="panel-heading" ng-show="am.cancella == &apos;0&apos;">
+                                        Inserimento / modifica richiesta da utente: --__am.user__-- @ --__am.timestamp|date:"dd-MM-yyyy HH:mm:ss"__--
+                                    </div>
+                                    <div class="panel-heading" ng-show="am.cancella == &apos;1&apos;">
+                                        Rimozione richiesta da utente: --__am.user__-- @ --__am.timestamp|date:"dd-MM-yyyy HH:mm:ss"__--
+                                    </div>
+                                    <div class="panel-body">
+                                        <div ng-show="am.ragionesociale.length">
+                                            Ragione sociale: --__am.ragionesociale__--
+                                        </div>
+                                        <div ng-show="am.indirizzo.length">
+                                            Indirizzo: --__am.indirizzo__--
+                                        </div>
+                                        <div ng-show="am.localita.length">
+                                            Localit&agrave;: --__am.localita__--
+                                        </div>
+                                        <div ng-show="am.cap.length">
+                                            Cap: --__am.cap__--
+                                        </div>
+                                        <div ng-show="am.provincia.length">
+                                            Provincia: --__am.provincia__--
+                                        </div>
+                                        <div ng-show="am.regione.length">
+                                            Regione: --__am.regione__--
+                                        </div>
+                                        <div ng-show="am.email.length">
+                                            Email: --__am.email__--
+                                        </div>
+                                        <div ng-show="am.sito.length">
+                                            Sito web: --__am.sito__--
+                                        </div>
+                                        <div ng-show="am.formagiuridica.length">
+                                            Forma giuridica: --__am.formagiuridica__--
+                                        </div>
+                                        <div ng-show="am.fasciafatturato.length">
+                                            Fascia fatturato: --__am.fasciafatturato__--
+                                        </div>
+                                        <div ng-show="am.classedipendenti.length">
+                                            Classe dipendenti: --__am.classedipendenti__--
+                                        </div>
+                                        <div ng-show="am.telefono.length">
+                                            Telefono: --__am.telefono__--
+                                        </div>
+                                        <!--<pre>--__am|json__--</pre>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="it" ng-app="{$ngApp}">
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <title>{if isset($custompagetitle)}{echo $custompagetitle}{/if}{else}{echo $stdpagetitle}{/else}</title>
+
+        {if isset($bootstrap)}
+        <link rel="stylesheet" href="{echo $bootstrap}">
+        {/if}
+        {else} 
+        <link rel="stylesheet" href="/tsnw/public/css/bs/bootstrap.min.css">
+        {/else}
+        {if isset($fa)}
+        <link rel="stylesheet" href="{echo $fa}">
+        {/if}
+
+        {if isset($script_inc)}{echo $script_inc}{/if}
+        {if isset($system_js_including)}{echo $system_js_including}{/if}
+        {if isset($css_autoinclude)}
+        {foreach $css in $css_autoinclude}
+        <link rel="stylesheet" href="{echo $css}">
+        {/foreach}
+        {/if}
+        {if isset($js_autoinclude)}
+        {foreach $js in $js_autoinclude}
+        <script type="text/javascript" src="{echo $bootstrapjs}"></script>
+        <script type="text/javascript" src="{echo $js}"></script>
+        {/foreach}
+        {/if}
+        <link rel="stylesheet" href="{$cssroot}daniele.css">
+    </head>
+    <body> 
+        <nav class="navbar navbar-fixed-top navbar-inverse" style="display: none;">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-toggle glyphicon glyphicon-search" onclick="(window.doGlobalSearch ? window.doGlobalSearch() : console.log(1234567890))"></a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainmenu" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a id="logo" href="#">
+                        {if isset($customlogo)}
+                        <img height="35" src="{$customlogo}">
+                        {/if}
+                    </a>
+
+                </div>
+                <div id="mainmenu" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav hidden-md hidden-lg">
+                        {if (isset($moduleName))}
+                        <li ><a>Sei in {echo $moduleName}</a></li>
+                        {/if}
+                        <li class="dropdown dropdowntoolbox">
+                            {if !isset($noUser)}
+                            {if isset($user)}
+                            {if $user}
+                            {if isset($vtiger_logged_user_id)}
+                            <i class="fa fa-paw fa-border"></i>
+                            {/if}
+                            {if isset($gLogged)}
+                            <i class="fa fa-google fa-border"></i> 
+                            {/if}
+                            {echo $user}
+                            <button class="btn btn-primary" type="button" onclick="window.location.href = {$sitepathapos}">
+                                <span class="glyphicon glyphicon-home" style="width: 100%; height: 100%;"></span>
+                            </button>
+                            <button class="btn btn-danger" type="button" onclick="window.location.href = {$logoutpath}">Logout</button>
+                            {/if}
+                            {/if}
+                            {/if}
+                        </li>
+                        <li class="divider"></li> 
+
+
+                    </ul>
+
+                    <div class="navbar-text navbar-left hidden-sm hidden-xs">
+                        <strong class="pull-left" style=" float: left; color: white;">
+                            {if (isset($moduleName))}
+                            {echo $moduleName}
+                            {/if}
+                        </strong>
+                    </div>
+                    <div class="navbar-form navbar-right hidden-sm hidden-xs">
+
+                        <button class="btn btn-primary" type="button" onclick="window.location.href = {$sitepathapos}">
+                            <span class="glyphicon glyphicon-home" style="width: 100%; height: 100%;"></span>
+                        </button>
+                        <button class="btn btn-danger" type="button" onclick="window.location.href = {$logoutpath}">Logout</button>
+                    </div>
+                    <div class="navbar-text navbar-right hidden-sm hidden-xs">
+                        {if !isset($noUser)}
+                        {if isset($user)}
+                        {if $user}
+                        {if isset($gLogged)}
+                        <i class="fa fa-paw fa-border"></i>
+                        {/if}
+                        {if isset($vtiger_logged_user_id)}
+                        <i class="fa fa-google fa-border"> </i>
+                        {/if}
+
+                        &nbsp;{echo $user} 
+
+                        {/if}
+                        {/if}
+                        {/if}
+                    </div>
+
+
+                </div><!--/.nav-collapse -->
+            </div>
+
+        </nav>
+        {if isset($breadCrumb)}
+        <div class=" navbar">
+            <div class="container">
+                <div class=" navbar-collapse collapse" style="margin-top: 10px;">
+                    <ol class="breadcrumb">
+                        {echo $breadCrumb}
+                    </ol>
+                </div>
+            </div>
+        </div>
+        {/if}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 panel" style="border-width:1px;">
+                    <br><br><bold>SESSION</bold><pre>{$session}</pre>
+                    <br><br><bold>REGISTRY</bold><pre>{$registry}</pre>
+                </div>
+                <div class="col-sm-6">
+                    {echo $template}            
+                </div>
+            </div>
+        </div>
+        
+        {if isset($adminPanel)}
+        <div style="width: 100%;">
+            {echo $adminPanel}
+        </div>
+        {/if}
+    </body>
+</html>

@@ -1,0 +1,312 @@
+<div ng-app="InserimentoLead" class="container">
+    <div ng-controller="InserimentoLeadController as ICTRL" class="topcontainer">
+        {if isset($breadCrumb)}
+        <div>
+            <ol class="breadcrumb">
+                {echo $breadCrumb}
+            </ol>
+        </div>
+        {/if}
+        <error-mask ng-show="ICTRL.errorMask"></error-mask>
+        <header class="page-header row hidden-sm hidden-xs">
+            <h1>Diretta venditore</h1>
+        </header>
+        <div class="row">
+            <div class="alert alert-info alert-dismissible in fade">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="fa fa-close"></i>
+                </button>
+                <h4>Istruzioni</h4>
+                <i>Questo pannello si riapre ad ogni accesso alla pagina</i>
+                <ul>
+                    <li>Cercare lead per partita iva:
+                        <ul>
+                            <li>se &eacute; presente e non bloccata &eacute; possibile continuare premendo "Prendi appuntamento",</li>    
+                            <li>se non &eacute; presente &eacute; necessario richiederne l&apos;inserimento a sistema,</li>    
+                            <li>se &eacute; presente, ma &eacute; bloccata, &eacute; necessario richiedere lo sblocco;</li>    
+                        </ul>
+                    </li> 
+                    <li>registrare anagrafica azienda, se l&apos;anagrafica é nuova va inserita manualmente:
+                        <ul>
+                            <li>i campi saranno valorizzati con valori presi dal db aziendale,</li>    
+                            <li>correggere eventuali errori e aggiornare i dati,</li>    
+                            <li>registrare l'anagrafica,</li>    
+                            <li>attendere che la nuova anagrafica sia registrata e procedere;</li>    
+                        </ul>
+                    </li>
+                    <li>scegliere un contatto, eventualmente registrandone uno nuovo.<br>In caso di nuovo contatto:
+                        <ul>
+                            <li>scegliere "Nuovo contatto" dal menu dei contatti,</li>    
+                            <li>inserire i dati richiesti (cognome e ruolo sono obbligatori),</li>    
+                            <li>registrare il contatto,</li>    
+                            <li>attendere che il nuovo contatto appaia in lista e sceglierlo;</li>    
+                        </ul>  
+                    </li>
+                    <li>inserire dettagli appuntamento e procedere (3 campi obbligatori).</li>
+                    <br>
+                    <i>Se si prova ad inserire un appuntamento per un&apos;azienda che ne ha gi&agrave; uno aperto,
+                    il sistema suggerir&agrave; di sostituire il nuovo al vecchio. Questo pu&ograve; essere un buon modo per correggere
+                    un inserimento sbagliato. Se si cancellasse per errore un appuntamento corretto, segnalare la cosa allo staff
+                    che pu&ograve; provvedere al ripristino. Quest&apos;ultima é una procedura lunga e noiosa e non senza rischi
+                    quindi si prega di servirsene il meno possibile.</i>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center" ng-show="!ICTRL.newApp.piva">
+            <form> 
+                <div class="form-group">
+                    <label>Cerca partita iva</label>
+                    <input type="search" class="form-control" name="pivaSearch" ng-model="pivaSearchString">
+                </div>
+                <div class="col-md-12 text-center">
+                    <a class="text-primary" ng-click="pivaSearchString && pivaSearchString.length && !ICTRL.searchingPiva && ICTRL.searchPiva()">
+                        <span class="btn btn-primary btn-circle btn-xl">
+                            <i class="fa fa-2x" ng-class="ICTRL.searchingPivaIcon()"></i>
+                        </span><br>
+                        Cerca
+                    </a>
+                </div>
+                <div ng-if="ICTRL.searchingPiva && ICTRL.searchPivaTimed && ICTRL.searchPivaTimed.index && ICTRL.searchPivaTimed.index>5">--__ICTRL.searchPivaTimed.index__-- secs
+                    <br>La ricerca ci sta mettendo troppo? <a ng-click="ICTRL.searchPivaStop()">ferma</a> e poi riprova.
+                </div>
+            </form>
+            </div>
+            <div ng-show="pivaSearch && !pivaSearch.length" class="col-md-12 text-center">
+                <h3>Nessuna lead risponde a questa partita iva</h3>
+                <p>Per procedere ad una diretta venditore &eacute; necessario richiedere l'inserimento della lead nel sistema.</p>
+            </div>
+                </div>
+            <div ng-show="ICTRL.newApp.piva && ICTRL.newApp.piva.length" class="col-md-12 text-center">
+                <h4>Appuntamento</h4>
+                                <form name="nuovoapp">
+                                    <fieldset class="control-group">
+                                        <span>Partita Iva: --__ICTRL.newApp.piva__--</span>
+                                    </fieldset>
+                                    <fieldset class="control-group">
+                                        <legend>Registra anagrafica cliente</legend>
+                                        
+                                        <div ng-show="!ICTRL.newAppPreviousData.account.partita_iva">
+                                            <p class="text-info">Anagrafica non presente, inseriscila.</p>
+                                            <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;ragionesociale&apos;,&apos;nuovoapp&apos;)">
+                                                <label>
+                                                    Ragione sociale *</label>
+                                                <input type="text" class="form-control" name="ragionesociale" ng-model="ICTRL.newApp.newAccount.ragioneSociale" required>
+                                            </div>
+                                            <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;indirizzo&apos;,&apos;nuovoapp&apos;)">
+                                                <label>
+                                                    Indirizzo *</label>
+                                                <input type="text" class="form-control" name="indirizzo" ng-model="ICTRL.newApp.newAccount.indirizzo" required>
+                                            </div>
+                                            <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;localita&apos;,&apos;nuovoapp&apos;)">
+                                                <label>
+                                                    Localit&agrave; *</label>
+                                                <input type="text" class="form-control" name="localita" ng-model="ICTRL.newApp.newAccount.localita" required>
+                                            </div>
+                                            <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;cap&apos;,&apos;nuovoapp&apos;)">
+                                                <label>
+                                                    Cap *</label>
+                                                <input type="text" class="form-control" name="cap" ng-model="ICTRL.newApp.newAccount.cap" required>
+                                            </div>
+                                            <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;provincia&apos;,&apos;nuovoapp&apos;)">
+                                                <label>
+                                                    Provincia *</label>
+                                                <input type="text" class="form-control" name="provincia" ng-model="ICTRL.newApp.newAccount.provincia" required>
+                                            </div>
+                                            <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;email&apos;,&apos;nuovoapp&apos;)">
+                                                <label>
+                                                    Email *</label>
+                                                <input type="email" class="form-control" name="email" ng-model="ICTRL.newApp.newAccount.email" required>
+                                            </div>
+                                            <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;telefono&apos;,&apos;nuovoapp&apos;)">
+                                                <label>
+                                                    Telefono *</label>
+                                                <input type="tel" class="form-control" name="telefono" ng-model="ICTRL.newApp.newAccount.telefono" required>
+                                            </div>
+                                            <i class="fa fa-spin fa-spinner" ng-show="ICTRL.registeringApp"></i>
+                                            <button class="btn btn-sm btn-primary" ng-show="!ICTRL.registeringApp" ng-click="ICTRL.registerNewAccount()">Registra anagrafica</button>
+                                        </div>
+                                        <div ng-show="ICTRL.newAppPreviousData.account.partita_iva">
+                                            <p class="text-info">Anagrafica presente.</p>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset ng-show="ICTRL.newAppStatus.get() > 0" class="control-group">
+                                        <legend>Registra anagrafica contatto</legend>
+                                        <div ng-class="{&apos;col-md-6&apos;:ICTRL.newApp.id_contatto === &apos;nuovo&apos;,&apos;col-md-12&apos;:ICTRL.newApp.id_contatto !== &apos;nuovo&apos;}">
+                                            <legend ng-show="ICTRL.newApp.id_contatto === &apos;nuovo&apos;">Contatti gi&agrave; presenti</legend>
+                                            <div class="form-group" ng-repeat="con in ICTRL.newAppPreviousData.contatti">
+                                            <input type="radio" ng-model="ICTRL.newApp.id_contatto" name="idcontatto" required 
+                                                   ng-value="con.id_contatto">
+                                            <label>--__con.nome__-- --__con.cognome__-- (--__con.ruolo__--)</label>
+                                        </div>
+                                            <div class="form-group">
+                                            <input type="radio" ng-model="ICTRL.newApp.id_contatto" name="idcontatto" required 
+                                                   value="nuovo">
+                                            <label>Nuovo contatto</label>
+                                        </div>
+                                            
+                                        </div>
+                                        <div class="col-sm-6" ng-show="ICTRL.newApp.id_contatto === &apos;nuovo&apos;">
+                                                <legend>Nuovo contatto</legend>
+                                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;nomecontatto&apos;,&apos;nuovoapp&apos;)">
+                                            <label>
+                                                Nome</label>
+                                            <input type="text" class="form-control" name="nomecontatto" ng-model="ICTRL.newApp.newContatto.nome">
+
+                                        </div>
+                                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;cognomecontatto&apos;,&apos;nuovoapp&apos;)">
+                                            <label>
+                                                Cognome *</label>
+                                            <input type="text" class="form-control" name="cognomecontatto" ng-model="ICTRL.newApp.newContatto.cognome" required>
+
+                                        </div>
+                                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;ruolocontatto&apos;,&apos;nuovoapp&apos;)">
+                                            <label>
+                                                Ruolo *</label>
+                                            <input type="text" class="form-control" name="ruolocontatto" ng-model="ICTRL.newApp.newContatto.ruolo" required>
+
+                                        </div>
+                                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;telefonocontatto&apos;,&apos;nuovoapp&apos;)">
+                                            <label>
+                                                Telefono</label>
+                                            <input type="tel" class="form-control" name="telefonocontatto" ng-model="ICTRL.newApp.newContatto.telefono">
+
+                                        </div>
+                                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;cellularecontatto&apos;,&apos;nuovoapp&apos;)">
+                                            <label>
+                                                Cellulare</label>
+                                            <input type="tel" class="form-control" name="cellularecontatto" ng-model="ICTRL.newApp.newContatto.cellulare">
+
+                                        </div>
+                                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;faxcontatto&apos;,&apos;nuovoapp&apos;)">
+                                            <label>
+                                                Fax</label>
+                                            <input type="tel" class="form-control" name="faxcontatto" ng-model="ICTRL.newApp.newContatto.fax">
+
+                                        </div>
+                                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;emailcontatto&apos;,&apos;nuovoapp&apos;)">
+                                            <label>
+                                                Email</label>
+                                            <input type="email" class="form-control" name="emailcontatto" ng-model="ICTRL.newApp.newContatto.email">
+
+                                        </div>
+                                                <div class="form-group">
+                                            <button type="button" class="btn btn-sm btn-primary" ng-click="ICTRL.registerNewContact()">
+                                                Registra anagrafica contatto
+                                            </button>
+                                        </div>
+                
+                                        
+                                            </div>
+                                    </fieldset>
+                                    <fieldset ng-show="!isNaN(ICTRL.newApp.id_cliente) && !isNaN(ICTRL.newApp.id_contatto)">
+                                        <legend>Registra dettagli appuntamento</legend>
+                                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;dataappuntamento&apos;,&apos;nuovoapp&apos;)">
+                                            <label>
+                                                Data appuntamento</label>
+                                            <input type="date" class="form-control" name="dataappuntamento" ng-model="ICTRL.newApp.data" required>
+                                        </div>
+                                        <div class="form-group" ng-class="ICTRL.validateClass(this, &apos;oraappuntamento&apos;,&apos;nuovoapp&apos;)">
+                                            <label>
+                                                Ora appuntamento</label>
+                                            <input type="time" step="60" class="form-control" name="oraappuntamento" ng-model="ICTRL.newApp.data" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                Note appuntamento</label>
+                                            <textarea class="form-control" rows="6" name="noteappuntamento" ng-model="ICTRL.newApp.note"></textarea>
+                                        </div>
+                                        <hr>
+                                        
+                                    </fieldset>
+                                    <div class="col-sm-6" ng-show="!ICTRL.registeringApp && ICTRL.newApp.piva">
+                                        <a class="text-warning" ng-click="ICTRL.cancelInsertApp()">
+                                            <span class="btn btn-warning btn-circle btn-xl">
+                                                <i class="fa fa-2x fa-remove"></i>
+                                            </span><br>
+                                            Annulla
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6" ng-show="!ICTRL.registeringApp && ICTRL.newApp.piva && ICTRL.newApp.id_cliente && ICTRL.newApp.id_contatto">
+                                        <a class="text-primary" ng-click="ICTRL.registerApp()">
+                                            <span class="btn btn-primary btn-circle btn-xl">
+                                                <i class="fa fa-2x fa-check"></i>
+                                            </span><br>
+                                            Conferma
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-12" ng-show="ICTRL.registeringApp">
+                                        <i class="fa fa-4x fa-spin fa-spinner"></i>
+                                    </div>
+                                </form>
+            </div>
+            <div ng-show="pivaSearch && pivaSearch.length && !ICTRL.newApp.piva" class="col-md-12 text-center">
+                <h3>Lead trovate <span class="badge">--__pivaSearch.length__--</span></h3>
+                <div class="col-sm-12 col-xs-12 alert" ng-repeat="lead in pivaSearch" ng-init="amendShow={}">
+                    <div class="col-sm-12 col-xs-12 text-left" role="alert">
+                        <div class="col-sm-6 col-xs-6">
+                            <p>
+                                <i class="fa fa-arrow-right"></i> <strong>Partita iva:</strong> --__lead.partitaiva__--&nbsp;&nbsp;&nbsp;<i class="fa" ng-class="ICTRL.checkPivaIcon(lead)" data-toggle="tooltip" data-original-title="Controllo validità partita iva"></i><br>
+                                <i class="fa fa-arrow-right"></i> <strong>Ragione sociale:</strong> --__lead.ragionesociale__--<br>
+                                <i class="fa fa-arrow-right"></i> <strong>Indirizzo:</strong> --__lead.indirizzo+" "+lead.cap+" "+lead.localita+" "+lead.provincia_sigla__--<br>
+
+                                <span ng-if="!lead.telefono.length && !lead.telefono2.length">
+                                    <i class="fa fa-arrow-right"></i> <strong>Nessun numero disponibile</strong><br>
+                                </span>
+                                <span ng-if="lead.telefono.length || lead.telefono2.length">
+                                    <i class="fa fa-arrow-right"></i> <strong>Telefoni:</strong> --__lead.telefono+", "+lead.telefono2.join(", ")__--<br>
+                                </span>
+                                <i class="fa fa-arrow-right"></i> <strong>Ateco:</strong> --__lead.attivita_ateco__--<br>
+                                <i class="fa fa-arrow-right"></i> <strong>Punteggio:</strong> --__lead.punteggio_azienda__--<br>
+                                <br>
+                                <span ng-if="lead.ultimachiamata.date">
+                                    <i class="fa fa-arrow-right"></i> <strong>Ultima chiamata:</strong> --__lead.ultimachiamata.date|date:"dd-MM-yyyy HH:mm:ss"__--<br>    
+                                </span>
+                                <span ng-if="!lead.ultimachiamata.date">
+                                    <i class="fa fa-arrow-right"></i> <strong>Nessuna chiamata:</strong><br>    
+                                </span>
+
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                            <div ng-show="lead.esclusione !== &apos;0&apos;">
+                                
+                                <table style="width:100%;" class="table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="8" class="text-center"><i class="fa fa-lock"></i> Questa azienda é bloccata</th>
+                                    </tr>
+                                    <tr> 
+                                        <th style="width:12%;" ng-repeat="lockCause in ICTRL.lockCauses" class="text-center">
+                                            --__lockCause.cause__--
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td ng-repeat="lockCause in ICTRL.lockCauses" class="text-center">
+                                            <i class="fa" ng-class="ICTRL.lockIcon(lead.esclusione, lockCause.value)" ng-show="!lead.escWorking"></i>
+                                            <i class="fa fa-spin fa-spinner" ng-show="lead.escWorking"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                            
+                            
+                            
+                            
+                            <div ng-show="lead.esclusione === &apos;0&apos;">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-sm btn-primary" ng-click="ICTRL.initInsertApp(lead.partitaiva)">
+                                        Prendi appuntamento <i class="fa fa-arrow-right"></i>                                        
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+

@@ -1,0 +1,7 @@
+.swipe-page {
+    
+    float: left;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: block;
+}

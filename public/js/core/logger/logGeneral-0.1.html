@@ -1,0 +1,39 @@
+<table class="table table-condensed log-general-tabella-log">
+    <!--    <thead>
+            <tr>
+                <td>LOG</td>
+                <td>Ora</td>
+                <td>Registrazione</td>
+                <td>Agente</td>
+                <td>Dati</td>
+                <td>Esito</td>
+                <td>Note</td>
+            </tr>
+        </thead>-->
+    <tbody>
+
+        <tr ng-repeat="logRow in formatLogged track by $index"
+            ng-show="(!logRow.parent) || (formatLogged[logRow.parent].open)">
+
+            <td style="width: 100%;">
+                <span ng-repeat="x in logRow.level track by $index">&nbsp;</span>
+                <button class="btn btn-success btn-sm" type="button" style="width: 20px; height: 20px; text-align: center; vertical-align: middle;
+                        line-height: 20px;"
+                        ng-if="!logRow.open && (logRow.children.length || logRow.comments.length)"
+                        ng-click="openLogRow($index)">
+                    +
+                </button> 
+                <button class="btn btn-danger btn-sm" type="button" style="width: 20px; height: 20px; text-align: center; vertical-align: middle;
+                        line-height: 20px;"
+                        ng-if="logRow.open"
+                        ng-click="closeLogRow($index)">
+                    -
+                </button> 
+                <div ng-if="!(!logRow.open && (logRow.children.length || logRow.comments.length)) && !(logRow.open)"
+                      style="width: 20px; height: 20px; display: inline-block;">&nbsp;</div>
+                --__logRow.row__--
+            </td>
+        </tr>
+
+    </tbody>
+</table>

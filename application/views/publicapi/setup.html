@@ -1,0 +1,261 @@
+<div ng-app="Setup" style="width: 100%;">
+    <div ng-controller="SetupController as SCTRL">
+        <error-mask ng-if ="SCTRL.errorMask"></error-mask>
+
+        <div class="container" style="width: 100%;">
+
+            <div class="row">
+                <div class="col-sm-2" ng-if="SCTRL.canLoadMainTree()">
+                    <div style="border: 1px dashed lightgray;">
+                        <tree-menu 
+                            data="mainTree.tree" 
+                            navigator="mainTree.nav" 
+                            global-selection-callback="true" 
+                            initial-expand="2" 
+                            selected-node-connector="mainTree.connector"
+                            initial-selection=""
+                            icon-leaf="glyphicon glyphicon-th"
+                            icon-expand="glyphicon glyphicon-folder-close"
+                            icon-collapse="glyphicon glyphicon-folder-open"
+                            folderQualificator="folder"
+                            folderMixture="false"
+                            selector-locker="SCTRL.canShowResourceSubTree"
+                            >
+                        </tree-menu>
+                    </div>
+                </div>
+                <div class="col-sm-8" ng-show="SCTRL.canShowResourceForm() && !SCTRL.canShowResourceSubTree()">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" ng-show="!mainTree.connector.data">
+                            <h3 class="panel-title">Dettagli cartella: --__mainTree.connector.label__--</h3>
+                        </div>
+                        <div class="panel-heading" ng-show="mainTree.connector.data">
+                            <h3 class="panel-title">Modifica risorsa: --__mainTree.connector.label__--</h3>
+                            <button type="button" class="btn btn-sm btn-success" style="position: relative; top: -22px; float: right;"
+                                    ng-click="SCTRL.resourceStructure()">
+                                Struttura&nbsp;&nbsp;<i class="glyphicon glyphicon-arrow-right">&nbsp;</i>
+                            </button>
+                        </div>
+                        <div class="panel-body">
+                            <div class="alert alert-info" role="alert" ng-if="!mainTree.connector.data">
+                                <p>Percorso cartella: --__mainTree.connector.path__--</p>
+                            </div>
+                            <div class="alert alert-info" role="alert" ng-if="mainTree.connector.data">
+                                <p>Percorso interno risorsa: --__treeNav.getParentNode(mainTree.connector).path__--</p>
+                                <p>Percorso pubblico risorsa: 
+                                    <a ng-href="--__SCTRL.percorsoPubblico(mainTree.connector)__--">
+                                        --__Common.cDotString(SCTRL.percorsoPubblico(mainTree.connector),30)__--
+                                    </a></p>
+                            </div>
+                            <form class="form form-aligned" name="editResForm" ng-if="mainTree.connector.data">
+                                <div class="row" style="width: 100%;">
+                                    <div class="col-sm-6">
+                                        <div class="form-group checkbox" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                <input type="checkbox" name="selectable" 
+                                                       id="selectable" ng-model="mainTree.connector.data.static_props._selectable">
+                                                Selezionabile
+                                            </label> 
+                                        </div>
+                                        <div class="form-group checkbox" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                <input type="checkbox" name="creatable"
+                                                       id="creatable" ng-model="mainTree.connector.data.static_props._creatable">
+                                                Creabile
+                                            </label>
+                                        </div>
+                                        <div class="form-group checkbox" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                <input type="checkbox" name="updatable"
+                                                       id="updatable" ng-model="mainTree.connector.data.static_props._updatable">
+                                                Modificabile
+                                            </label>
+                                        </div>
+                                        <div class="form-group checkbox" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                <input type="checkbox" name="deletable"
+                                                       id="deletable" ng-model="mainTree.connector.data.static_props._deletable">
+                                                Cancellabile
+                                            </label>
+                                        </div>
+                                        <br>
+                                        <div class="form-group select" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                Tipo modello<br>
+                                                <select ng-options="type for type in modelTypes" name="modeltype" id="modeltype"
+                                                        ng-model="mainTree.connector.data.static_props._modeltype" 
+                                                        class="form-control input-sm" style="width: 100%;"></select> 
+                                            </label>
+                                        </div>
+                                        <div class="form-group select" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                Modello principale<br>
+                                                <select ng-options="mod for mod in mainTree.connector.data.static_props._modelsinvolved" 
+                                                        name="mainmodel" id="mainmodel"
+                                                        ng-model="mainTree.connector.data.static_props._mainmodel" 
+                                                        class="form-control input-sm" style="width: 100%;">
+                                                    <option> </option>
+                                                </select> 
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                        <div class="form-group select" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                Modelli coinvolti<br>
+                                                <multi-select opts="models[editResForm.modeltype.$modelValue]" 
+                                                              model="mainTree.connector.data.static_props._modelsinvolved" 
+                                                              innermodel="mainTree.connector.data.modelsSelection"
+                                                              height="250" valuename="class"></multi-select>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4" ng-show="SCTRL.canShowResourceSubTree()">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" ng-show="!mainTree.connector.data">
+                            <h3 class="panel-title">Dettagli cartella: --__mainTree.connector.label__--</h3>
+                        </div>
+                        <div class="panel-heading" ng-show="mainTree.connector.data">
+                            <h3 class="panel-title">Modifica risorsa: --__mainTree.connector.label__--</h3>
+                            <button type="button" class="btn btn-sm btn-success" style="position: relative; top: -22px; float: right;"
+                                    ng-click="SCTRL.resourceForm()">
+                                &nbsp;<i class="glyphicon glyphicon-arrow-left">&nbsp;&nbsp;Generali</i>
+                            </button>
+                        </div>
+                        <div class="panel-body">
+                            <div class="alert alert-info" role="alert" ng-if="!mainTree.connector.data">
+                                <p>Percorso cartella: --__mainTree.connector.path__--</p>
+                            </div>
+                            <div class="alert alert-info" role="alert" ng-if="mainTree.connector.data">
+                                <p>Percorso interno risorsa: --__treeNav.getParentNode(mainTree.connector).path__--</p>
+                                <p>Percorso pubblico risorsa: 
+                                    <a ng-href="--__SCTRL.percorsoPubblico(mainTree.connector)__--">
+                                        --__Common.cDotString(SCTRL.percorsoPubblico(mainTree.connector),30)__--
+                                    </a></p>
+                            </div>
+                            <form class="form form-aligned" name="editResForm" ng-if="mainTree.connector.data">
+                                <div class="row" style="width: 100%;">
+                                    <div class="col-sm-6">
+                                        <div class="form-group checkbox" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                Selezionabile
+                                                <span ng-if="mainTree.connector.data.static_props._selectable">&nbsp;SI</span>
+                                                <span ng-if="!mainTree.connector.data.static_props._selectable">&nbsp;NO</span>
+                                            </label> 
+                                        </div>
+                                        <div class="form-group checkbox" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                Creabile
+                                                <span ng-if="mainTree.connector.data.static_props._creatable">&nbsp;SI</span>
+                                                <span ng-if="!mainTree.connector.data.static_props._creatable">&nbsp;NO</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group checkbox" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                Modificabile
+                                                <span ng-if="mainTree.connector.data.static_props._updatable">&nbsp;SI</span>
+                                                <span ng-if="!mainTree.connector.data.static_props._updatable">&nbsp;NO</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group checkbox" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                Cancellabile
+                                                <span ng-if="mainTree.connector.data.static_props._deletable">&nbsp;SI</span>
+                                                <span ng-if="!mainTree.connector.data.static_props._deletable">&nbsp;NO</span>
+                                            </label>
+                                        </div>
+                                        <br>
+                                        <div class="form-group select" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                Tipo modello --__mainTree.connector.data.static_props._modeltype__-- 
+                                            </label>
+                                        </div>
+                                        <div class="form-group select" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                Modello principale --__mainTree.connector.data.static_props._mainmodel__--
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                        <div class="form-group select" style="width: 100%;">
+                                            <label class="label-primary" style="width: 100%;">
+                                                Modelli coinvolti<br>
+                                                <p ng-repeat="mod in mainTree.connector.data.modelsSelection|selectedF"
+                                                   ng-style="{color: mod.color}">
+                                                    --__mod.value__--
+                                                </p>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2" ng-show="SCTRL.canLoadResourceSubTree()">
+                    Organizzazione campi in corso....
+                </div>
+                <div class="col-sm-6" ng-if="SCTRL.canShowResourceSubTree()">
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <tree-menu 
+                                data="resourceSubTree.tree" 
+                                navigator="resourceSubTree.nav" 
+                                initial-expand="5" 
+                                selected-node-connector="resourceSubTree.connector"
+                                icon-leaf="glyphicon glyphicon-th-list"
+                                icon-expand="glyphicon glyphicon-folder-open"
+                                icon-collapse="glyphicon glyphicon-folder-close"
+                                folderQualificator="folder"
+                                folderMixture="false"
+                                >
+                            </tree-menu>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" ng-if="SCTRL.canShowResourceSubTreeDetails()">
+                        <form name="resFieldsForm">
+                            <fieldset>
+                                <legend>Dettagli campo risorsa</legend>
+                                <div class="form-group select" style="width: 100%;">
+                                    <pre>--__resourceSubTree.connector|json__--</pre>
+                                </div>
+                            </fieldset>
+                        </form>
+
+                    </div>
+                    <div class="col-sm-6" ng-if="SCTRL.canShowResourceFields()">
+                        <form name="resFieldsForm">
+                            <fieldset ng-repeat="mod in mainTree.connector.data.modelsSelection|selectedF">
+                                <legend>
+                                    <span class="glyphicon glyphicon-minus" ng-show="pippo" ng-click="pippo = false">&nbsp;</span>
+                                    <span class="glyphicon glyphicon-plus" ng-show="!pippo" ng-click="pippo = true">&nbsp;</span>
+                                    --__mod.value__--</legend>
+                                <p ui-draggable="true" 
+                                   drag="f"
+                                   ng-click="SCTRL.fieldToResourceSubTree(f,mod)"
+                                    ng-show="pippo" ng-repeat="f in modelEdit.modelDets[mod.value].fields">--__f.fieldname|fAlias: modelEdit.modelDets[mod.value]__--</p>
+                            </fieldset>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <pre>
+                    --__models.activerecord|json__--
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

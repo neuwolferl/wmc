@@ -1,0 +1,59 @@
+.tabella-azienda>tbody>tr>td:first-child {
+    width: 130px;
+    font-weight: bold;
+}
+.tabella-azienda>tbody>tr.lb {
+    height: 10px;
+}
+.tabella-contatto>tbody>tr>td:first-child {
+    width: 130px;
+    font-weight: bold;
+}
+.tabella-contatto>tbody>tr.lb {
+    height: 10px;
+}
+
+
+.btn-reload {
+    background-image: url('./img/reload.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; 
+    width: 30px; 
+    height: 30px;
+    text-align: center;
+}
+.hloader-back {
+    background-image: url('./img/ajax-loader-h.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: initial; 
+    width: 100%; 
+    height: auto;
+    text-align: center;
+}
+.btn-esito {
+    width: 400px;
+}
+
+
+div.notConfirmedDatum {
+    background-image: url('./img/alerticon.gif');
+    width: 25px;
+    height: 25px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; 
+    text-align: center;
+    display: inline;
+    float: right;
+    margin-left: 3px;
+}
+td.notConfirmedDatum {
+    width: 25px;
+    height: 25px;
+}
+/*.notConfirmedDatum div {
+    background: #ff0000;
+    width: 20px;
+}*/

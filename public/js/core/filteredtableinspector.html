@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Inspector</div>
+    <div class="panel-body">
+        <p ng-if="FilteredTable.getTableDynamics(tableId).colSelection.length">
+            --__FilteredTable.getTableDynamics(tableId).colSelection.length__-- colonne selezionate
+        </p>
+        <p ng-if="FilteredTable.getTableDynamics(tableId).rowSelection.length">
+            --__FilteredTable.getTableDynamics(tableId).rowSelection.length__-- righe selezionate
+        </p>
+        <p>Filtri testuali</p>
+        <p ng-repeat="(field,filt) in FilteredTable.getTableDynamics(tableId).filterings">
+            <span ng-if="(filt.length)"><b>--__field__--:</b><br> --__filt__--</span>
+        </p>
+    </div>
+</div>

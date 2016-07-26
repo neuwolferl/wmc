@@ -1,0 +1,21 @@
+
+<h1> Backoffice</h1>
+
+<div class="container"  style="width: 100%;">
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10" style="border: 1px dashed lightgray;">
+            <ul class="nav nav-pills nav-stacked">
+                {foreach $act in $actions}
+                <li>
+                    <a href="{echo $act}">{echo $act_i}</a>
+                </li>
+                <li>
+                    &nbsp;
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+</div>

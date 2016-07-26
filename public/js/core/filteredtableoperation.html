@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Operazioni</div>
+    <div class="panel-body">
+        <table class="table-condensed" ng-if="FilteredTable.isDefined(tableId)">
+            <tr ng-repeat="op in FilteredTable.getTableDynamics(tableId).ops">
+                <td ng-if="isAvalaible(op.availability)"><button type="button" class="btn btn-primary btn-sm" ng-click="xOp(op.callback,op.arguments)">--__op.name__--</button></td>
+            </tr>
+        </table>
+    </div>
+</div>

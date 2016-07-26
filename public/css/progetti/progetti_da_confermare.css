@@ -1,0 +1,68 @@
+/* 
+    Created on : 19-set-2014, 17.42.18
+    Author     : alberto
+*/
+
+#pagina {
+    /*text-align: center;*/
+    margin: 1%;
+}
+
+
+#pageCounterOption {
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+}
+#pageCounterOptionLabel {
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+}
+
+#pageCounterOption select{
+    display: inline;
+}
+
+#ricerca {
+    display: inline-block;
+    float: left;
+    margin-right: 150px;
+}
+#ricercaLabel {
+    display: inline-block;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+#goBack {
+    display: inline-block;
+    /*float: right;*/
+    margin-left: 5px;
+    margin-right: 5px;
+}
+#numeroPagina {
+    display: inline-block;
+    /*float: right;*/
+    margin-left: 5px;
+    margin-right: 5px;
+}
+#goForw {
+    display: inline-block;
+    /*float: right;*/
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.listone {
+
+}
+
+#paginazione {
+    width: 100%;
+    text-align: center;
+}
+
+#topNavigator {
+    width: 100%;
+    vertical-align: middle;
+}

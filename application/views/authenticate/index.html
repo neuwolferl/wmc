@@ -1,0 +1,23 @@
+
+
+<div class="authenticate_div">
+    <div id="formdiv">
+    <h2> Fai login per accedere a questo sito</h2><br><br>
+    <form method="post" action="{echo $original_target}" class="form">
+        <label for="user" class="input-sm">Nome utente</label>
+        <input type="text" name="user" id="user" class="input-sm" {if isset($user)}{echo $user}{/if}>
+
+
+        <br><br>
+        <label for="password" class="input-sm">Password</label>
+        <input class="input-sm" type="password" name="password" id="password" >
+        <br><br>
+        {if isset($error)}
+        {echo $error}
+        {/if}
+        <input type="hidden" value="{echo $original_target}" name="original_target">
+        <button class="btn btn-primary" type="submit" name="login">Login</button>
+
+    </form>
+</div>
+</div>

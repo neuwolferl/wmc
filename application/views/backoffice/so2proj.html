@@ -1,0 +1,270 @@
+<div ng-app="so2proj">
+    <div ng-controller="ListController as LCTRL" class="container-fluid" ng-show="{$root}.showNotShow.lista">
+        <div class="row">
+            <div class="col-sm-1">
+                Stati ammessi<br>
+                <ul class="nav nav-pills nav-stacked">
+                    <li ng-repeat="status in LCTRL.allowedstatuses">
+                        <a ng-click="LCTRL.removeAllowedStatus(status)">--__status__--</a>
+                    </li>
+                </ul>
+                Stati non ammessi<br>
+                <ul class="nav nav-pills nav-stacked">
+                    <li ng-repeat="status in LCTRL.notallowedstatuses">
+                        <a ng-click="LCTRL.addAllowedStatus(status)">--__status__--</a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-sm-10" style="background-color: #f4f4f4">
+                <div style="width: 100%; height: auto; vertical-align: top;">
+                    <div style="width: 100%; text-align: center;">
+                        Tutti&nbsp;<input type="radio" ng-model="LCTRL.allowedtrattato" value="1">&nbsp;&nbsp;&nbsp;
+                        Solo non trattati&nbsp;<input type="radio" ng-model="LCTRL.allowedtrattato" value="0">
+                    </div>
+                    <table width="100%" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th width="10%">Numero SO</th>
+                                <th width="20%">Soggetto SO</th>
+                                <th width="10%">Stato SO</th>
+                                <th width="20%">Nome Azienda</th>
+                                <th width="10%">Progetto associato</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="!(LCTRL.listLoaded)">
+                            <tr>
+                                <td colspan="6" style="text-align: center;">Caricamento in corso...<br><img ng-src="../../public/img/ajax-loader-h.gif"></td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="(LCTRL.listLoaded)">
+                            <!--<tr ng-repeat="datum in {$root}.filtered = (data| filterSituazione : statusFilter | filter : ListoneCtrl.ricerca) | pagina : ListoneCtrl.currentPage * itemsInAPage | limitTo : itemsInAPage" ng-click="ListoneCtrl.avvia(datum.link, datum)">-->
+                            <tr ng-repeat="datum in {$root}.filtered = ({$root}.soList|FiltraStato: LCTRL.allowedstatuses |FiltraSoggetto: LCTRL.allowedsubjects|FiltraTrattato: LCTRL.allowedtrattato)" ng-click="LCTRL.scegliSo(datum.salesorderid)">
+                                <!--<tr ng-repeat="datum in []" ng-click="ListoneCtrl.avvia(datum.link)">-->
+                                <td style="background: lightgreen;" ng-if="datum.trattato">--__datum["Numero SO"]__--</td>
+                                <td ng-if="!datum.trattato">--__datum["Numero SO"]__--</td>
+                                <td>--__datum["Soggetto SO"]__--</td>
+                                <td>--__datum["Stato SO"]__--</td>
+                                <td>--__datum["Nome Azienda"]__--</td>
+                                <td>--__datum["Progetto associato"]__--</td>
+                            </tr>
+                            <tr ng-if="!{$root}.filtered.length">
+                                <td colspan="6" style="text-align: center;">Nessun elemento rispetta le condizioni richieste.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                Soggetti ammessi<br>
+                <ul class="nav nav-pills nav-stacked">
+                    <li ng-repeat="subject in LCTRL.allowedsubjects">
+                        <a ng-click="LCTRL.removeAllowedSubject(subject)">--__subject__--</a>
+                    </li>
+                </ul>
+                Soggetti non ammessi<br>
+                <ul class="nav nav-pills nav-stacked">
+                    <li ng-repeat="subject in LCTRL.notallowedsubjects">
+                        <a ng-click="LCTRL.addAllowedSubject(subject)">--__subject__--</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="width: 100%;" ng-show="!{$root}.showNotShow.lista" ng-controller="ModificaController as MCTRL">
+        <div class="row">
+            <div class="col-sm-1">
+                &nbsp;
+            </div>
+            <div class="col-sm-10" style="background-color: #f4f4f4">
+                <button class="btn btn-primary" type="button" ng-click="MCTRL.tornaALista()">Torna a lista</button>
+                <div style="width: 100%; height: auto; vertical-align: top;">
+                    <div style="width: 100%; text-align: center;" ng-if="{$root}.showNotShow.detailsLoaded">
+                        Caricamento in corso...<br><img ng-src="../../public/img/ajax-loader-h.gif">
+                    </div>
+                    <div style="border: 1px dotted lightgray; display: inline-block; float: left; margin-right: 1%; width: 15%; height: 350px; text-align: left;">
+                        <h4>Sales Order</h4>
+                        <dl class="dl-horizontal" style="width: 100%; text-align: left;">
+                            <dt>Soggetto</dt>
+                            <dd>--__MCTRL.so["Soggetto"]__--</dd>
+                            <dt>Numero SO</dt>
+                            <dd>--__MCTRL.so["Numero SO"]__--</dd>
+                            <dt>Id SO</dt>
+                            <dd>--__{$root}.soScelta__--</dd>
+                            <dt>Stato</dt>
+                            <dd>--__MCTRL.so["Stato"]__--</dd>
+                            <dt>Capo progetto</dt>
+                            <dd>--__MCTRL.so["Capo progetto"]__--</dd>
+                        </dl>
+                        <button type="button" ng-click="MCTRL.imponiSO()">Imponi questa SO</button>
+                    </div>
+                    <div style="border: 1px dotted lightgray; display: inline-block; float: left; margin-right: 2%; width: 15%; height: 350px; text-align: left;">
+                        <h4>Cliente</h4>
+                        <dl class="dl-horizontal" style="width: 100%; text-align: left;">
+                            <dt>ID Azienda</dt>
+                            <dd>--__MCTRL.so["accountid"]__--</dd>
+                            <dt>Num Azienda</dt>
+                            <dd>--__MCTRL.customer["Num Azienda"]__--</dd>
+                            <dt>Azienda</dt>
+                            <dd>--__MCTRL.customer["Azienda"]__--</dd>
+                        </dl>
+                    </div>
+                    <div style="border: 1px dotted lightgray; display: inline-block; float: left; margin-right: 1%; width: 20%; height: 350px; text-align: left;">
+                        <h4>Progetto associato ad SO</h4>
+                        <dl class="dl-horizontal" style="width: 100%; text-align: left;">
+                            <dt>Nome progetto</dt>
+                            <dd>--__MCTRL.assProj["Nome progetto"]__--</dd>
+                            <dt>Numero progetto</dt>
+                            <dd>--__MCTRL.assProj["Numero progetto"]__--</dd>
+                            <dt>Id progetto</dt>
+                            <dd>--__MCTRL.assProj["projectid"]__--</dd>
+                            <dt>Url progetto</dt>
+                            <dd><a href="--__MCTRL.assProj.url__--">link</a></dd>
+                            <dt>Assegnato a</dt>
+                            <dd>--__MCTRL.assProj["Assegnato a"]__--</dd>
+                            <dt>Stato progetto</dt>
+                            <dd>--__MCTRL.assProj["Stato progetto"]__--</dd>
+                            <dt>Tipo progetto</dt>
+                            <dd>--__MCTRL.assProj["Tipo progetto"]__--</dd>
+                        </dl>
+                        <button type="button" ng-click="MCTRL.modificaQuesto(MCTRL.assProj.projectid)">Modifica questo</button>
+                    </div>
+
+                    <div style="border: 1px dotted lightgray; display: inline-block; float: left; width: 20%; height: 350px; text-align: left;"> 
+                        <h4>Progetti non associati ad SO</h4>                    
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li ng-repeat="proj in MCTRL.otherProj" ng-class=""><a href="" ng-click="this.shifttoproject({$index})">--__proj["Numero progetto"]__--</a></li>
+                        </ul>
+                        <div ng-repeat="proj in MCTRL.otherProj">
+                            <dl  style="width: 100%; text-align: left;" class="dl-horizontal" ng-show="!(MCTRL.visibleProject - {$index})">
+                                <dt>Nome progetto</dt>
+                                <dd>--__proj["Nome progetto"]__--</dd>
+                                <dt>Numero progetto</dt>
+                                <dd>--__proj["Numero progetto"]__--</dd>
+                                <dt>Id progetto</dt>
+                                <dd>--__proj["projectid"]__--</dd>
+                                <dt>Url progetto</dt>
+                                <dd><a href="--__proj.url__--">link</a></dd>
+                                <dt>Assegnato a</dt>
+                                <dd>--__proj["Assegnato a"]__--</dd>
+                                <dt>Stato progetto</dt>
+                                <dd>--__proj["Stato progetto"]__--</dd>
+                                <dt>Tipo progetto</dt>
+                                <dd>--__proj["Tipo progetto"]__--</dd>
+                            </dl>
+                            <button type="button" ng-click="MCTRL.modificaQuesto(proj.projectid)">Modifica questo</button>
+                        </div>
+                    </div>
+                    <div style="border: 1px dotted lightgray; display: inline-block; float: left; width: 21%; height: 350px; text-align: left;">
+
+                        <h4>Fatture associate ad SO</h4>                    
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li ng-repeat="invoice in MCTRL.inv" ng-class=""><a href="" ng-click="MCTRL.shifttoinv({$index})">--__invoice.numero__--</a></li>
+                        </ul>
+                        <dl ng-repeat="invoice in MCTRL.inv" class="dl-horizontal" style="width: 100%; text-align: left;" ng-show="!(MCTRL.visibleInv - {$index})">
+                            <dt>Soggetto</dt>
+                            <dd>--__invoice["Soggetto"]__--</dd>
+                            <dt>Data fattura</dt>
+                            <dd>--__invoice["Data fattura"]__--</dd>
+                            <dt>Numero fattura</dt>
+                            <dd>--__invoice["numero"]__--</dd>
+                            <dt>Ammontare</dt>
+                            <dd>--__invoice["Ammontare"]__--</dd>
+                        </dl>
+                    </div>
+
+                </div>
+                <div class="col-sm-1">
+                    &nbsp;
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                <div style="border: 1px dotted lightgray; display: inline-block; float: left; width: 48%; text-align: center;">
+                    <h4>Modifica progetto</h4>                    
+                    <dl class="dl-horizontal">
+                        <dt>Id progetto</dt>
+                        <dd><input type="text" disabled ng-model="MCTRL.updateProj.id.value"></dd>
+                        <dt>Nome progetto</dt>
+                        <dd><input type="text" ng-model="MCTRL.updateProj.projectname.value"></dd>
+                        <dt>Numero progetto</dt>
+                        <dd><input disabled type="text" ng-model="MCTRL.updateProj.project_no.value"></dd>
+                        <dt>Data avvio</dt>
+                        <dd><input type="date" ng-model="MCTRL.updateProj.startdate.value"></dd>
+                        <dt>Data fine prevista</dt>
+                        <dd><input type="date" ng-model="MCTRL.updateProj.targetenddate.value">
+                            <button type="button" ng-click="MCTRL.calcolaFineUpd()">Suggerisci</button>
+                        </dd>
+                        <dt>Data fine effettiva</dt>
+                        <dd><input type="date" ng-model="MCTRL.updateProj.actualenddate.value"></dd>
+                        <dt>Stato progetto</dt>
+                        <dd><select ng-model="MCTRL.updateProj.projectstatus.value" ng-options="val for val in MCTRL.updateProj.projectstatus.picklistValues">
+                            </select>
+                            <button type="button" ng-click="MCTRL.calcolaStatoUpd()">Suggerisci</button>
+                        </dd>
+                        <dt>Tipo progetto</dt>
+                        <dd><select ng-model="MCTRL.updateProj.projecttype.value">
+                                <option ng-repeat="val in MCTRL.updateProj.projecttype.picklistValues" value="--__val__--">
+                                    --__val__--
+                                </option>
+                            </select></dd>
+                        <dt>Azienda</dt>
+                        <dd><input disabled type="text" ng-model="MCTRL.updateProj.linktoaccountscontacts.value"></dd>
+                        <dt>Assegnato a</dt>
+                        <dd><select ng-model="MCTRL.updateProj.assigned_user_id.value" ng-options="user.id as user.name for user in MCTRL.users">
+                            </select></dd>
+                        <dt>Url progetto</dt>
+                        <dd><input type="text"  ng-model="MCTRL.updateProj.projecturl.value"></dd>
+                        <dt>SO collegata(6x)</dt>
+                        <dd><input disabled type="text" ng-model="MCTRL.updateProj.cf_691.value">
+                        </dd>
+
+                    </dl>
+                    <button type="button" ng-click="MCTRL.update()">Invia modifiche</button>
+                </div>
+                <div style="border: 1px dotted lightgray; display: inline-block; float: left; width: 48%; text-align: center;">
+                    <h4>Crea nuovo progetto</h4>     
+                    <button type="button" ng-click="MCTRL.inizializzaNuovo()">Inizializza</button>
+                    <dl class="dl-horizontal">
+                        <dt>Nome progetto</dt>
+                        <dd><input type="text" ng-model="MCTRL.newProj.projectname.value"></dd>
+                        <dt>Numero progetto</dt>
+                        <dd><input disabled type="text" ng-model="MCTRL.newProj.project_no.value"></dd>
+                        <dt>Data avvio</dt>
+                        <dd><input type="date" ng-model="MCTRL.newProj.startdate.value"></dd>
+                        <dt>Data fine prevista</dt>
+                        <dd><input type="date" ng-model="MCTRL.newProj.targetenddate.value">
+                            <button type="button" ng-click="MCTRL.calcolaFine()">Suggerisci</button>
+                        </dd>
+                        <dt>Data fine effettiva</dt>
+                        <dd><input type="date" ng-model="MCTRL.newProj.actualenddate.value"></dd>
+                        <dt>Stato progetto</dt>
+                        <dd><select ng-model="MCTRL.newProj.projectstatus.value" ng-options="val for val in MCTRL.newProj.projectstatus.picklistValues">
+                            </select>
+                        </dd>
+                        <dt>Tipo progetto</dt>
+                        <dd><select ng-model="MCTRL.newProj.projecttype.value" ng-options="val for val in MCTRL.newProj.projecttype.picklistValues">
+                            </select></dd>
+                        <dt>Azienda</dt>
+                        <dd><input disabled type="text" ng-model="MCTRL.newProj.linktoaccountscontacts.value"></dd>
+                        <dt>Assegnato a</dt>
+                        <dd><select ng-model="MCTRL.newProj.assigned_user_id.value" ng-options="user.id as user.name for user in MCTRL.users">
+                            </select></dd>
+                        <dt>Url progetto</dt>
+                        <dd><input type="text"  ng-model="MCTRL.newProj.projecturl.value"></dd>
+                        <dt>SO collegata</dt>
+                        <dd><input type="text" disabled  ng-model="MCTRL.newProj.cf_691.value"></dd>
+
+                    </dl>
+                    <button type="button" ng-click="MCTRL.create()">Crea</button>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+    </div>
+</div>

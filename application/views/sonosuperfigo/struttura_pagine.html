@@ -1,0 +1,80 @@
+<div ng-app="RiepilogoPagine" class="container" style="width: 100%; margin-top: 1%;">
+    <div ng-controller="MainController as MainCtrl">
+        <div class="row">
+            <div class="col-md-1"></div>
+
+            <div class="col-md-10">
+
+                <div class="greybox">
+                    <h3>Riepilogo pagine</h3>
+                    <div style="display: inline-block; float: left; width: 80%;">
+                    <table class="table-striped table-controlli">
+                        <tr>
+                            <th style="width: 30%">CONTROLLO</th>
+                            <th style="width: 70%">AZIONI</th>
+                        </tr>
+                        <tr ng-repeat="cont in MainCtrl.pagine|selectedController:{$root}.controller">
+                            <td>--__cont.index|uppercase__--</td>
+                            <td>
+                                <table class="table-azioni">
+                                    <!--<tr ng-if="{$first}">-->
+                                    <tr ng-if="!$index">
+                                        <th style="width: 30%">Nome</th>
+                                        <th style="width: 30%">Vista</th>
+                                        <th style="text-align: left; width: 20%"> </th>
+                                        <th style="text-align: left; width: 20%"> </th>
+                                    </tr>
+                                    <tr ng-if="MainCtrl.showOnlyViews" ng-repeat="met in cont.value|showOnlyViews|selectedAction:{$root}.action">
+                                        <td style="width: 30%">--__met.method__--</td>
+                                        <td style="width: 30%">--__met.view__--</td>
+                                        <td style="text-align: left; width: 20%">
+                                            <button ng-if="met.isactive" class="btn btn-danger btn-sm" ng-click="MainCtrl.disablePage(cont.index,met.method)">DISABLE</button>
+                                            <button ng-if="!met.isactive" class="btn btn-success btn-sm" ng-click="MainCtrl.enablePage(cont.index,met.method)">ENABLE</button>
+                                        </td>
+                                        <td style="text-align: left; width: 20%">
+                                            <button class="btn btn-primary btn-sm" ng-click="MainCtrl.makeAuthorization(cont.index,met.method)">AUTHORIZE</button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="!MainCtrl.showOnlyViews" ng-repeat="met in cont.value">
+                                        <td>--__met.method__--</td>
+                                        <td>--__met.view__--</td>
+                                        <td><button class="btn btn-sm">AUT</button></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                            
+                    </table>
+                    </div>
+                    <div style="display: inline-block; float: left; width: 20%;">
+                        <label for=showOnlyViews">Mostra solo azioni con vista</label>
+                        <input type="checkbox" name="showOnlyViews" id="showOnlyViews" ng-model="MainCtrl.showOnlyViews">
+                    </div >
+                    <div ng-controller="AuthController as ACTRL" ng-show="{$root}.showNotShow.listaUtenti" style="display: inline-block; float: left; width: 20%;">
+                        Auth per: --__ACTRL.controller + " / " + ACTRL.action__--
+                        <div ng-repeat="us in ACTRL.listaUtenti">
+                            <span ng-if="{$index}">--__us.name__--</span>
+                            <span ng-if="{$index}"><input type="checkbox" ng-model="us.auth" ng-change="ACTRL.authnoauth(us.id)"></span>
+                        </div>
+                        <button type="button" ng-click="ACTRL.closeUsers()">Chiudi</button>
+                    </div>
+                    
+                    
+                </div>
+                
+                
+                <div class="greybox">
+                    
+                </div>
+                
+                
+                
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+
+    </div>
+
+</div>
+</div>
+
